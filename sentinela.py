@@ -1,34 +1,37 @@
 from flask import Flask
 import os
-import time
+import subprocess
 
 app = Flask(__name__)
 
 @app.route('/forjar', methods=['POST'])
 def forjar():
-    print("\n[!] ORDEM RECEBIDA! INICIANDO CICLO DE FORJA...")
+    print("\n[!] ORDEM RECEBIDA: INICIANDO CONSTRUÇÃO S-RANK!")
     
-    # Sobe os frames
-    os.system("git add . && git commit -m 'Forja Disparada' && git push origin main -f")
+    # 1. Gatilho no GitHub
+    os.system("git add . && git commit -m 'Comando: Gerar Influencer' && git push origin main -f")
     
-    print("[...] RADAR ATIVO: Aguardando GitHub Actions...")
-    # Espera o processo terminar (gh run watch já configurado com o repo default)
-    os.system("gh run watch") 
+    # 2. O OLHO DE HÓRUS: Monitorando Logs ao Vivo
+    print("[...] CONECTANDO AO SERVIDOR DE RENDERIZAÇÃO...")
+    # Pega o ID da última execução
+    run_id = subprocess.getoutput("gh run list --limit 1 --json databaseId --jq '.[0].databaseId'")
     
-    print("[...] BAIXANDO VÍDEO...")
-    # Baixa o vídeo (Certifique-se que o nome no GitHub é 'video_final')
+    print(f"[📡] LOGS EM TEMPO REAL (ID: {run_id}):")
+    # Este comando faz o Termux mostrar o que acontece no GitHub AGORA
+    os.system(f"gh run watch {run_id} && gh run view {run_id} --log")
+    
+    # 3. Resgate Final
+    print("\n[OK] RENDERIZAÇÃO CONCLUÍDA! BAIXANDO VÍDEO...")
     os.system("gh run download --name video_final")
     
-    # ALERTA DE VITÓRIA (Voz e Vibração)
-    # Nota: Certifique-se de ter o app 'Termux:API' instalado na Play Store/F-Droid
-    os.system("termux-vibrate -d 1000")
-    os.system("termux-tts-speak 'Mestre, o vídeo da Súcubus está pronto na sua tela.'")
+    # Alerta de Hardware
+    os.system("termux-vibrate -d 1500")
+    os.system("termux-tts-speak 'Mestre, a influencer foi forjada e o vídeo está pronto.'")
     
-    print("[OK] ABRINDO VÍDEO...")
-    # Procura qualquer arquivo mp4 na pasta e abre
+    # 4. Projeção
     os.system("termux-open *.mp4")
     
-    return "Missão Cumprida", 200
+    return "Sucesso", 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8081)
