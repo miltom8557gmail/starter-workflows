@@ -11,10 +11,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Instalando Motor de Cinema (FFmpeg)
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Costurando a Succubus
+      - name: Costurando a Succubus (Busca Global)
         run: |
-          # O segredo está em apontar para a pasta correta:
-          ffmpeg -pattern_type glob -i 'Frames_Sequenciais/*.png' -c:v libx264 -pix_fmt yuv420p video_da_succubus.mp4
+          # Procura frames .png em todas as pastas e costura o vídeo
+          find . -name "*.png" | sort -V > frames.txt
+          ffmpeg -f concat -safe 0 -i <(sed 's/^/file /' frames.txt) -c:v libx264 -pix_fmt yuv420p video_da_succubus.mp4
       - name: Entrega do Vídeo Pronto
         uses: actions/upload-artifact@v4
         with:
