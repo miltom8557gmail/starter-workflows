@@ -1,6 +1,8 @@
 name: Forja_de_Video_Milton
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -8,4 +10,8 @@ jobs:
       - name: Checkout do Império
         uses: actions/checkout@v4
       - name: Simulando Forja de Vídeo
-        run: echo "Animando a Succubus..."
+        run: |
+          echo "Iniciando a Forja da Succubus..."
+          echo "Processando imagens de 34MB..."
+          sleep 10
+          echo "Vídeo gerado com sucesso!"
