@@ -1,21 +1,23 @@
-name: Forja_de_Video_Milton
+name: Forja_Real_de_Video_Milton
 on:
-  workflow_dispatch:
   push:
     branches: [ main ]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do Império
+      - name: Acesso ao Império
         uses: actions/checkout@v4
-      - name: Simulando Forja de Vídeo
+      - name: Instalando Motor de Cinema (FFmpeg)
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Costurando a Succubus (Frames em Vídeo)
         run: |
-          echo "Iniciando a Forja da Succubus..."
-          echo "Processando imagens de 34MB..."
-          sleep 10
-          echo "Vídeo gerado com sucesso!"
-# Forja realizada em: Sun Mar 29 13:56:22 -03 2026
-# Forja realizada em: Sun Mar 29 13:58:11 -03 2026
-# Forja realizada em: Sun Mar 29 13:58:54 -03 2026
-# Forja realizada em: Sun Mar 29 13:59:37 -03 2026
+          # Procura todos os frames na pasta e cria o vídeo real
+          # O glob '*/*.png' vai pegar as imagens dentro da pasta Frames_Sequenciais
+          ffmpeg -pattern_type glob -i 'Frames_Sequenciais/*.png' -c:v libx264 -pix_fmt yuv420p video_da_succubus.mp4
+      - name: Entrega do Vídeo Pronto
+        uses: actions/upload-artifact@v4
+        with:
+          name: Video_Final_Alta_Definicao
+          path: video_da_succubus.mp4
