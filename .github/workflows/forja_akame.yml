@@ -1,32 +1,31 @@
 name: Forja de Influencer NSFW S-Rank
 on: [push]
-
+permissions:
+  contents: write
+  actions: read
+  runs: write
 jobs:
-  gerar_imagem_ia:
+  gerar_ia:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do Codigo
         uses: actions/checkout@v4
-
-      - name: Instalar Python e Dependencias de IA
+      - name: Instalar Dependencias
         run: |
           sudo apt-get update
-          sudo apt-get install ffmpeg -y
-          pip install diffusers transformers accelerate torch
-
-      - name: Executar Motor de IA (Stable Diffusion + LoRA)
+          sudo apt-get install -y ffmpeg
+          pip install torch diffusers transformers accelerate
+      - name: Executar Motor de IA
+        run: python scripts/gerar_influencer.py
+      - name: Finalizar Video
         run: |
-          # Este comando simula a geração via script Python que vamos criar
-          # Em 2026, o GitHub Actions processa isso em segundos
-          python3 scripts/gerar_influencer.py --prompt "influencer nsfw, ultra realistic, masterpiece, cinematic lighting"
-
-      - name: Finalizar Video com FFmpeg
-        run: |
-          # Transforma os resultados em video fluido
-          ffmpeg -framerate 24 -pattern_type glob -i 'output/*.png' -c:v libx264 -pix_fmt yuv420p video_influencer.mp4
-
-      - name: Armazenar Resultado Secreto
+          if [ -f output/frame1.png ]; then
+            ffmpeg -loop 1 -i output/frame1.png -t 5 -pix_fmt yuv420p video_final.mp4
+          else
+            echo "ERRO: Nenhuma imagem gerada!" && exit 1
+          fi
+      - name: Armazenar Resultado
         uses: actions/upload-artifact@v4
         with:
           name: video_final
-          path: video_influencer.mp4
+          path: video_final.mp4
