@@ -1,15 +1,11 @@
 name: Forja_de_Video_Milton
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 jobs:
-  animar:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Preparar Motor de Animação
-        run: |
-          pip install --upgrade pip
-          pip install moviepy==1.0.3
-      - name: Gerar Movimento
-        run: |
-          echo "O Robô do GitHub está dando vida à imagem sd3.5_large.png..."
-          # Aqui o robô processa a animação para você
+      - name: Checkout do Império
+        uses: actions/checkout@v4
+      - name: Simulando Forja de Vídeo
+        run: echo "Animando a Succubus..."
