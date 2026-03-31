@@ -1,28 +1,37 @@
-name: Forja_Real_de_Video_Milton
+name: IA Overlord Forge
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    paths:
+      - 'trigger.json'
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
-  build:
+  forge:
     runs-on: ubuntu-latest
     steps:
-      - name: Acesso ao Império
+      - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Instalando Motor de Cinema (FFmpeg)
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Costurando a Succubus (Apenas Frames Reais)
-        run: |
-          # Filtra apenas arquivos que começam com números e terminam em .png
-          find . -name "[0-9]*.png" | sort -V > lista_frames.txt
-          
-          # Transforma a lista em formato que o FFmpeg entende
-          sed "s/^/file '/;s/$/'/" lista_frames.txt > ffmpeg_input.txt
-          
-          # Gera o vídeo final
-          ffmpeg -f concat -safe 0 -i ffmpeg_input.txt -c:v libx264 -pix_fmt yuv420p video_da_succubus.mp4
-      - name: Entrega do Vídeo Pronto
-        uses: actions/upload-artifact@v4
+
+      - name: Setup Node.js v24
+        uses: actions/setup-node@v4
         with:
-          name: Video_Final_Alta_Definicao
-          path: video_da_succubus.mp4
+          node-version: '24'
+
+      - name: Akame Forge Logic
+        run: |
+          echo "[🔥] Processando ordem do App..."
+          # SIMULAÇÃO DE TREINO: Aqui você substituiria pelo seu comando real
+          # Exemplo: python train_network.py --config config.toml
+          echo "Simulando criação de LoRA..."
+          touch akame_model_$(date +%s).safetensors
+          echo "ARTEFATO GERADO COM SUCESSO."
+
+      - name: Commit e Push do Artefato
+        run: |
+          git config --global user.name "Akame-Core"
+          git config --global user.email "bot@akame.ia"
+          git add *.safetensors
+          git commit -m "[💎] ARTEFATO COLETADO"
+          git push origin main
