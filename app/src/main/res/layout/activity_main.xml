@@ -1,39 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#000000">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="16dp">
 
-    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AKAME: NÚCLEO DE SEGURANÇA"
+        android:textColor="#FF0000"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textSize="18sp" />
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="AKAME: NÚCLEO DE EXPANSÃO" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
-
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="20dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Status de Monetização (Privacy/OF)" android:textColor="#00FF00" android:textStyle="bold"/>
-                    <TextView android:id="@+id/profit_text" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Lucro Estimado: R$ 0,00" android:textColor="#FFF" android:textSize="18sp" android:layout_marginTop="5dp"/>
-                    <Button android:id="@+id/btn_auto_sales" android:layout_width="match_parent" android:layout_height="50dp"
-                        android:text="ATIVAR BOT DE VENDAS (DM)" android:backgroundTint="#FFD700" android:textColor="#000" android:layout_marginTop="10dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="10dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Módulo de Camuflagem Digital" android:textColor="#1E90FF" android:textStyle="bold"/>
-                    <CheckBox android:id="@+id/check_metadata" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Limpar Rastros de IA (Exif/Metadata)" android:textColor="#AAA" android:checked="true"/>
-                    <Button android:id="@+id/btn_obfuscate" android:layout_width="match_parent" android:layout_height="50dp"
-                        android:text="CRIPTOGRAFAR MÍDIA PARA POSTAGEM" android:backgroundTint="#444" android:layout_marginTop="5dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#1A1A1A"
+        android:layout_marginTop="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <TextView
+                android:id="@+id/profit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lucro Estimado: R$ 1.450,00"
+                android:textColor="#00FF00"
+                android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: Operacional"
+                android:textColor="#666"
+                android:textSize="12sp" />
         </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAMUFLAGEM DIGITAL"
+        android:textColor="#1E90FF"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp" />
+
+    <CheckBox
+        android:id="@+id/check_metadata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limpar Rastros (Exif/Metadata)"
+        android:textColor="#AAA"
+        android:checked="true" />
+
+    <Button
+        android:id="@+id/btn_obfuscate"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="CRIPTOGRAFAR E LIMPAR MÍDIA"
+        android:backgroundTint="#444"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/etInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Log de atividade ou nova ID..."
+        android:textColorHint="#666"
+        android:textColor="#FFF"
+        android:layout_marginTop="20dp" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:divider="#333"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
