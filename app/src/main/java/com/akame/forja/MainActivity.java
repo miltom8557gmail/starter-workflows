@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
-    private View pinScreen, mainContent, cardPersonagem;
-    private EditText etPin;
-    private TextView abaTitulo;
+    private View pinScreen, mainContent, cardPersonagem, chatInterface, dashScroll;
+    private EditText etPin, etMsg;
+    private TextView chatLog, abaTitulo;
     private ListView listView;
 
     @Override
@@ -23,15 +23,19 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         pinScreen = findViewById(R.id.pin_screen);
         mainContent = findViewById(R.id.main_content);
+        chatInterface = findViewById(R.id.chat_interface);
+        dashScroll = findViewById(R.id.dashboard_scroll);
         cardPersonagem = findViewById(R.id.card_personagem);
         etPin = findViewById(R.id.et_pin_entry);
+        etMsg = findViewById(R.id.et_message);
+        chatLog = findViewById(R.id.chat_log);
         abaTitulo = findViewById(R.id.aba_titulo);
         listView = findViewById(R.id.listView_logs);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Descobrir"));
+        tabLayout.addTab(tabLayout.newTab().setText("Explorar"));
         tabLayout.addTab(tabLayout.newTab().setText("Reveri"));
-        tabLayout.addTab(tabLayout.newTab().setText("Segurança"));
+        tabLayout.addTab(tabLayout.newTab().setText("Sistema"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -40,39 +44,58 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+        // DESBLOQUEIO PIN 3650 / MILTON
         findViewById(R.id.btn_unlock).setOnClickListener(v -> {
             String pass = etPin.getText().toString();
             if (pass.equals("3650") || pass.equalsIgnoreCase("Milton")) {
                 pinScreen.setVisibility(View.GONE);
                 mainContent.setVisibility(View.VISIBLE);
-                dbHelper.addData("ACESSO: " + pass + " desbloqueou o Nexus.");
-            } else {
-                Toast.makeText(this, "ACESSO NEGADO", Toast.LENGTH_SHORT).show();
-            }
+                dbHelper.addData("NUCLEO: Acesso garantido (" + pass + ")");
+            } else { Toast.makeText(this, "PIN INVÁLIDO", Toast.LENGTH_SHORT).show(); }
         });
 
+        // LÓGICA DE CHAT
         findViewById(R.id.btn_interagir).setOnClickListener(v -> {
-            dbHelper.addData("HISTÓRIA: Iniciando capítulo com Seraphina Vale.");
-            Toast.makeText(this, "Entrando em modo narrativo...", Toast.LENGTH_LONG).show();
+            dashScroll.setVisibility(View.GONE);
+            chatInterface.setVisibility(View.VISIBLE);
+        });
+
+        findViewById(R.id.btn_close_chat).setOnClickListener(v -> {
+            chatInterface.setVisibility(View.GONE);
+            dashScroll.setVisibility(View.VISIBLE);
+        });
+
+        findViewById(R.id.btn_send).setOnClickListener(v -> {
+            String msg = etMsg.getText().toString();
+            if (!msg.isEmpty()) {
+                chatLog.append("Tu: " + msg + "\n");
+                chatLog.append("Seraphina: [Digitando...] (Conexão via Nexus estabelecida)\n\n");
+                etMsg.setText("");
+                dbHelper.addData("ROLEPLAY: Mensagem enviada.");
+            }
         });
 
         atualizarLista();
     }
 
-    private void mudarAba(int posicao) {
-        if (posicao == 0) { // Descobrir
-            abaTitulo.setText("DESCOBRIR 18+");
+    private void mudarAba(int pos) {
+        chatInterface.setVisibility(View.GONE);
+        dashScroll.setVisibility(View.VISIBLE);
+        if (pos == 0) {
+            abaTitulo.setText("DESCOBRIR PERSONAGENS");
             cardPersonagem.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
-        } else if (posicao == 1) { // Reveri
-            abaTitulo.setText("REVERI: AUTO-HIPNOSE");
+        } else if (pos == 1) {
+            abaTitulo.setText("REVERI: FOCO SUPREMO");
             cardPersonagem.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
-        } else { // Segurança
-            abaTitulo.setText("LOGS DE SEGURANÇA");
+            dbHelper.addData("REVERI: Módulo de hipnose carregado.");
+        } else {
+            abaTitulo.setText("LOGS DO IMPÉRIO");
             cardPersonagem.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
         }
+        atualizarLista();
     }
 
     private void atualizarLista() {
