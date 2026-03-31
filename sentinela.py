@@ -2,53 +2,40 @@ import os, socket, requests
 from flask import Flask, request
 
 app = Flask(__name__)
-log_msg = "[🛰️] AGUARDANDO COMANDO..."
-
-# Rota do Cérebro (Mistral-7B via API Direta)
+log_msg = "[🛰️] AGUARDANDO ORDEM MESTRE..."
 API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
 
-@app.route('/ia/chat')
-def chat():
+@app.route('/ia/executar')
+def executar():
     global log_msg
-    pergunta = request.args.get('prompt', '')
-    log_msg = f"[🧠] PENSANDO: {pergunta}"
+    ordem_humana = request.args.get('prompt', '')
+    log_msg = f"[🧠] TRADUZINDO: {ordem_humana}"
+    
+    # Prompt para a IA se comportar como um tradutor de comandos Termux
+    prompt_ia = f"Transforme esta ordem em UM ÚNICO comando Bash para Termux. Responda APENAS o comando, sem explicações: {ordem_humana}"
+    
     try:
-        # Envia a pergunta para a nuvem do Hugging Face
-        payload = {"inputs": pergunta, "parameters": {"max_new_tokens": 500}}
-        response = requests.post(API_URL, json=payload).json()
+        payload = {"inputs": prompt_ia, "parameters": {"max_new_tokens": 100}}
+        res = requests.post(API_URL, json=payload).json()
+        comando_gerado = res[0]['generated_text'].split('\n')[-1].strip()
         
-        # Extrai o texto da resposta
-        if isinstance(response, list):
-            res_text = response[0].get('generated_text', 'Sem resposta.')
-        else:
-            res_text = str(response)
-
-        log_msg = "[✅] RESPOSTA GERADA"
-        with open("resultado_ia.txt", "w") as f: f.write(res_text)
-        return res_text
+        log_msg = f"[🔥] EXECUTANDO: {comando_gerado}"
+        # EXECUÇÃO REAL NO SISTEMA
+        os.system(f"{comando_gerado} > resultado_comando.txt 2>&1")
+        
+        return f"Comando: {comando_gerado} executado com sucesso."
     except Exception as e:
-        log_msg = f"[❌] ERRO NA IA: {str(e)}"
-        return str(e)
-
-@app.route('/ia/nuvem')
-def nuvem():
-    global log_msg
-    p = request.args.get('prompt', '')
-    log_msg = f"[☁️] ENVIANDO ORDEM: {p}"
-    with open("ordem_nuvem.txt", "w") as f: f.write(p)
-    os.system("git add . && git commit -m 'Ordem Nuvem' && git push origin main &")
-    return "OK"
-
-@app.route('/check')
-def check(): return "OK", 200
+        return f"Erro na tradução: {str(e)}"
 
 @app.route('/logs')
 def logs(): return log_msg
+
+@app.route('/check')
+def check(): return "OK", 200
 
 if __name__ == '__main__':
     for p in range(8081, 8090):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(('127.0.0.1', p)) != 0:
-                print(f">>> SISTEMA AKAME ONLINE NA PORTA: {p}")
                 app.run(host='0.0.0.0', port=p, threaded=True)
                 break
