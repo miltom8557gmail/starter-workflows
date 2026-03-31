@@ -2,33 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#020202">
+    android:background="#000000">
 
     <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="AKAME: NÚCLEO DE PERSONA VIVA" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
+                android:text="AKAME: NÚCLEO DE EXPANSÃO" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp" app:cardBackgroundColor="#111" android:layout_marginTop="15dp">
+                app:cardCornerRadius="12dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="20dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Definir Temperamento" android:textColor="#FFF" android:textSize="14sp"/>
-                    <Spinner android:id="@+id/spinner_personality" android:layout_width="match_parent" android:layout_height="50dp"
-                        android:backgroundTint="#FFF" android:layout_marginTop="5dp"/>
-                    <EditText android:id="@+id/custom_traits" android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:hint="Comandos de Voz/Texto personalizados..." android:textColorHint="#444" android:textColor="#00FF00" android:background="#000" android:padding="10dp" android:layout_marginTop="5dp"/>
+                        android:text="Status de Monetização (Privacy/OF)" android:textColor="#00FF00" android:textStyle="bold"/>
+                    <TextView android:id="@+id/profit_text" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Lucro Estimado: R$ 0,00" android:textColor="#FFF" android:textSize="18sp" android:layout_marginTop="5dp"/>
+                    <Button android:id="@+id/btn_auto_sales" android:layout_width="match_parent" android:layout_height="50dp"
+                        android:text="ATIVAR BOT DE VENDAS (DM)" android:backgroundTint="#FFD700" android:textColor="#000" android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp" app:cardBackgroundColor="#111" android:layout_marginTop="10dp">
+                app:cardCornerRadius="12dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
-                    <Button android:id="@+id/btn_lipsync" android:layout_width="match_parent" android:layout_height="55dp"
-                        android:text="SINCRO LABIAL + OLHAR FIXO" android:backgroundTint="#4B0082" android:textColor="#FFF"/>
-                    <Button android:id="@+id/btn_start_live" android:layout_width="match_parent" android:layout_height="60dp"
-                        android:text="INICIAR TRANSMISSÃO (LIVE REACT)" android:backgroundTint="#FF0000" android:textStyle="bold" android:layout_marginTop="10dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Módulo de Camuflagem Digital" android:textColor="#1E90FF" android:textStyle="bold"/>
+                    <CheckBox android:id="@+id/check_metadata" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Limpar Rastros de IA (Exif/Metadata)" android:textColor="#AAA" android:checked="true"/>
+                    <Button android:id="@+id/btn_obfuscate" android:layout_width="match_parent" android:layout_height="50dp"
+                        android:text="CRIPTOGRAFAR MÍDIA PARA POSTAGEM" android:backgroundTint="#444" android:layout_marginTop="5dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
