@@ -3,85 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | ISEKAI UNBOUND</title>
+    <title>AKAME NEXUS | Liberdade Absoluta</title>
     <style>
-        :root { --gold: #d4af37; --red: #8b0000; --blue: #004488; --bg: #020205; }
+        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; }
         body { background: var(--bg); color: #e0e0e0; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        /* NOTIFICAÇÃO DE SISTEMA ESTILO ANIME */
-        .system-alert { background: rgba(0, 68, 136, 0.2); border: 1px solid var(--blue); padding: 10px; color: #00ccff; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; text-align: center; position: absolute; top: 10px; width: 90%; left: 5%; z-index: 10; animation: glow 2s infinite; }
-        @keyframes glow { 0% { box-shadow: 0 0 5px var(--blue); } 50% { box-shadow: 0 0 20px var(--blue); } 100% { box-shadow: 0 0 5px var(--blue); } }
+        .header { background: #000; padding: 15px; border-bottom: 1px solid #1a1a1a; text-align: center; }
+        .header h1 { font-size: 1.2rem; color: var(--gold); letter-spacing: 5px; margin: 0; }
 
-        /* TELA DE AVENTURA */
-        .adventure-screen { flex: 1; overflow-y: auto; padding: 60px 20px 20px 20px; display: flex; flex-direction: column; gap: 15px; }
+        .chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: radial-gradient(circle at top, #1a0505 0%, #030303 100%); }
         
-        .event-box { background: rgba(255, 255, 255, 0.03); border-left: 3px solid var(--gold); padding: 15px; border-radius: 4px; animation: slideIn 0.5s ease-out; }
-        .event-box.isekai { border-left-color: var(--blue); color: #00ccff; }
-        .event-box.nsfw { border-left-color: var(--red); }
+        .bubble { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; position: relative; }
+        .char-msg { align-self: flex-start; background: #1a1a1a; border-left: 3px solid var(--red); color: #eee; }
+        .user-msg { align-self: flex-end; background: var(--red); color: #fff; border-radius: 15px 15px 0 15px; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .typing { font-size: 10px; color: var(--gold); font-style: italic; display: none; margin-bottom: 10px; }
 
-        .char-name { color: var(--gold); font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px; }
-        .text { font-size: 15px; line-height: 1.6; }
+        .input-bar { padding: 15px; background: #080808; border-top: 1px solid #1a1a1a; display: flex; gap: 10px; }
+        input { flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 25px; outline: none; }
+        .send-btn { background: var(--gold); border: none; padding: 0 20px; border-radius: 25px; font-weight: bold; cursor: pointer; }
 
-        /* INPUT DE AÇÃO */
-        .action-bar { background: #08080a; padding: 20px; border-top: 1px solid #1a1a1a; display: flex; gap: 10px; }
-        .action-bar input { flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 5px; outline: none; }
-        .btn-action { background: var(--blue); color: #fff; border: none; padding: 0 25px; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; }
-
-        /* OVERLAY DE BLOQUEIO (MONETIZAÇÃO) */
-        #isekai-lock { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
-        .btn-unlock { background: var(--gold); color: #000; border: none; width: 100%; max-width: 300px; padding: 20px; font-weight: bold; cursor: pointer; border-radius: 4px; margin-top: 20px; }
+        /* MODAL DE CONVERSÃO (O PULO DO GATO) */
+        #pay-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; border: 2px solid var(--gold); margin: 20px; border-radius: 20px; }
+        .btn-premium { background: var(--gold); color: #000; border: none; width: 100%; padding: 20px; font-weight: bold; border-radius: 10px; font-size: 16px; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="system-alert">SISTEMA: Conexão com Outro Mundo Estabilizada (Protocolo S8XDBBIFZ1)</div>
+    <div class="header"><h1>AKAME NEXUS</h1></div>
 
-    <div class="adventure-screen" id="chat-engine">
-        <div class="event-box isekai">
-            <span class="char-name">[SISTEMA]</span>
-            <div class="text">Bem-vindo ao Novo Mundo, Viajante. Você despertou nos aposentos privados da Duquesa Seraphina. O que você faz?</div>
-        </div>
+    <div class="chat-container" id="chat-box">
+        <div class="bubble char-msg"><b>Seraphina:</b> "Então você finalmente criou coragem para entrar no meu domínio... Diga-me, o que você mais deseja sentir hoje?"</div>
+        <div id="typing-indicator" class="typing">Seraphina está digitando...</div>
     </div>
 
-    <div class="action-bar" id="input-container">
-        <input type="text" id="user-action" placeholder="Digite sua ação (Ex: Observar o quarto...)">
-        <button class="btn-action" onclick="sendAction()">AGIR</button>
+    <div class="input-bar" id="input-ui">
+        <input type="text" id="user-input" placeholder="Sua resposta...">
+        <button class="send-btn" onclick="handleSend()">➔</button>
     </div>
 
-    <div id="isekai-lock">
-        <h2 style="color:var(--gold)">AVENTURA INTERROMPIDA</h2>
-        <p>Suas escolhas levaram a um caminho restrito. Desbloqueie o Passe Isekai para continuar sua jornada e acessar cenas sem filtros.</p>
-        <div style="font-size: 24px; margin: 15px 0;">R$ 29,90 <small>/mês</small></div>
-        <button class="btn-unlock" onclick="window.location.href='#'">ATIVAR PASSE UNBOUND</button>
+    <div id="pay-modal">
+        <div style="font-size: 40px;">🔥</div>
+        <h2 style="color:var(--gold)">CENA DESBLOQUEADA</h2>
+        <p>A Seraphina está reagindo ao seu comando... Para ver a mídia exclusiva e continuar esta interação sem filtros, ative sua conta.</p>
+        <div style="font-size: 28px; margin: 10px 0;">R$ 39,90 <small>/mês</small></div>
+        <button class="btn-premium" onclick="window.location.href='#'">ASSINAR AGORA</button>
+        <p style="font-size: 10px; color: #444; margin-top: 15px;">Acesso Ilimitado • Sem Censura • Mídias Reais</p>
     </div>
 
     <script>
-        let actionCount = 0;
+        let count = 0;
+        const responses = [
+            "Interessante... Seus pensamentos são mais sombrios do que eu imaginava. Continue...",
+            "Eu consigo sentir o seu batimento acelerar daqui. Você quer mesmo chegar onde está pensando?",
+            "Sabe... poucas pessoas chegam nessa parte da conversa vivas. Você é especial."
+        ];
 
-        function sendAction() {
-            const input = document.getElementById('user-action');
-            const engine = document.getElementById('chat-engine');
-            
-            if(input.value.trim() === "") return;
+        function handleSend() {
+            const input = document.getElementById('user-input');
+            const chat = document.getElementById('chat-box');
+            const typing = document.getElementById('typing-indicator');
 
-            // Adiciona Ação do Usuário
-            engine.innerHTML += '<div class="event-box" style="border-left: 3px solid #555;"><span class="char-name">VOCÊ:</span><div class="text">' + input.value + '</div></div>';
-            
-            const userMsg = input.value;
+            if (input.value.trim() === "") return;
+
+            // Mensagem do Usuário
+            chat.innerHTML += '<div class="bubble user-msg">' + input.value + '</div>';
+            const val = input.value;
             input.value = "";
-            actionCount++;
+            count++;
 
-            // Resposta Dinâmica da Seraphina
+            chat.scrollTop = chat.scrollHeight;
+
+            // Lógica de Vício
             setTimeout(() => {
-                if(actionCount >= 2) {
-                    document.getElementById('isekai-lock').style.display = 'flex';
+                if (count >= 3) {
+                    document.getElementById('pay-modal').style.display = 'flex';
+                    document.getElementById('input-ui').style.opacity = '0.3';
+                    document.getElementById('input-ui').style.pointerEvents = 'none';
                 } else {
-                    engine.innerHTML += '<div class="event-box nsfw"><span class="char-name">SERAPHINA VALE:</span><div class="text">"Interessante... você não parece ser um camponês comum. Aproxime-se, vamos ver do que você é feito."</div></div>';
-                    engine.scrollTop = engine.scrollHeight;
+                    typing.style.display = "block";
+                    setTimeout(() => {
+                        typing.style.display = "none";
+                        chat.innerHTML += '<div class="bubble char-msg"><b>Seraphina:</b> "' + responses[count-1] + '"</div>';
+                        chat.scrollTop = chat.scrollHeight;
+                    }, 1500);
                 }
-            }, 1200);
+            }, 500);
         }
     </script>
 </body>
