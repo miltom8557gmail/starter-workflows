@@ -2,36 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#030303">
+    android:background="#020202">
 
     <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="AKAME: DEEP INTELLIGENCE" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
+                android:text="AKAME: NÚCLEO DE PERSONA VIVA" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="20dp">
+                app:cardCornerRadius="12dp" app:cardBackgroundColor="#111" android:layout_marginTop="15dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Módulo Deepfake (ReActor)" android:textColor="#1E90FF" android:textStyle="bold"/>
-                    
-                    <Button android:id="@+id/btn_target_video" android:layout_width="match_parent" android:layout_height="50dp"
-                        android:text="SUBIR VÍDEO BASE (TikTok/Reels)" android:backgroundTint="#333" android:layout_marginTop="10dp"/>
-                    
-                    <Button android:id="@+id/btn_swap_face" android:layout_width="match_parent" android:layout_height="60dp"
-                        android:text="INJETAR ROSTO DA INFLUENCER" android:backgroundTint="#006400" android:layout_marginTop="10dp"/>
+                        android:text="Definir Temperamento" android:textColor="#FFF" android:textSize="14sp"/>
+                    <Spinner android:id="@+id/spinner_personality" android:layout_width="match_parent" android:layout_height="50dp"
+                        android:backgroundTint="#FFF" android:layout_marginTop="5dp"/>
+                    <EditText android:id="@+id/custom_traits" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:hint="Comandos de Voz/Texto personalizados..." android:textColorHint="#444" android:textColor="#00FF00" android:background="#000" android:padding="10dp" android:layout_marginTop="5dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="15dp">
+                app:cardCornerRadius="12dp" app:cardBackgroundColor="#111" android:layout_marginTop="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Treinamento LoRA via Vídeo" android:textColor="#FFD700" android:textStyle="bold"/>
-                    
-                    <Button android:id="@+id/btn_train_video" android:layout_width="match_parent" android:layout_height="55dp"
-                        android:text="ENVIAR VÍDEO DATASET (.mp4)" android:backgroundTint="#8B0000" android:layout_marginTop="10dp"/>
+                    <Button android:id="@+id/btn_lipsync" android:layout_width="match_parent" android:layout_height="55dp"
+                        android:text="SINCRO LABIAL + OLHAR FIXO" android:backgroundTint="#4B0082" android:textColor="#FFF"/>
+                    <Button android:id="@+id/btn_start_live" android:layout_width="match_parent" android:layout_height="60dp"
+                        android:text="INICIAR TRANSMISSÃO (LIVE REACT)" android:backgroundTint="#FF0000" android:textStyle="bold" android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
