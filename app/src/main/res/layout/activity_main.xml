@@ -1,71 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000000">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#000">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <LinearLayout android:id="@+id/pin_screen"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:gravity="center" android:padding="30dp"
+        android:elevation="10dp" android:background="#000">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="AKAME SECURE ACCESS" android:textColor="#FF0000" android:textStyle="bold" android:textSize="20sp"/>
+        <EditText android:id="@+id/et_pin_entry" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="PIN ou Chave Mestra" android:textColorHint="#444" android:textColor="#FFF"
+            android:textAlignment="center" android:inputType="textPassword" android:layout_marginTop="20dp" />
+        <Button android:id="@+id/btn_unlock" android:layout_width="match_parent" android:layout_height="60dp"
+            android:text="DESBLOQUEAR" android:backgroundTint="#FF0000" android:layout_marginTop="10dp"/>
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AKAME: OPERAÇÕES DE ELITE"
-            android:textColor="#FF0000"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:textSize="20sp" />
+    <LinearLayout android:id="@+id/main_content"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:visibility="gone">
+        
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="#1A1A1A" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#1A1A1A"
-            android:layout_marginTop="15dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp">
-                <TextView
-                    android:id="@+id/status_cloud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PROTEÇÃO EXIF: ATIVA"
-                    android:textColor="#00FF00"
-                    android:textStyle="bold" />
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:id="@+id/txt_welcome" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="BEM-VINDO, MILTON" android:textColor="#00FF00" android:layout_gravity="center"/>
+                
+                <Button android:id="@+id/btn_reveri_tool" android:layout_width="match_parent" android:layout_height="60dp"
+                    android:text="ABRIR REVERI HUB (AUTO-HIPNOSE)" android:backgroundTint="#6200EE" android:layout_marginTop="20dp"/>
+                
+                <ListView android:id="@+id/listView" android:layout_width="match_parent" android:layout_height="400dp" android:layout_marginTop="10dp"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/btn_clean_real"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="🛡️ SELECIONAR E LIMPAR MÍDIA"
-            android:backgroundTint="#FFD700"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:id="@+id/btn_sync_cloud"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="SINCRONIZAR COM GITHUB"
-            android:backgroundTint="#444"
-            android:textColor="#FFF"
-            android:layout_marginTop="10dp" />
-
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="15dp" />
-
+        </ScrollView>
     </LinearLayout>
 </RelativeLayout>

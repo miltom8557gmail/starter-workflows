@@ -1,8 +1,7 @@
 package com.akame.forja;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
-    private ListView listView;
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private View pinScreen, mainContent;
+    private EditText etPin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,42 +18,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHelper(this);
-        listView = findViewById(R.id.listView);
+        pinScreen = findViewById(R.id.pin_screen);
+        mainContent = findViewById(R.id.main_content);
+        etPin = findViewById(R.id.et_pin_entry);
 
-        findViewById(R.id.btn_clean_real).setOnClickListener(v -> {
-            abrirGaleria();
+        findViewById(R.id.btn_unlock).setOnClickListener(v -> {
+            String entry = etPin.getText().toString();
+            // Lógica: PIN 3650 ou Chave Mestra 'Milton'
+            if (entry.equals("3650") || entry.equalsIgnoreCase("Milton")) {
+                pinScreen.setVisibility(View.GONE);
+                mainContent.setVisibility(View.VISIBLE);
+                dbHelper.addData("ACESSO: Sistema liberado por " + entry);
+            } else {
+                Toast.makeText(this, "Acesso Negado", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        findViewById(R.id.btn_sync_cloud).setOnClickListener(v -> {
-            dbHelper.addData("CLOUD: Sincronização iniciada...");
-            atualizarLista();
-            Toast.makeText(this, "Ordem enviada para nuvem!", Toast.LENGTH_SHORT).show();
+        findViewById(R.id.btn_reveri_tool).setOnClickListener(v -> {
+            Toast.makeText(this, "Acessando Ferramentas Reveri...", Toast.LENGTH_SHORT).show();
+            // A lógica de hipnose será injetada no Passo 3
         });
 
         atualizarLista();
     }
 
-    private void abrirGaleria() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri imageUri = data.getData();
-            // Aqui a mágica acontece: simulando a remoção de metadados Exif
-            dbHelper.addData("🛡️ LIMPEZA: Rastros GPS/Exif removidos de " + imageUri.getLastPathSegment());
-            atualizarLista();
-            Toast.makeText(this, "Mídia Higienizada com Sucesso!", Toast.LENGTH_LONG).show();
-        }
-    }
-
     private void atualizarLista() {
         ArrayList<String> logs = dbHelper.getAllData();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, logs);
-        listView.setAdapter(adapter);
+        ((ListView)findViewById(R.id.listView)).setAdapter(adapter);
     }
 }
