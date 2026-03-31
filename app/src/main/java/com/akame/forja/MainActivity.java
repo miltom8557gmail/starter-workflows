@@ -1,20 +1,24 @@
 package com.akame.forja;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
     private ProgressBar progressSync;
-    private FrameLayout callOverlay;
-    private VideoView videoView;
     private ListView listView;
+    
+    // ATENÇÃO: COLOQUE SEU TOKEN DO GITHUB AQUI PARA O APK FUNCIONAR
+    private String GITHUB_TOKEN = "SEU_TOKEN_AQUI"; 
+    private String REPO_OWNER = "SEU_USUARIO";
+    private String REPO_NAME = "NOME_DO_REPO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,42 +27,57 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         progressSync = findViewById(R.id.progress_sync);
-        callOverlay = findViewById(R.id.call_overlay);
-        videoView = findViewById(R.id.video_view);
         listView = findViewById(R.id.listView);
 
-        // BOTÃO DE SINCRONIZAÇÃO
         findViewById(R.id.btn_sync_cloud).setOnClickListener(v -> {
-            executarSincronizacao();
-        });
-
-        findViewById(R.id.btn_fake_call).setOnClickListener(v -> {
-            callOverlay.setVisibility(View.VISIBLE);
-            String path = "android.resource://" + getPackageName() + "/" + R.raw.video_influencer;
-            videoView.setVideoURI(Uri.parse(path));
-            videoView.start();
-        });
-
-        findViewById(R.id.btn_end_call).setOnClickListener(v -> {
-            callOverlay.setVisibility(View.GONE);
-            videoView.stopPlayback();
+            executarSincronizacaoCloud();
         });
 
         atualizarLista();
     }
 
-    private void executarSincronizacao() {
+    private void executarSincronizacaoCloud() {
         progressSync.setVisibility(View.VISIBLE);
-        dbHelper.addData("🔄 INICIANDO PUSH PARA GITHUB...");
+        dbHelper.addData("🛰️ CONECTANDO AO GITHUB API...");
         atualizarLista();
 
-        // Simula o tempo de upload para o GitHub
-        new Handler().postDelayed(() -> {
-            progressSync.setVisibility(View.GONE);
-            dbHelper.addData("✅ NUVEM ATUALIZADA: Versão 1.0.4 enviada.");
-            atualizarLista();
-            Toast.makeText(this, "Sincronização com GitHub Concluída!", Toast.LENGTH_LONG).show();
-        }, 3000);
+        new Thread(() -> {
+            try {
+                // Endpoint para criar/atualizar arquivo e disparar o Actions
+                URL url = new URL("https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/trigger.txt");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("PUT");
+                conn.setRequestProperty("Authorization", "token " + GITHUB_TOKEN);
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                // JSON simples para atualizar o trigger
+                String json = "{\"message\":\"Sync from App\", \"content\":\"YXV0b21hdGljX3N5bmNfYWthbWU=\", \"sha\":\"\"}";
+
+                OutputStream os = conn.getOutputStream();
+                os.write(json.getBytes());
+                os.flush();
+                os.close();
+
+                int code = conn.getResponseCode();
+                runOnUiThread(() -> {
+                    progressSync.setVisibility(View.GONE);
+                    if(code == 200 || code == 201) {
+                        dbHelper.addData("✅ CLOUD: Sincronização disparada com sucesso!");
+                        Toast.makeText(this, "Ordem enviada ao GitHub!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dbHelper.addData("❌ ERRO CLOUD: Código " + code);
+                    }
+                    atualizarLista();
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    progressSync.setVisibility(View.GONE);
+                    dbHelper.addData("❌ FALHA DE REDE: " + e.getMessage());
+                    atualizarLista();
+                });
+            }
+        }).start();
     }
 
     private void atualizarLista() {

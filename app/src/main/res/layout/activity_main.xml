@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AKAME: NÚCLEO DE CONTROLE"
+            android:text="AKAME: NÚCLEO SUPREMO"
             android:textColor="#FF0000"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -35,10 +35,18 @@
                     android:id="@+id/profit_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SISTEMA: ONLINE"
+                    android:text="LUCRO TOTAL: R$ 5.120,00"
                     android:textColor="#00FF00"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
+                <ProgressBar
+                    android:id="@+id/progress_sync"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -46,57 +54,18 @@
             android:id="@+id/btn_sync_cloud"
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:text="🚀 SINCRONIZAÇÃO TOTAL (CLOUD)"
-            android:backgroundTint="#00FF00"
-            android:textColor="#000"
+            android:text="🚀 EXECUTAR SINCRONIZAÇÃO SUPREMA"
+            android:backgroundTint="#FF0000"
+            android:textColor="#FFF"
             android:textStyle="bold"
             android:layout_marginTop="20dp" />
-
-        <Button
-            android:id="@+id/btn_fake_call"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="CHAMADA VÍDEO FAKE"
-            android:backgroundTint="#FFD700"
-            android:textColor="#000"
-            android:layout_marginTop="10dp" />
-
-        <ProgressBar
-            android:id="@+id/progress_sync"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            android:indeterminate="true" />
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="15dp" />
 
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/call_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000"
-        android:visibility="gone">
-        <VideoView
-            android:id="@+id/video_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-        <ImageButton
-            android:id="@+id/btn_end_call"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="50dp"
-            android:background="@android:drawable/ic_menu_close_clear_cancel"
-            android:backgroundTint="#FF0000" />
-    </FrameLayout>
 </RelativeLayout>
