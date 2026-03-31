@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AKAME: NÚCLEO SUPREMO"
+            android:text="AKAME: NÚCLEO DE CONTROLE"
             android:textColor="#FF0000"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -35,43 +35,47 @@
                     android:id="@+id/profit_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LUCRO ACUMULADO: R$ 4.250,00"
+                    android:text="SISTEMA: ONLINE"
                     android:textColor="#00FF00"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Status: Criptografia Ativa"
-                    android:textColor="#666"
-                    android:textSize="12sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/btn_fake_call"
+            android:id="@+id/btn_sync_cloud"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="INICIAR CHAMADA DE VÍDEO FAKE"
-            android:backgroundTint="#FFD700"
+            android:layout_height="65dp"
+            android:text="🚀 SINCRONIZAÇÃO TOTAL (CLOUD)"
+            android:backgroundTint="#00FF00"
             android:textColor="#000"
             android:textStyle="bold"
             android:layout_marginTop="20dp" />
 
         <Button
-            android:id="@+id/btn_obfuscate"
+            android:id="@+id/btn_fake_call"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="LIMPAR RASTROS DE MÍDIA"
-            android:backgroundTint="#444"
+            android:text="CHAMADA VÍDEO FAKE"
+            android:backgroundTint="#FFD700"
+            android:textColor="#000"
             android:layout_marginTop="10dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_sync"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:indeterminate="true" />
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 
@@ -81,13 +85,11 @@
         android:layout_height="match_parent"
         android:background="#000"
         android:visibility="gone">
-        
         <VideoView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />
-
         <ImageButton
             android:id="@+id/btn_end_call"
             android:layout_width="80dp"
@@ -96,14 +98,5 @@
             android:layout_marginBottom="50dp"
             android:background="@android:drawable/ic_menu_close_clear_cancel"
             android:backgroundTint="#FF0000" />
-            
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LIVE PROTECTION ACTIVE"
-            android:textColor="#00FF00"
-            android:textStyle="bold"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="40dp" />
     </FrameLayout>
 </RelativeLayout>

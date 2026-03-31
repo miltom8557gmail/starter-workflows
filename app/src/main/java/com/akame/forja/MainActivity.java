@@ -2,6 +2,7 @@ package com.akame.forja;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
+    private ProgressBar progressSync;
     private FrameLayout callOverlay;
     private VideoView videoView;
     private ListView listView;
@@ -20,38 +22,43 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHelper(this);
+        progressSync = findViewById(R.id.progress_sync);
         callOverlay = findViewById(R.id.call_overlay);
         videoView = findViewById(R.id.video_view);
         listView = findViewById(R.id.listView);
 
+        // BOTÃO DE SINCRONIZAÇÃO
+        findViewById(R.id.btn_sync_cloud).setOnClickListener(v -> {
+            executarSincronizacao();
+        });
+
         findViewById(R.id.btn_fake_call).setOnClickListener(v -> {
-            try {
-                callOverlay.setVisibility(View.VISIBLE);
-                // Busca o vídeo na pasta raw
-                String path = "android.resource://" + getPackageName() + "/" + R.raw.video_influencer;
-                videoView.setVideoURI(Uri.parse(path));
-                videoView.start();
-                dbHelper.addData("LIVE: Chamada iniciada para verificação.");
-            } catch (Exception e) {
-                Toast.makeText(this, "Erro: Adicione o vídeo na pasta res/raw", Toast.LENGTH_LONG).show();
-                callOverlay.setVisibility(View.GONE);
-            }
+            callOverlay.setVisibility(View.VISIBLE);
+            String path = "android.resource://" + getPackageName() + "/" + R.raw.video_influencer;
+            videoView.setVideoURI(Uri.parse(path));
+            videoView.start();
         });
 
         findViewById(R.id.btn_end_call).setOnClickListener(v -> {
             callOverlay.setVisibility(View.GONE);
             videoView.stopPlayback();
-            dbHelper.addData("LIVE: Chamada encerrada com sucesso.");
-            atualizarLista();
-        });
-
-        findViewById(R.id.btn_obfuscate).setOnClickListener(v -> {
-            dbHelper.addData("SECURITY: Metadados eliminados.");
-            atualizarLista();
-            Toast.makeText(this, "🛡️ Camuflagem Aplicada!", Toast.LENGTH_SHORT).show();
         });
 
         atualizarLista();
+    }
+
+    private void executarSincronizacao() {
+        progressSync.setVisibility(View.VISIBLE);
+        dbHelper.addData("🔄 INICIANDO PUSH PARA GITHUB...");
+        atualizarLista();
+
+        // Simula o tempo de upload para o GitHub
+        new Handler().postDelayed(() -> {
+            progressSync.setVisibility(View.GONE);
+            dbHelper.addData("✅ NUVEM ATUALIZADA: Versão 1.0.4 enviada.");
+            atualizarLista();
+            Toast.makeText(this, "Sincronização com GitHub Concluída!", Toast.LENGTH_LONG).show();
+        }, 3000);
     }
 
     private void atualizarLista() {
