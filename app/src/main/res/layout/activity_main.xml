@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#020202">
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
+            
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="AKAME SUPREMO: HUB DE DOMINAÇÃO" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
+
+            <VideoView android:id="@+id/video_player" android:layout_width="match_parent" android:layout_height="200dp" android:background="#111" android:layout_marginTop="10dp"/>
+            
+            <Button android:id="@+id/btn_gallery" android:layout_width="match_parent" android:layout_height="50dp"
+                android:text="ABRIR GALERIA DE CRIAÇÕES" android:backgroundTint="#2F4F4F" android:layout_marginTop="5dp"/>
+
+            <EditText android:id="@+id/url_input" android:layout_width="match_parent" android:layout_height="50dp"
+                android:hint="Link para Download (YT-DLP)" android:textColor="#FFF" android:background="#1A1A1A" android:layout_marginTop="10dp" android:padding="10dp"/>
+            
+            <Button android:id="@+id/btn_download" android:layout_width="match_parent" android:layout_height="55dp"
+                android:text="DOWNLOAD UNIVERSAL (YT-DLP)" android:backgroundTint="#B22222" android:layout_marginTop="5dp"/>
+
+            <Button android:id="@+id/btn_ubuntu" android:layout_width="match_parent" android:layout_height="55dp"
+                android:text="LANÇAR UBUNTU/DOLPHIN NO GITHUB" android:backgroundTint="#E95420" android:layout_marginTop="5dp"/>
+
+            <WebView android:id="@+id/web_view" android:layout_width="match_parent" android:layout_height="300dp" android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
