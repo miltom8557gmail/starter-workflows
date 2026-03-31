@@ -3,92 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Liberdade Absoluta</title>
+    <title>AKAME NEXUS | Isekai Unbound</title>
     <style>
         :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; }
         body { background: var(--bg); color: #e0e0e0; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
         .header { background: #000; padding: 15px; border-bottom: 1px solid #1a1a1a; text-align: center; }
         .header h1 { font-size: 1.2rem; color: var(--gold); letter-spacing: 5px; margin: 0; }
+        .quota-info { font-size: 9px; color: #555; text-transform: uppercase; margin-top: 5px; }
 
         .chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: radial-gradient(circle at top, #1a0505 0%, #030303 100%); }
         
-        .bubble { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; position: relative; }
+        .bubble { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; }
         .char-msg { align-self: flex-start; background: #1a1a1a; border-left: 3px solid var(--red); color: #eee; }
         .user-msg { align-self: flex-end; background: var(--red); color: #fff; border-radius: 15px 15px 0 15px; }
 
-        .typing { font-size: 10px; color: var(--gold); font-style: italic; display: none; margin-bottom: 10px; }
+        .typing { font-size: 10px; color: var(--gold); font-style: italic; display: none; margin: 10px 0; }
 
         .input-bar { padding: 15px; background: #080808; border-top: 1px solid #1a1a1a; display: flex; gap: 10px; }
         input { flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 25px; outline: none; }
         .send-btn { background: var(--gold); border: none; padding: 0 20px; border-radius: 25px; font-weight: bold; cursor: pointer; }
 
-        /* MODAL DE CONVERSÃO (O PULO DO GATO) */
-        #pay-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; border: 2px solid var(--gold); margin: 20px; border-radius: 20px; }
-        .btn-premium { background: var(--gold); color: #000; border: none; width: 100%; padding: 20px; font-weight: bold; border-radius: 10px; font-size: 16px; margin-top: 20px; cursor: pointer; }
+        /* MODAL DE LIMITE DIÁRIO */
+        #limit-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; border: 1px solid var(--gold); margin: 20px; border-radius: 20px; }
+        .btn-premium { background: var(--gold); color: #000; border: none; width: 100%; padding: 20px; font-weight: bold; border-radius: 10px; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="header"><h1>AKAME NEXUS</h1></div>
+    <div class="header">
+        <h1>AKAME NEXUS</h1>
+        <div class="quota-info" id="quota-display">Sessão Diária: 3 / 3 interações</div>
+    </div>
 
     <div class="chat-container" id="chat-box">
-        <div class="bubble char-msg"><b>Seraphina:</b> "Então você finalmente criou coragem para entrar no meu domínio... Diga-me, o que você mais deseja sentir hoje?"</div>
+        <div class="bubble char-msg"><b>Seraphina:</b> "Você voltou... Achei que não teria coragem de me encarar novamente hoje. O que você quer?"</div>
         <div id="typing-indicator" class="typing">Seraphina está digitando...</div>
     </div>
 
     <div class="input-bar" id="input-ui">
-        <input type="text" id="user-input" placeholder="Sua resposta...">
+        <input type="text" id="user-input" placeholder="Sua ação...">
         <button class="send-btn" onclick="handleSend()">➔</button>
     </div>
 
-    <div id="pay-modal">
-        <div style="font-size: 40px;">🔥</div>
-        <h2 style="color:var(--gold)">CENA DESBLOQUEADA</h2>
-        <p>A Seraphina está reagindo ao seu comando... Para ver a mídia exclusiva e continuar esta interação sem filtros, ative sua conta.</p>
-        <div style="font-size: 28px; margin: 10px 0;">R$ 39,90 <small>/mês</small></div>
-        <button class="btn-premium" onclick="window.location.href='#'">ASSINAR AGORA</button>
-        <p style="font-size: 10px; color: #444; margin-top: 15px;">Acesso Ilimitado • Sem Censura • Mídias Reais</p>
+    <div id="limit-modal">
+        <div style="font-size: 40px;">⏳</div>
+        <h2 style="color:var(--gold)">LIMITE DIÁRIO ATINGIDO</h2>
+        <p>Você gastou sua energia de viagem dimensional por hoje. A Seraphina está esperando por você...</p>
+        <div style="font-size: 12px; color: #666; margin: 15px 0;">Renovação automática em 24h ou desbloqueio imediato abaixo:</div>
+        <button class="btn-premium" onclick="window.location.href='#'">LIBERAR ACESSO ILIMITADO (R$ 39,90)</button>
+        <p style="font-size: 10px; color: #444; margin-top: 15px;">Assine e nunca mais seja interrompido.</p>
     </div>
 
     <script>
-        let count = 0;
-        const responses = [
-            "Interessante... Seus pensamentos são mais sombrios do que eu imaginava. Continue...",
-            "Eu consigo sentir o seu batimento acelerar daqui. Você quer mesmo chegar onde está pensando?",
-            "Sabe... poucas pessoas chegam nessa parte da conversa vivas. Você é especial."
-        ];
+        const LIMIT = 3;
+        const TODAY = new Date().toLocaleDateString();
+        
+        // Inicializa ou recupera dados do usuário
+        let userData = JSON.parse(localStorage.getItem('akame_user')) || { date: TODAY, count: 0 };
+
+        // Reseta o contador se for um novo dia
+        if (userData.date !== TODAY) {
+            userData = { date: TODAY, count: 0 };
+            localStorage.setItem('akame_user', JSON.stringify(userData));
+        }
+
+        updateUI();
+
+        function updateUI() {
+            const remaining = LIMIT - userData.count;
+            document.getElementById('quota-display').innerText = "Sessão Diária: " + (remaining > 0 ? remaining : 0) + " / " + LIMIT + " interações";
+            if (userData.count >= LIMIT) {
+                showLimit();
+            }
+        }
+
+        function showLimit() {
+            document.getElementById('limit-modal').style.display = 'flex';
+            document.getElementById('input-ui').style.opacity = '0.3';
+            document.getElementById('input-ui').style.pointerEvents = 'none';
+        }
 
         function handleSend() {
             const input = document.getElementById('user-input');
             const chat = document.getElementById('chat-box');
             const typing = document.getElementById('typing-indicator');
 
-            if (input.value.trim() === "") return;
+            if (input.value.trim() === "" || userData.count >= LIMIT) return;
 
-            // Mensagem do Usuário
+            // Registra mensagem do usuário
             chat.innerHTML += '<div class="bubble user-msg">' + input.value + '</div>';
-            const val = input.value;
             input.value = "";
-            count++;
-
+            userData.count++;
+            localStorage.setItem('akame_user', JSON.stringify(userData));
+            
             chat.scrollTop = chat.scrollHeight;
+            updateUI();
 
-            // Lógica de Vício
-            setTimeout(() => {
-                if (count >= 3) {
-                    document.getElementById('pay-modal').style.display = 'flex';
-                    document.getElementById('input-ui').style.opacity = '0.3';
-                    document.getElementById('input-ui').style.pointerEvents = 'none';
-                } else {
+            // Resposta da Personagem
+            if (userData.count < LIMIT + 1) {
+                setTimeout(() => {
                     typing.style.display = "block";
                     setTimeout(() => {
                         typing.style.display = "none";
-                        chat.innerHTML += '<div class="bubble char-msg"><b>Seraphina:</b> "' + responses[count-1] + '"</div>';
+                        chat.innerHTML += '<div class="bubble char-msg"><b>Seraphina:</b> "Você está gastando suas palavras com cuidado... Eu gosto disso. Mas o tempo está acabando."</div>';
                         chat.scrollTop = chat.scrollHeight;
                     }, 1500);
-                }
-            }, 500);
+                }, 500);
+            }
         }
     </script>
 </body>
