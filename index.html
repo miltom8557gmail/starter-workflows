@@ -3,115 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Console do Mestre</title>
+    <title>AKAME NEXUS | Sistema Autêntico</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
     <style>
         :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; }
         body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        .header { background: #000; padding: 15px; border-bottom: 2px solid var(--gold); text-align: center; }
-        .header h1 { font-size: 1.2rem; color: var(--gold); letter-spacing: 5px; margin: 0; cursor: pointer; }
-        .quota { font-size: 10px; color: #555; margin-top: 5px; }
+        /* HEADER COM LOGIN */
+        .header { background: #000; padding: 10px; border-bottom: 2px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1rem; color: var(--gold); letter-spacing: 3px; margin: 0; cursor: pointer; }
+        .user-pill { display: flex; align-items: center; gap: 8px; font-size: 10px; background: #111; padding: 5px 10px; border-radius: 20px; border: 1px solid #333; }
+        .user-img { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--gold); }
 
-        .char-avatar { width: 100%; height: 280px; background-size: cover; background-position: center; border-bottom: 1px solid #1a1a1a; transition: 0.8s; }
-        .blur { filter: blur(20px) brightness(0.2); }
-
-        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: linear-gradient(180deg, #1a050588 0%, #030303 100%); }
-        .msg { padding: 12px; border-radius: 8px; font-size: 14px; max-width: 85%; line-height: 1.5; }
+        .char-avatar { width: 100%; height: 250px; background-size: cover; background-position: center; border-bottom: 1px solid #1a1a1a; transition: 0.8s; }
+        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .msg { padding: 12px; border-radius: 8px; font-size: 14px; max-width: 85%; }
         .seraphina { align-self: flex-start; border-left: 3px solid var(--red); background: rgba(255,255,255,0.03); }
-        .user { align-self: flex-end; background: var(--red); border-radius: 8px 8px 0 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .user { align-self: flex-end; background: var(--red); }
 
-        .control-bar { padding: 15px; background: #080808; display: flex; gap: 10px; border-top: 1px solid #1a1a1a; }
-        input[type="text"] { flex: 1; background: #000; border: 1px solid #222; color: #fff; padding: 12px; border-radius: 5px; outline: none; }
-        .btn-send { background: var(--gold); border: none; padding: 0 20px; font-weight: bold; cursor: pointer; border-radius: 5px; }
-
-        /* MODAIS */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 100; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; }
+        .btn-google { background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 10px; display: flex; align-items: center; gap: 5px; }
         
-        /* PAINEL OCULTO DO MESTRE (ABRE AO CLICAR NO TÍTULO) */
-        #master-panel { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #111; padding: 20px; border-top: 2px solid var(--gold); z-index: 500; }
-        .admin-input { width: 100%; margin-bottom: 10px; padding: 8px; background: #000; border: 1px solid var(--gold); color: #fff; font-size: 12px; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1 onclick="toggleAdmin()">AKAME NEXUS</h1>
-        <div class="quota" id="q-txt">ENERGIA: 3 / 3</div>
+        <div id="auth-ui">
+            <button class="btn-google" onclick="signIn()">LOGAR COM GOOGLE</button>
+        </div>
     </div>
 
     <div class="char-avatar" id="avatar" style="background-image: url('https://image.pollinations.ai/prompt/anime%20girl%20seraphina%20isekai%20queen%20dark%20fantasy%20gold%20details');"></div>
 
     <div class="chat-box" id="chat">
-        <div class="msg seraphina"><b id="char-name">Seraphina</b>: "O tempo urge, viajante. O que você fará para me entreter?"</div>
-    </div>
-
-    <div class="control-bar" id="input-area">
-        <input type="text" id="u-msg" placeholder="Sua ação...">
-        <button class="btn-send" onclick="talk()">ENVIAR</button>
-    </div>
-
-    <div id="master-panel">
-        <h3 style="color:var(--gold); margin:0 0 10px 0; font-size:12px;">🛠️ CONFIGURAÇÃO DA LOJA</h3>
-        <input type="text" id="set-pay-link" class="admin-input" placeholder="Link de Pagamento (Mercado Pago)">
-        <input type="text" id="set-lora-url" class="admin-input" placeholder="Link da Imagem LoRA">
-        <button onclick="saveAdmin()" style="background:var(--gold); border:none; padding:10px; width:100%; font-weight:bold; cursor:pointer;">SALVAR ALTERAÇÕES</button>
+        <div class="msg seraphina"><b>Seraphina:</b> "Finalmente um rosto novo... ou seria apenas mais uma alma perdida no meu domínio?"</div>
     </div>
 
     <div id="pay-modal" class="modal">
-        <h2 style="color:var(--gold)">CONEXÃO INTERROMPIDA</h2>
-        <p>A Seraphina exige um sacrifício de ouro para revelar sua forma Unbound.</p>
-        <div style="font-size: 2rem; margin: 20px 0;">R$ 39,90</div>
-        <button class="btn-send" style="width:100%; padding:20px;" onclick="goToPay()">DESBLOQUEAR TUDO AGORA</button>
-        <button onclick="location.reload()" style="background:transparent; color:#444; border:none; margin-top:10px; cursor:pointer;">Tentar amanhã</button>
+        <h2 style="color:var(--gold)">ACESSO RESTRITO</h2>
+        <p>A Seraphina exige um contrato de sangue (ou R$ 39,90) para continuar.</p>
+        <button class="btn-google" style="width:100%; background:var(--gold); padding:15px;" onclick="window.location.href='#'">PAGAR E DESBLOQUEAR</button>
     </div>
 
     <script>
-        let count = 0;
-        let payLink = localStorage.getItem('akame_pay') || "#";
-        let loraUrl = localStorage.getItem('akame_lora') || "https://image.pollinations.ai/prompt/anime%20girl%20seraphina%20isekai%20queen%20dark%20fantasy%20gold%20details";
+        // CONFIGURAÇÃO DO MESTRE (FIREBASE)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoKsZgI_IsW-rZh-caq9E_MEN0-CdQCfg",
+            authDomain: "gen-lang-client-0399949449.firebaseapp.com",
+            projectId: "gen-lang-client-0399949449",
+            storageBucket: "gen-lang-client-0399949449.firebasestorage.app",
+            messagingSenderId: "157939074644",
+            appId: "1:157939074644:web:a399bcccca16ca43d1cfc1",
+            measurementId: "G-F6375V4DCS"
+        };
 
-        // Aplica imagem salva
-        document.getElementById('avatar').style.backgroundImage = "url('" + loraUrl + "')";
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-        function talk() {
-            const msg = document.getElementById('u-msg');
-            const chat = document.getElementById('chat');
-            if (msg.value.trim() === "" || count >= 3) return;
-
-            chat.innerHTML += '<div class="msg user">' + msg.value + '</div>';
-            count++;
-            msg.value = "";
-            document.getElementById('q-txt').innerText = "ENERGIA: " + (3-count) + " / 3";
-            chat.scrollTop = chat.scrollHeight;
-
-            setTimeout(() => {
-                if (count >= 3) {
-                    document.getElementById('avatar').classList.add('blur');
-                    document.getElementById('pay-modal').style.display = 'flex';
-                } else {
-                    chat.innerHTML += '<div class="msg seraphina"><b>Seraphina</b>: "Vejo que você tem potencial. Mas será que tem coragem?"</div>';
-                    chat.scrollTop = chat.scrollHeight;
-                }
-            }, 1000);
+        // LOGIN GOOGLE
+        function signIn() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then((result) => {
+                console.log("Logado com:", result.user.displayName);
+            }).catch((error) => alert("Erro ao logar: " + error.message));
         }
 
-        // FUNÇÕES ADMINISTRATIVAS (O SEGREDO)
+        // MONITORAR LOGIN
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById('auth-ui').innerHTML = `
+                    <div class="user-pill">
+                        <img src="${user.photoURL}" class="user-img">
+                        <span>${user.displayName.split(' ')[0]}</span>
+                    </div>`;
+                checkAccess(user.uid);
+            }
+        });
+
+        function checkAccess(uid) {
+            // Aqui verificaremos no banco se o UID já pagou
+            console.log("Verificando acesso para:", uid);
+        }
+
         function toggleAdmin() {
-            const panel = document.getElementById('master-panel');
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function saveAdmin() {
-            const nLink = document.getElementById('set-pay-link').value;
-            const nLora = document.getElementById('set-lora-url').value;
-            if(nLink) localStorage.setItem('akame_pay', nLink);
-            if(nLora) localStorage.setItem('akame_lora', nLora);
-            alert("Dados Atualizados! Recarregando portal...");
-            location.reload();
-        }
-
-        function goToPay() {
-            window.location.href = localStorage.getItem('akame_pay') || "#";
+            // Função secreta do mestre mantida
+            alert("Painel Administrativo Oculto Ativo");
         }
     </script>
 </body>
