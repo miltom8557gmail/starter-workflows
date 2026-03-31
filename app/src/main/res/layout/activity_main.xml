@@ -2,41 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#050505">
+    android:background="#030303">
 
     <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="PROJETO: INFLUENCER DIGITAL (LoRA)" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
+                android:text="AKAME: DEEP INTELLIGENCE" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp" app:cardBackgroundColor="#111" android:layout_marginTop="20dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
-                    
+                app:cardCornerRadius="15dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="20dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="1. Criar Identidade (Dataset)" android:textColor="#FFF" android:textSize="16sp"/>
+                        android:text="Módulo Deepfake (ReActor)" android:textColor="#1E90FF" android:textStyle="bold"/>
                     
-                    <Button android:id="@+id/btn_select_photos" android:layout_width="match_parent" android:layout_height="55dp"
-                        android:text="SELECIONAR 20 FOTOS DA INFLUENCER" android:backgroundTint="#333" android:layout_marginTop="10dp"/>
-
-                    <Button android:id="@+id/btn_train_lora" android:layout_width="match_parent" android:layout_height="60dp"
-                        android:text="INICIAR TREINAMENTO (GitHub GPU)" android:backgroundTint="#FFD700" android:textColor="#000" android:layout_marginTop="10dp"/>
+                    <Button android:id="@+id/btn_target_video" android:layout_width="match_parent" android:layout_height="50dp"
+                        android:text="SUBIR VÍDEO BASE (TikTok/Reels)" android:backgroundTint="#333" android:layout_marginTop="10dp"/>
+                    
+                    <Button android:id="@+id/btn_swap_face" android:layout_width="match_parent" android:layout_height="60dp"
+                        android:text="INJETAR ROSTO DA INFLUENCER" android:backgroundTint="#006400" android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp" app:cardBackgroundColor="#111" android:layout_marginTop="15dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
-                    
+                app:cardCornerRadius="15dp" app:cardBackgroundColor="#1A1A1A" android:layout_marginTop="15dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="2. Gerar Conteúdo (Usar LoRA)" android:textColor="#FFF" android:textSize="16sp"/>
+                        android:text="Treinamento LoRA via Vídeo" android:textColor="#FFD700" android:textStyle="bold"/>
                     
-                    <EditText android:id="@+id/lora_prompt" android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:hint="Ex: Influencer em Paris, luz de ouro..." android:textColorHint="#555" android:textColor="#00FF00" android:layout_marginTop="10dp"/>
-
-                    <Button android:id="@+id/btn_generate_influencer" android:layout_width="match_parent" android:layout_height="55dp"
-                        android:text="GERAR FOTO/VÍDEO DA INFLUENCER" android:backgroundTint="#8B0000" android:layout_marginTop="10dp"/>
+                    <Button android:id="@+id/btn_train_video" android:layout_width="match_parent" android:layout_height="55dp"
+                        android:text="ENVIAR VÍDEO DATASET (.mp4)" android:backgroundTint="#8B0000" android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
