@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>REVERI NEXUS - ACESSO EXCLUSIVO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVERIE NEXUS | Exploração Mental</title>
     <style>
-        body { background: #000; color: #ffd700; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        .box { border: 2px solid #ff0000; padding: 20px; display: inline-block; border-radius: 15px; background: #111; }
-        button { background: #ff0000; color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        :root { --gold: #ffd700; --red: #ff4444; --bg: #050505; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* Efeito de Nebulosa no Fundo */
+        .nebula { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                  background: radial-gradient(circle at 50% 50%, #1a0a0a 0%, #050505 100%); z-index: -1; }
+
+        .header { padding: 40px 20px; text-align: center; }
+        .header h1 { font-size: 2.5rem; letter-spacing: 5px; color: var(--red); text-shadow: 0 0 15px var(--red); margin: 0; }
+        .header p { color: #888; font-size: 0.9rem; margin-top: 10px; }
+
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        
+        .reverie-card { background: rgba(26, 26, 26, 0.8); border: 1px solid #333; border-radius: 20px; 
+                         width: 320px; overflow: hidden; transition: 0.3s; backdrop-filter: blur(10px); }
+        .reverie-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        
+        .card-img { width: 100%; height: 200px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 50px; }
+        
+        .card-content { padding: 20px; text-align: left; }
+        .card-tag { font-size: 10px; text-transform: uppercase; border: 1px solid var(--red); color: var(--red); padding: 2px 8px; border-radius: 5px; }
+        .card-title { font-size: 1.4rem; margin: 10px 0 5px 0; color: var(--gold); }
+        .card-desc { font-size: 0.85rem; color: #aaa; line-height: 1.4; }
+        
+        .stats { display: flex; justify-content: space-between; margin-top: 15px; font-size: 12px; color: #666; }
+        .stats b { color: #fff; }
+
+        .btn-action { background: var(--red); color: #fff; border: none; width: 100%; padding: 15px; 
+                       border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        
+        .referral-box { background: #111; border: 1px dashed var(--gold); padding: 15px; margin: 40px 20px; border-radius: 10px; color: var(--gold); font-size: 13px; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>REVERI NEXUS</h1>
-        <p>Acesse o simulador de histórias 18+</p>
-        <hr color="#333">
-        <p>Login via Google para assinantes</p>
-        <button onclick="alert('Área de Assinantes - Login Necessário')">ENTRAR COM GMAIL</button>
+    <div class="nebula"></div>
+
+    <div class="header">
+        <h1>AKAME REVERIE</h1>
+        <p>Acesse o plano etéreo de narrativas 18+</p>
     </div>
+
+    <div class="card-container">
+        <div class="reverie-card">
+            <div class="card-img">🎭</div>
+            <div class="card-content">
+                <span class="card-tag">NSFW • OBSESSIVA</span>
+                <div class="card-title">Seraphina Vale</div>
+                <div class="card-desc">Uma boneca de porcelana com veneno sob a pele. Disposta a tudo para conquistar o que deseja.</div>
+                <div class="stats">
+                    <span>Foco: <b>98%</b></span>
+                    <span>Poder: <b>Elite</b></span>
+                    <span>Relação: <b>0.0</b></span>
+                </div>
+                <button class="btn-action" onclick="alert('Login Google Necessário')">INICIAR SESSÃO</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="referral-box">
+        Código de Convite Ativo: <b>S8XDBBIFZ1</b> (Acesso Elite via MILTON)
+    </div>
+
+    <script>
+        // Futura integração de Login Google aqui
+    </script>
 </body>
 </html>
