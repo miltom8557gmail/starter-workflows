@@ -3,72 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REVERIE NEXUS | Exploração Mental</title>
+    <title>AKAME NEXUS | Narrativas de Elite</title>
     <style>
-        :root { --gold: #ffd700; --red: #ff4444; --bg: #050505; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; --card: #0d0d0d; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; overflow-x: hidden; }
         
-        /* Efeito de Nebulosa no Fundo */
-        .nebula { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                  background: radial-gradient(circle at 50% 50%, #1a0a0a 0%, #050505 100%); z-index: -1; }
+        /* Fundo de Profundidade */
+        .ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                    background: radial-gradient(circle at 10% 20%, #1a0505 0%, #030303 100%); z-index: -1; }
 
-        .header { padding: 40px 20px; text-align: center; }
-        .header h1 { font-size: 2.5rem; letter-spacing: 5px; color: var(--red); text-shadow: 0 0 15px var(--red); margin: 0; }
-        .header p { color: #888; font-size: 0.9rem; margin-top: 10px; }
+        .header { padding: 60px 20px; text-align: center; border-bottom: 1px solid #1a1a1a; }
+        .header h1 { font-size: 3rem; letter-spacing: 8px; color: var(--gold); text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); margin: 0; text-transform: uppercase; }
+        .header p { color: #555; font-size: 1rem; margin-top: 15px; font-style: italic; }
 
-        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .nexus-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px 20px; }
         
-        .reverie-card { background: rgba(26, 26, 26, 0.8); border: 1px solid #333; border-radius: 20px; 
-                         width: 320px; overflow: hidden; transition: 0.3s; backdrop-filter: blur(10px); }
-        .reverie-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .entity-card { background: var(--card); border: 1px solid #1a1a1a; border-radius: 4px; 
+                         width: 340px; transition: 0.5s; position: relative; }
+        .entity-card:hover { border-color: var(--red); box-shadow: 0 0 30px rgba(139, 0, 0, 0.2); }
         
-        .card-img { width: 100%; height: 200px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 50px; }
+        .entity-img { width: 100%; height: 240px; background: #000; display: flex; align-items: center; justify-content: center; filter: grayscale(50%); border-bottom: 1px solid #1a1a1a; }
         
-        .card-content { padding: 20px; text-align: left; }
-        .card-tag { font-size: 10px; text-transform: uppercase; border: 1px solid var(--red); color: var(--red); padding: 2px 8px; border-radius: 5px; }
-        .card-title { font-size: 1.4rem; margin: 10px 0 5px 0; color: var(--gold); }
-        .card-desc { font-size: 0.85rem; color: #aaa; line-height: 1.4; }
+        .entity-content { padding: 25px; }
+        .warning-label { font-size: 10px; color: var(--red); border: 1px solid var(--red); padding: 3px 10px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
         
-        .stats { display: flex; justify-content: space-between; margin-top: 15px; font-size: 12px; color: #666; }
-        .stats b { color: #fff; }
+        .entity-name { font-size: 1.6rem; margin: 15px 0 8px 0; color: #fff; }
+        .entity-desc { font-size: 0.9rem; color: #777; line-height: 1.6; min-height: 80px; }
+        
+        .stats-bar { margin-top: 20px; border-top: 1px solid #1a1a1a; padding-top: 15px; display: flex; justify-content: space-between; font-size: 11px; color: #444; text-transform: uppercase; }
+        .stats-bar b { color: var(--gold); }
 
-        .btn-action { background: var(--red); color: #fff; border: none; width: 100%; padding: 15px; 
-                       border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .btn-unbound { background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; padding: 15px; 
+                         font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-unbound:hover { background: var(--gold); color: #000; }
         
-        .referral-box { background: #111; border: 1px dashed var(--gold); padding: 15px; margin: 40px 20px; border-radius: 10px; color: var(--gold); font-size: 13px; }
+        .referral-footer { text-align: center; padding: 40px; color: #333; font-size: 11px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-    <div class="nebula"></div>
+    <div class="ambient"></div>
 
     <div class="header">
-        <h1>AKAME REVERIE</h1>
-        <p>Acesse o plano etéreo de narrativas 18+</p>
+        <h1>AKAME NEXUS</h1>
+        <p>"A realidade é opcional. O desejo é absoluto."</p>
     </div>
 
-    <div class="card-container">
-        <div class="reverie-card">
-            <div class="card-img">🎭</div>
-            <div class="card-content">
-                <span class="card-tag">NSFW • OBSESSIVA</span>
-                <div class="card-title">Seraphina Vale</div>
-                <div class="card-desc">Uma boneca de porcelana com veneno sob a pele. Disposta a tudo para conquistar o que deseja.</div>
-                <div class="stats">
-                    <span>Foco: <b>98%</b></span>
-                    <span>Poder: <b>Elite</b></span>
-                    <span>Relação: <b>0.0</b></span>
+    <div class="nexus-grid">
+        <div class="entity-card">
+            <div class="entity-img">💀</div>
+            <div class="entity-content">
+                <span class="warning-label">UNFILTERED • DARK RP</span>
+                <div class="entity-name">Seraphina Vale</div>
+                <div class="entity-desc">Obsessiva e manipuladora. Uma narrativa onde não existem limites éticos ou filtros de conduta. Domine ou seja dominado.</div>
+                
+                <div class="stats-bar">
+                    <span>Libido: <b>MAX</b></span>
+                    <span>Moral: <b>ZERO</b></span>
+                    <span>Status: <b>LIVRE</b></span>
                 </div>
-                <button class="btn-action" onclick="alert('Login Google Necessário')">INICIAR SESSÃO</button>
+                
+                <button class="btn-unbound" onclick="location.href='https://accounts.google.com/gsi/select'">DESBLOQUEAR ACESSO</button>
             </div>
         </div>
     </div>
 
-    <div class="referral-box">
-        Código de Convite Ativo: <b>S8XDBBIFZ1</b> (Acesso Elite via MILTON)
+    <div class="referral-footer">
+        PROTOCOL S8XDBBIFZ1 // ENCRYPTED CONNECTION
     </div>
 
-    <script>
-        // Futura integração de Login Google aqui
-    </script>
 </body>
 </html>
