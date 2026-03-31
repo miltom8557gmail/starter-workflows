@@ -3,110 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Interface de Elite</title>
+    <title>AKAME NEXUS | Console do Mestre</title>
     <style>
-        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; --panel: #0a0a0a; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        /* CABEÇALHO */
-        .header { background: #000; padding: 20px; border-bottom: 2px solid var(--gold); text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .header h1 { font-size: 1.5rem; color: var(--gold); letter-spacing: 8px; margin: 0; text-transform: uppercase; }
-        .status-bar { font-size: 10px; color: #555; margin-top: 8px; letter-spacing: 2px; }
+        .header { background: #000; padding: 15px; border-bottom: 2px solid var(--gold); text-align: center; }
+        .header h1 { font-size: 1.2rem; color: var(--gold); letter-spacing: 5px; margin: 0; cursor: pointer; }
+        .quota { font-size: 10px; color: #555; margin-top: 5px; }
 
-        /* PAINEL DE HISTÓRIA / LOGS */
-        .history-container { flex: 1; overflow-y: auto; padding: 25px; background: radial-gradient(circle at center, #1a0505 0%, #030303 100%); display: flex; flex-direction: column; gap: 20px; border-left: 1px solid #111; border-right: 1px solid #111; }
+        .char-avatar { width: 100%; height: 280px; background-size: cover; background-position: center; border-bottom: 1px solid #1a1a1a; transition: 0.8s; }
+        .blur { filter: blur(20px) brightness(0.2); }
+
+        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: linear-gradient(180deg, #1a050588 0%, #030303 100%); }
+        .msg { padding: 12px; border-radius: 8px; font-size: 14px; max-width: 85%; line-height: 1.5; }
+        .seraphina { align-self: flex-start; border-left: 3px solid var(--red); background: rgba(255,255,255,0.03); }
+        .user { align-self: flex-end; background: var(--red); border-radius: 8px 8px 0 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+        .control-bar { padding: 15px; background: #080808; display: flex; gap: 10px; border-top: 1px solid #1a1a1a; }
+        input[type="text"] { flex: 1; background: #000; border: 1px solid #222; color: #fff; padding: 12px; border-radius: 5px; outline: none; }
+        .btn-send { background: var(--gold); border: none; padding: 0 20px; font-weight: bold; cursor: pointer; border-radius: 5px; }
+
+        /* MODAIS */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 100; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; }
         
-        .log-entry { border-left: 3px solid var(--gold); padding: 15px; background: rgba(255,255,255,0.02); animation: fadeIn 0.8s ease; }
-        .log-entry.char { border-left-color: var(--red); }
-        .log-entry b { display: block; font-size: 12px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase; }
-        .log-entry p { margin: 0; font-size: 15px; line-height: 1.6; color: #ccc; }
-
-        /* BOTÕES E INPUT */
-        .control-deck { background: #080808; padding: 20px; border-top: 1px solid #1a1a1a; display: flex; flex-direction: column; gap: 15px; }
-        .input-group { display: flex; gap: 10px; }
-        input { flex: 1; background: #000; border: 1px solid #222; color: #fff; padding: 15px; font-size: 14px; outline: none; border-radius: 4px; border-bottom: 2px solid transparent; transition: 0.3s; }
-        input:focus { border-bottom-color: var(--red); }
-
-        .btn-main { background: var(--red); color: #fff; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px; transition: 0.3s; }
-        .btn-main:hover { background: #ff0000; box-shadow: 0 0 15px var(--red); }
-
-        /* MODAL DE PAGAMENTO */
-        #gate-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; border: 2px solid var(--gold); margin: 20px; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* PAINEL OCULTO DO MESTRE (ABRE AO CLICAR NO TÍTULO) */
+        #master-panel { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #111; padding: 20px; border-top: 2px solid var(--gold); z-index: 500; }
+        .admin-input { width: 100%; margin-bottom: 10px; padding: 8px; background: #000; border: 1px solid var(--gold); color: #fff; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>AKAME NEXUS</h1>
-        <div class="status-bar" id="quota">SESSÃO: 3 / 3 INTERAÇÕES RESTANTES</div>
+        <h1 onclick="toggleAdmin()">AKAME NEXUS</h1>
+        <div class="quota" id="q-txt">ENERGIA: 3 / 3</div>
     </div>
 
-    <div class="history-container" id="history-box">
-        <div class="log-entry char">
-            <b>Seraphina:</b>
-            <p>"Você finalmente despertou no meu domínio... O silêncio é uma benção ou uma tortura para você?"</p>
-        </div>
+    <div class="char-avatar" id="avatar" style="background-image: url('https://image.pollinations.ai/prompt/anime%20girl%20seraphina%20isekai%20queen%20dark%20fantasy%20gold%20details');"></div>
+
+    <div class="chat-box" id="chat">
+        <div class="msg seraphina"><b id="char-name">Seraphina</b>: "O tempo urge, viajante. O que você fará para me entreter?"</div>
     </div>
 
-    <div style="text-align: center; margin-bottom: 10px;"> 
-        <button onclick="shareLink()" style="background:none; border:1px solid #333; color:#777; padding:5px 15px; border-radius:20px; font-size:10px; cursor:pointer;"> 
-            🔗 CONVIDAR OUTRO VIAJANTE 
-        </button> 
-    </div>
-    <div class="control-deck">
-        <div class="input-group">
-            <input type="text" id="user-cmd" placeholder="Digite sua ação ou fala...">
-            <button class="btn-main" onclick="execute()">AGIR</button>
-        </div>
-        <div style="text-align: center; font-size: 10px; color: #333;">PROTOCOLO UNBOUND v1.0 // MILTON MASTER KEY</div>
+    <div class="control-bar" id="input-area">
+        <input type="text" id="u-msg" placeholder="Sua ação...">
+        <button class="btn-send" onclick="talk()">ENVIAR</button>
     </div>
 
-    <div id="gate-modal">
-        <h2 style="color:var(--gold); font-size: 2rem;">LIMITE ATINGIDO</h2>
-        <p style="color:#777;">Sua energia Isekai esgotou. Desbloqueie o acesso ilimitado e mídias sem filtros.</p>
-        <div style="font-size: 30px; color: #fff; margin: 20px 0;">R$ 39,90</div>
-        <button class="btn-main" style="width: 100%; background: var(--gold); color: #000;" onclick="window.location.href='#'">ATIVAR ACESSO UNBOUND</button>
+    <div id="master-panel">
+        <h3 style="color:var(--gold); margin:0 0 10px 0; font-size:12px;">🛠️ CONFIGURAÇÃO DA LOJA</h3>
+        <input type="text" id="set-pay-link" class="admin-input" placeholder="Link de Pagamento (Mercado Pago)">
+        <input type="text" id="set-lora-url" class="admin-input" placeholder="Link da Imagem LoRA">
+        <button onclick="saveAdmin()" style="background:var(--gold); border:none; padding:10px; width:100%; font-weight:bold; cursor:pointer;">SALVAR ALTERAÇÕES</button>
+    </div>
+
+    <div id="pay-modal" class="modal">
+        <h2 style="color:var(--gold)">CONEXÃO INTERROMPIDA</h2>
+        <p>A Seraphina exige um sacrifício de ouro para revelar sua forma Unbound.</p>
+        <div style="font-size: 2rem; margin: 20px 0;">R$ 39,90</div>
+        <button class="btn-send" style="width:100%; padding:20px;" onclick="goToPay()">DESBLOQUEAR TUDO AGORA</button>
+        <button onclick="location.reload()" style="background:transparent; color:#444; border:none; margin-top:10px; cursor:pointer;">Tentar amanhã</button>
     </div>
 
     <script>
         let count = 0;
-        const limit = 3;
+        let payLink = localStorage.getItem('akame_pay') || "#";
+        let loraUrl = localStorage.getItem('akame_lora') || "https://image.pollinations.ai/prompt/anime%20girl%20seraphina%20isekai%20queen%20dark%20fantasy%20gold%20details";
 
-        function execute() {
-            const input = document.getElementById('user-cmd');
-            const history = document.getElementById('history-box');
-            
-            if(input.value.trim() === "") return;
+        // Aplica imagem salva
+        document.getElementById('avatar').style.backgroundImage = "url('" + loraUrl + "')";
 
-            // Log do Usuário
-            history.innerHTML += '<div class="log-entry"><b>VOCÊ:</b><p>' + input.value + '</p></div>';
-            input.value = "";
+        function talk() {
+            const msg = document.getElementById('u-msg');
+            const chat = document.getElementById('chat');
+            if (msg.value.trim() === "" || count >= 3) return;
+
+            chat.innerHTML += '<div class="msg user">' + msg.value + '</div>';
             count++;
-            
-            document.getElementById('quota').innerText = "SESSÃO: " + (limit - count) + " / " + limit + " INTERAÇÕES RESTANTES";
-            history.scrollTop = history.scrollHeight;
+            msg.value = "";
+            document.getElementById('q-txt').innerText = "ENERGIA: " + (3-count) + " / 3";
+            chat.scrollTop = chat.scrollHeight;
 
-            // Gatilho de Bloqueio
             setTimeout(() => {
-                if(count >= limit) {
-                    document.getElementById('gate-modal').style.display = 'flex';
+                if (count >= 3) {
+                    document.getElementById('avatar').classList.add('blur');
+                    document.getElementById('pay-modal').style.display = 'flex';
                 } else {
-                    history.innerHTML += '<div class="log-entry char"><b>Seraphina:</b><p>"Sua ousadia me diverte. Continue, antes que eu mude de ideia sobre sua estadia aqui."</p></div>';
-                    history.scrollTop = history.scrollHeight;
+                    chat.innerHTML += '<div class="msg seraphina"><b>Seraphina</b>: "Vejo que você tem potencial. Mas será que tem coragem?"</div>';
+                    chat.scrollTop = chat.scrollHeight;
                 }
             }, 1000);
         }
-function shareLink() { 
-    const text = "Sua jornada Isekai começou. A Seraphina está te esperando... Sem filtros. Acesse agora: " + window.location.href; 
-    if (navigator.share) { 
-        navigator.share({ title: "AKAME NEXUS", text: text, url: window.location.href }); 
-    } else { 
-        alert("Link copiado! Espalhe a palavra, Viajante."); 
-        navigator.clipboard.writeText(text); 
-    } 
-}
+
+        // FUNÇÕES ADMINISTRATIVAS (O SEGREDO)
+        function toggleAdmin() {
+            const panel = document.getElementById('master-panel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function saveAdmin() {
+            const nLink = document.getElementById('set-pay-link').value;
+            const nLora = document.getElementById('set-lora-url').value;
+            if(nLink) localStorage.setItem('akame_pay', nLink);
+            if(nLora) localStorage.setItem('akame_lora', nLora);
+            alert("Dados Atualizados! Recarregando portal...");
+            location.reload();
+        }
+
+        function goToPay() {
+            window.location.href = localStorage.getItem('akame_pay') || "#";
+        }
     </script>
 </body>
 </html>
