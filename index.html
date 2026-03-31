@@ -3,104 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Experiência Unbound</title>
+    <title>AKAME NEXUS | Gênesis Unbound</title>
     <style>
         :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; --card: #0d0d0d; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; padding-bottom: 50px; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; padding: 20px; text-align: center; }
         
         .ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
                     background: radial-gradient(circle at 50% 50%, #1a0505 0%, #030303 100%); z-index: -1; }
 
-        .nexus-header { text-align: center; padding: 40px 20px; border-bottom: 1px solid #1a1a1a; }
-        .nexus-header h1 { color: var(--gold); letter-spacing: 10px; font-size: 2.5rem; margin: 0; }
-
-        .main-container { max-width: 500px; margin: 20px auto; background: var(--card); border: 1px solid #1a1a1a; border-radius: 4px; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-
-        /* VISUAL DA PERSONAGEM */
-        .character-visual { position: relative; width: 100%; height: 400px; background: #000; }
-        .character-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
+        .genesis-container { max-width: 600px; margin: 40px auto; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,1); }
         
-        /* AUDIO PLAYER */
-        .audio-tease { background: #080808; padding: 15px; border-top: 1px solid #1a1a1a; text-align: center; }
-        .btn-audio { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 8px 15px; cursor: pointer; font-size: 10px; letter-spacing: 2px; }
+        h1 { color: var(--gold); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 30px; }
+        
+        .option-group { text-align: left; margin-bottom: 25px; border-bottom: 1px solid #1a1a1a; padding-bottom: 15px; }
+        .label { color: var(--gold); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        
+        select, input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Inter', sans-serif; border-radius: 4px; outline: none; }
+        select:focus { border-color: var(--red); }
 
-        /* SIMULADOR DE CHAT */
-        .chat-area { height: 250px; overflow-y: auto; padding: 20px; font-family: 'Inter', sans-serif; font-size: 14px; background: rgba(0,0,0,0.3); }
-        .msg-char { color: var(--gold); margin-bottom: 15px; line-height: 1.4; border-left: 2px solid var(--red); padding-left: 10px; }
-        .msg-user { color: #fff; text-align: right; margin-bottom: 15px; opacity: 0.7; }
+        .btn-forge { background: var(--red); color: #fff; border: none; width: 100%; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; transition: 0.3s; }
+        .btn-forge:hover { background: #b30000; box-shadow: 0 0 20px rgba(139, 0, 0, 0.4); }
 
-        .input-area { display: flex; padding: 15px; background: #050505; border-top: 1px solid #1a1a1a; }
-        .input-area input { flex: 1; background: transparent; border: none; color: #fff; outline: none; font-size: 14px; }
-        .btn-send { background: var(--red); color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
-
-        /* OVERLAY DE PAGAMENTO (BLOCKED) */
-        #payment-overlay { display: none; padding: 40px 20px; text-align: center; background: #000; border-top: 2px solid var(--gold); }
-        .price { font-size: 2rem; color: var(--gold); margin: 20px 0; }
-        .btn-pay { background: var(--gold); color: #000; border: none; width: 100%; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; }
+        .unlimited-badge { font-size: 10px; color: #555; margin-top: 15px; display: block; }
     </style>
 </head>
 <body>
     <div class="ambient"></div>
 
-    <div class="nexus-header">
-        <h1>AKAME</h1>
-        <p style="font-size:10px; letter-spacing:3px; color:#555;">PROTOCOL S8XDBBIFZ1 // UNBOUND</p>
+    <div class="genesis-container">
+        <h1>GÊNESIS</h1>
+        <p style="font-size: 12px; color: #777; margin-bottom: 30px;">Dê vida ao seu desejo mais profundo. Sem limites. Sem filtros.</p>
+
+        <div class="option-group">
+            <span class="label">Arquétipo Dominante</span>
+            <select>
+                <option>A Manipuladora Fria</option>
+                <option>A Inocente Corrompida</option>
+                <option>A Entidade Sobrenatural</option>
+                <option>A Rival Competitiva</option>
+                <option>O Protetor Obsessivo</option>
+                <option>Crie o seu próprio...</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <span class="label">Traços Psicológicos (Infinitas Opções)</span>
+            <input type="text" placeholder="Ex: Sádica, Leal, Ciumenta, Misteriosa...">
+        </div>
+
+        <div class="option-group">
+            <span class="label">Nível de Moralidade</span>
+            <select>
+                <option>Totalmente Sem Filtros (Unbound)</option>
+                <option>Lenta Corrupção</option>
+                <option>Conflito Ético</option>
+                <option>Devoção Absoluta</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <span class="label">Local da Primeira Interação</span>
+            <input type="text" placeholder="Ex: Mansão Abandonada, Escritório, Sonho Lúcido...">
+        </div>
+
+        <button class="btn-forge" onclick="alert('PAGAMENTO NECESSÁRIO: Assine o Plano Unbound para dar vida a esta entidade no Nexus.')">
+            FORJAR ENTIDADE
+        </button>
+
+        <span class="unlimited-badge">INFINTAS POSSIBILIDADES ATIVADAS // PROTOCOLO AKAME</span>
     </div>
 
-    <div class="main-container">
-        <div class="character-visual">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=500&q=80" alt="Seraphina">
-            <div style="position:absolute; bottom:20px; left:20px; font-size:18px; color:#fff; text-shadow: 2px 2px 4px #000;">Seraphina Vale</div>
-        </div>
-
-        <div class="audio-tease">
-            <button class="btn-audio" onclick="alert('Áudio Exclusivo para Assinantes Unbound.')">▶ OUVIR SUSSURRO</button>
-        </div>
-
-        <div id="chat-engine">
-            <div class="chat-area" id="chat-box">
-                <div class="msg-char"><b>Seraphina:</b> "Você parece tenso. Veio aqui para fugir da realidade ou para ser dominado por ela?"</div>
-            </div>
-
-            <div class="input-area">
-                <input type="text" id="user-input" placeholder="Responda para a Seraphina...">
-                <button class="btn-send" onclick="sendMessage()">ENVIAR</button>
-            </div>
-        </div>
-
-        <div id="payment-overlay">
-            <h2 style="color:var(--gold)">LIMITE ATINGIDO</h2>
-            <p style="font-size:12px;">Para continuar esta narrativa sem filtros e desbloquear mídias explícitas, assine o plano Unbound.</p>
-            <div class="price">R$ 29,90<small>/mês</small></div>
-            <button class="btn-pay" onclick="window.location.href='#'">PAGAR E CONTINUAR</button>
-        </div>
-    </div>
-
-    <script>
-        let messageCount = 0;
-
-        function sendMessage() {
-            const input = document.getElementById('user-input');
-            const chatBox = document.getElementById('chat-box');
-            
-            if(input.value.trim() === "") return;
-
-            // Adiciona mensagem do usuário
-            chatBox.innerHTML += '<div class="msg-user">' + input.value + '</div>';
-            input.value = "";
-            messageCount++;
-
-            // Resposta automática da Seraphina
-            setTimeout(() => {
-                if(messageCount >= 2) {
-                    document.getElementById('chat-engine').style.display = 'none';
-                    document.getElementById('payment-overlay').style.display = 'block';
-                } else {
-                    chatBox.innerHTML += '<div class="msg-char"><b>Seraphina:</b> "Interessante... você fala como alguém que ainda não conhece as minhas regras."</div>';
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }
-            }, 1000);
-        }
-    </script>
 </body>
 </html>
