@@ -1,9 +1,8 @@
 package com.akame.forja;
 import android.os.Bundle;
-import android.webkit.*;
 import android.widget.*;
-import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -11,22 +10,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        WebView myWebView = findViewById(R.id.web_view);
-        myWebView.setWebViewClient(new WebViewClient());
-        myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.loadUrl("https://www.google.com");
-
-        VideoView videoView = findViewById(R.id.video_player);
-        Button btnDown = findViewById(R.id.btn_download);
-        EditText urlIn = findViewById(R.id.url_input);
-
-        btnDown.setOnClickListener(v -> {
-            String url = urlIn.getText().toString();
-            Toast.makeText(this, "Enviando " + url + " para o YT-DLP no GitHub...", Toast.LENGTH_LONG).show();
+        EditText input = findViewById(R.id.url_input);
+        Button btnPrompt = findViewById(R.id.btn_nsfw);
+        
+        // MOTOR DE AUTO-PROMPT (CÉREBRO AKAME)
+        btnPrompt.setOnLongClickListener(v -> {
+            String[] styles = {"4k, cinematic lighting, masterpiece, detailed skin texture, hyper-realistic, trending on artstation", 
+                             "8k resolution, ethereal glow, dark fantasy, intricate details, photorealistic, S-Rank quality"};
+            String userText = input.getText().toString();
+            String autoPrompt = userText + ", " + styles[new Random().nextInt(styles.length)];
+            input.setText(autoPrompt);
+            Toast.makeText(this, "Prompt S-Rank Forjado!", Toast.LENGTH_SHORT).show();
+            return true;
         });
 
-        findViewById(R.id.btn_ubuntu).setOnClickListener(v -> {
-            Toast.makeText(this, "Instanciando Ubuntu/Dolphin Open...", Toast.LENGTH_SHORT).show();
+        findViewById(R.id.btn_download).setOnClickListener(v -> {
+            Toast.makeText(this, "Download via Proxy Ativado (Ghost Mode)", Toast.LENGTH_SHORT).show();
         });
     }
 }
