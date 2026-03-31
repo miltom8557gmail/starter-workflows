@@ -1,14 +1,11 @@
 #!/bin/bash
-# Mata processos antigos
 fuser -k 8081-8089/tcp > /dev/null 2>&1
-echo "[🔥] INICIANDO SISTEMA AKAME..."
+echo "[🔥] SISTEMA AKAME ETERNIZADO..."
 cd ~/Imperio_IA
-# Inicia o servidor Python
 python sentinela.py & 
-# Inicia o Sentinela de Backup Automático (A cada 5 min)
-echo "[🛰️] BACKUP AUTOMÁTICO ATIVADO EM SEGUNDO PLANO."
+echo "[🛰️] BACKUP AUTOMÁTICO ATIVO."
 while true; do
     git add .
-    git commit -m "Auto-Sinc Akame" && git push origin main
+    git commit -m "[⚔️] GUARDIAO DO IMPERIO: $(date)" && git push origin main
     sleep 300
 done &
