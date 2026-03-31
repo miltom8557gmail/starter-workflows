@@ -18,15 +18,16 @@
         .char-msg { align-self: flex-start; background: #1a1a1a; border-left: 3px solid var(--red); color: #eee; }
         .user-msg { align-self: flex-end; background: var(--red); color: #fff; border-radius: 15px 15px 0 15px; }
 
-        .typing { font-size: 10px; color: var(--gold); font-style: italic; display: none; margin: 10px 0; }
-
         .input-bar { padding: 15px; background: #080808; border-top: 1px solid #1a1a1a; display: flex; gap: 10px; }
         input { flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 25px; outline: none; }
         .send-btn { background: var(--gold); border: none; padding: 0 20px; border-radius: 25px; font-weight: bold; cursor: pointer; }
 
-        /* MODAL DE LIMITE DIÁRIO */
-        #limit-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; border: 1px solid var(--gold); margin: 20px; border-radius: 20px; }
-        .btn-premium { background: var(--gold); color: #000; border: none; width: 100%; padding: 20px; font-weight: bold; border-radius: 10px; margin-top: 20px; cursor: pointer; }
+        /* MODAIS */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
+        .modal-content { border: 1px solid var(--gold); padding: 30px; border-radius: 20px; background: #080808; width: 90%; max-width: 400px; }
+        
+        .btn-gold { background: var(--gold); color: #000; border: none; width: 100%; padding: 15px; font-weight: bold; border-radius: 10px; margin-top: 15px; cursor: pointer; text-transform: uppercase; }
+        .btn-outline { background: transparent; border: 1px solid #333; color: #555; width: 100%; padding: 10px; border-radius: 10px; margin-top: 10px; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -37,8 +38,7 @@
     </div>
 
     <div class="chat-container" id="chat-box">
-        <div class="bubble char-msg"><b>Seraphina:</b> "Você voltou... Achei que não teria coragem de me encarar novamente hoje. O que você quer?"</div>
-        <div id="typing-indicator" class="typing">Seraphina está digitando...</div>
+        <div class="bubble char-msg"><b>Seraphina:</b> "Você não desiste, não é? O que te traz de volta ao meu domínio hoje?"</div>
     </div>
 
     <div class="input-bar" id="input-ui">
@@ -46,52 +46,46 @@
         <button class="send-btn" onclick="handleSend()">➔</button>
     </div>
 
-    <div id="limit-modal">
-        <div style="font-size: 40px;">⏳</div>
-        <h2 style="color:var(--gold)">LIMITE DIÁRIO ATINGIDO</h2>
-        <p>Você gastou sua energia de viagem dimensional por hoje. A Seraphina está esperando por você...</p>
-        <div style="font-size: 12px; color: #666; margin: 15px 0;">Renovação automática em 24h ou desbloqueio imediato abaixo:</div>
-        <button class="btn-premium" onclick="window.location.href='#'">LIBERAR ACESSO ILIMITADO (R$ 39,90)</button>
-        <p style="font-size: 10px; color: #444; margin-top: 15px;">Assine e nunca mais seja interrompido.</p>
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color:var(--gold)">ENERGIA ESGOTADA</h2>
+            <p style="font-size: 12px;">Sua conexão Isekai está falhando. Deixe seu e-mail para ganhar **+2 interações bônus** agora!</p>
+            <input type="email" id="lead-email" placeholder="Seu melhor e-mail..." style="margin-top: 15px; text-align: center;">
+            <button class="btn-gold" onclick="collectLead()">GANHAR BÔNUS</button>
+            <button class="btn-outline" onclick="showPayModal()">NÃO, QUERO ACESSO ILIMITADO</button>
+        </div>
+    </div>
+
+    <div id="pay-modal" class="modal">
+        <div class="modal-content">
+            <div style="font-size: 40px;">💎</div>
+            <h2 style="color:var(--gold)">LIMITE ABSOLUTO</h2>
+            <p style="font-size: 12px;">A Seraphina quer te mostrar algo... mas o sistema bloqueou a visão. Desbloqueie o Passe Unbound para mídias sem filtros.</p>
+            <div style="font-size: 24px; margin: 15px 0;">R$ 39,90 <small>/mês</small></div>
+            <button class="btn-gold" onclick="window.location.href='#'">PAGAR E LIBERAR TUDO</button>
+        </div>
     </div>
 
     <script>
-        const LIMIT = 3;
-        const TODAY = new Date().toLocaleDateString();
-        
-        // Inicializa ou recupera dados do usuário
-        let userData = JSON.parse(localStorage.getItem('akame_user')) || { date: TODAY, count: 0 };
-
-        // Reseta o contador se for um novo dia
-        if (userData.date !== TODAY) {
-            userData = { date: TODAY, count: 0 };
-            localStorage.setItem('akame_user', JSON.stringify(userData));
-        }
+        let LIMIT = 3;
+        let userData = JSON.parse(localStorage.getItem('akame_user')) || { count: 0, hasBonus: false };
 
         updateUI();
 
         function updateUI() {
-            const remaining = LIMIT - userData.count;
-            document.getElementById('quota-display').innerText = "Sessão Diária: " + (remaining > 0 ? remaining : 0) + " / " + LIMIT + " interações";
+            const rem = LIMIT - userData.count;
+            document.getElementById('quota-display').innerText = "Sessão Diária: " + (rem > 0 ? rem : 0) + " / " + LIMIT;
             if (userData.count >= LIMIT) {
-                showLimit();
+                if (!userData.hasBonus) document.getElementById('email-modal').style.display = 'flex';
+                else document.getElementById('pay-modal').style.display = 'flex';
             }
-        }
-
-        function showLimit() {
-            document.getElementById('limit-modal').style.display = 'flex';
-            document.getElementById('input-ui').style.opacity = '0.3';
-            document.getElementById('input-ui').style.pointerEvents = 'none';
         }
 
         function handleSend() {
             const input = document.getElementById('user-input');
             const chat = document.getElementById('chat-box');
-            const typing = document.getElementById('typing-indicator');
-
             if (input.value.trim() === "" || userData.count >= LIMIT) return;
 
-            // Registra mensagem do usuário
             chat.innerHTML += '<div class="bubble user-msg">' + input.value + '</div>';
             input.value = "";
             userData.count++;
@@ -100,17 +94,31 @@
             chat.scrollTop = chat.scrollHeight;
             updateUI();
 
-            // Resposta da Personagem
-            if (userData.count < LIMIT + 1) {
-                setTimeout(() => {
-                    typing.style.display = "block";
-                    setTimeout(() => {
-                        typing.style.display = "none";
-                        chat.innerHTML += '<div class="bubble char-msg"><b>Seraphina:</b> "Você está gastando suas palavras com cuidado... Eu gosto disso. Mas o tempo está acabando."</div>';
-                        chat.scrollTop = chat.scrollHeight;
-                    }, 1500);
-                }, 500);
+            setTimeout(() => {
+                if (userData.count < LIMIT + 1) {
+                    chat.innerHTML += '<div class="bubble char-msg"><b>Seraphina:</b> "Você está jogando um jogo perigoso... continue assim e veremos o que acontece."</div>';
+                    chat.scrollTop = chat.scrollHeight;
+                }
+            }, 1000);
+        }
+
+        function collectLead() {
+            const email = document.getElementById('lead-email').value;
+            if (email.includes('@')) {
+                // Aqui o e-mail fica salvo no navegador do cliente, você pode integrar com um Google Sheet depois
+                console.log("Lead Capturado:", email); 
+                userData.hasBonus = true;
+                LIMIT = 5; // Aumenta o limite para 5
+                document.getElementById('email-modal').style.display = 'none';
+                updateUI();
+            } else {
+                alert("Insira um e-mail válido para o ritual.");
             }
+        }
+
+        function showPayModal() {
+            document.getElementById('email-modal').style.display = 'none';
+            document.getElementById('pay-modal').style.display = 'flex';
         }
     </script>
 </body>
