@@ -3,75 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Gênesis Unbound</title>
+    <title>AKAME NEXUS | ISEKAI UNBOUND</title>
     <style>
-        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; --card: #0d0d0d; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; padding: 20px; text-align: center; }
+        :root { --gold: #d4af37; --red: #8b0000; --blue: #004488; --bg: #020205; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         
-        .ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                    background: radial-gradient(circle at 50% 50%, #1a0505 0%, #030303 100%); z-index: -1; }
+        /* NOTIFICAÇÃO DE SISTEMA ESTILO ANIME */
+        .system-alert { background: rgba(0, 68, 136, 0.2); border: 1px solid var(--blue); padding: 10px; color: #00ccff; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; text-align: center; position: absolute; top: 10px; width: 90%; left: 5%; z-index: 10; animation: glow 2s infinite; }
+        @keyframes glow { 0% { box-shadow: 0 0 5px var(--blue); } 50% { box-shadow: 0 0 20px var(--blue); } 100% { box-shadow: 0 0 5px var(--blue); } }
 
-        .genesis-container { max-width: 600px; margin: 40px auto; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,1); }
+        /* TELA DE AVENTURA */
+        .adventure-screen { flex: 1; overflow-y: auto; padding: 60px 20px 20px 20px; display: flex; flex-direction: column; gap: 15px; }
         
-        h1 { color: var(--gold); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 30px; }
-        
-        .option-group { text-align: left; margin-bottom: 25px; border-bottom: 1px solid #1a1a1a; padding-bottom: 15px; }
-        .label { color: var(--gold); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 10px; }
-        
-        select, input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Inter', sans-serif; border-radius: 4px; outline: none; }
-        select:focus { border-color: var(--red); }
+        .event-box { background: rgba(255, 255, 255, 0.03); border-left: 3px solid var(--gold); padding: 15px; border-radius: 4px; animation: slideIn 0.5s ease-out; }
+        .event-box.isekai { border-left-color: var(--blue); color: #00ccff; }
+        .event-box.nsfw { border-left-color: var(--red); }
 
-        .btn-forge { background: var(--red); color: #fff; border: none; width: 100%; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; transition: 0.3s; }
-        .btn-forge:hover { background: #b30000; box-shadow: 0 0 20px rgba(139, 0, 0, 0.4); }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
 
-        .unlimited-badge { font-size: 10px; color: #555; margin-top: 15px; display: block; }
+        .char-name { color: var(--gold); font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px; }
+        .text { font-size: 15px; line-height: 1.6; }
+
+        /* INPUT DE AÇÃO */
+        .action-bar { background: #08080a; padding: 20px; border-top: 1px solid #1a1a1a; display: flex; gap: 10px; }
+        .action-bar input { flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 5px; outline: none; }
+        .btn-action { background: var(--blue); color: #fff; border: none; padding: 0 25px; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+
+        /* OVERLAY DE BLOQUEIO (MONETIZAÇÃO) */
+        #isekai-lock { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
+        .btn-unlock { background: var(--gold); color: #000; border: none; width: 100%; max-width: 300px; padding: 20px; font-weight: bold; cursor: pointer; border-radius: 4px; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="ambient"></div>
 
-    <div class="genesis-container">
-        <h1>GÊNESIS</h1>
-        <p style="font-size: 12px; color: #777; margin-bottom: 30px;">Dê vida ao seu desejo mais profundo. Sem limites. Sem filtros.</p>
+    <div class="system-alert">SISTEMA: Conexão com Outro Mundo Estabilizada (Protocolo S8XDBBIFZ1)</div>
 
-        <div class="option-group">
-            <span class="label">Arquétipo Dominante</span>
-            <select>
-                <option>A Manipuladora Fria</option>
-                <option>A Inocente Corrompida</option>
-                <option>A Entidade Sobrenatural</option>
-                <option>A Rival Competitiva</option>
-                <option>O Protetor Obsessivo</option>
-                <option>Crie o seu próprio...</option>
-            </select>
+    <div class="adventure-screen" id="chat-engine">
+        <div class="event-box isekai">
+            <span class="char-name">[SISTEMA]</span>
+            <div class="text">Bem-vindo ao Novo Mundo, Viajante. Você despertou nos aposentos privados da Duquesa Seraphina. O que você faz?</div>
         </div>
-
-        <div class="option-group">
-            <span class="label">Traços Psicológicos (Infinitas Opções)</span>
-            <input type="text" placeholder="Ex: Sádica, Leal, Ciumenta, Misteriosa...">
-        </div>
-
-        <div class="option-group">
-            <span class="label">Nível de Moralidade</span>
-            <select>
-                <option>Totalmente Sem Filtros (Unbound)</option>
-                <option>Lenta Corrupção</option>
-                <option>Conflito Ético</option>
-                <option>Devoção Absoluta</option>
-            </select>
-        </div>
-
-        <div class="option-group">
-            <span class="label">Local da Primeira Interação</span>
-            <input type="text" placeholder="Ex: Mansão Abandonada, Escritório, Sonho Lúcido...">
-        </div>
-
-        <button class="btn-forge" onclick="alert('PAGAMENTO NECESSÁRIO: Assine o Plano Unbound para dar vida a esta entidade no Nexus.')">
-            FORJAR ENTIDADE
-        </button>
-
-        <span class="unlimited-badge">INFINTAS POSSIBILIDADES ATIVADAS // PROTOCOLO AKAME</span>
     </div>
 
+    <div class="action-bar" id="input-container">
+        <input type="text" id="user-action" placeholder="Digite sua ação (Ex: Observar o quarto...)">
+        <button class="btn-action" onclick="sendAction()">AGIR</button>
+    </div>
+
+    <div id="isekai-lock">
+        <h2 style="color:var(--gold)">AVENTURA INTERROMPIDA</h2>
+        <p>Suas escolhas levaram a um caminho restrito. Desbloqueie o Passe Isekai para continuar sua jornada e acessar cenas sem filtros.</p>
+        <div style="font-size: 24px; margin: 15px 0;">R$ 29,90 <small>/mês</small></div>
+        <button class="btn-unlock" onclick="window.location.href='#'">ATIVAR PASSE UNBOUND</button>
+    </div>
+
+    <script>
+        let actionCount = 0;
+
+        function sendAction() {
+            const input = document.getElementById('user-action');
+            const engine = document.getElementById('chat-engine');
+            
+            if(input.value.trim() === "") return;
+
+            // Adiciona Ação do Usuário
+            engine.innerHTML += '<div class="event-box" style="border-left: 3px solid #555;"><span class="char-name">VOCÊ:</span><div class="text">' + input.value + '</div></div>';
+            
+            const userMsg = input.value;
+            input.value = "";
+            actionCount++;
+
+            // Resposta Dinâmica da Seraphina
+            setTimeout(() => {
+                if(actionCount >= 2) {
+                    document.getElementById('isekai-lock').style.display = 'flex';
+                } else {
+                    engine.innerHTML += '<div class="event-box nsfw"><span class="char-name">SERAPHINA VALE:</span><div class="text">"Interessante... você não parece ser um camponês comum. Aproxime-se, vamos ver do que você é feito."</div></div>';
+                    engine.scrollTop = engine.scrollHeight;
+                }
+            }, 1200);
+        }
+    </script>
 </body>
 </html>
