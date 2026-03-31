@@ -1,15 +1,15 @@
 #!/bin/bash
-echo "[!] INICIANDO SEQUÊNCIA DE CRIAÇÃO AUTOMÁTICA..."
+# Script de Sincronia Eterna Akame
+echo "[⚔️] INICIANDO SENTINELA DE BACKUP..."
 
-# 1. Simula a IA criando o frame (Aqui você integraria seu comando de IA real)
-# Por enquanto, ele cria um arquivo de imagem para o App 'enxergar'
-echo "[!] GERANDO PREVIEW VISUAL..."
-touch preview.jpg 
-
-# 2. Sincronia com GitHub
-echo "[!] SUBINDO PARA O REPOSITÓRIO..."
-git add .
-git commit -m "Auto-Update Akame App"
-git push origin main -f
-
-echo "[OK] PROCESSO CONCLUÍDO COM SUCESSO!"
+while true; do
+    # Verifica se houve mudanças nos arquivos
+    if [[ -n $(git status -s) ]]; then
+        echo "[🛰️] MUDANÇA DETECTADA! SINCRONIZANDO COM GITHUB..."
+        git add .
+        git commit -m "[🚀] ATUALIZAÇÃO AUTOMÁTICA: $(date +'%d/%m/%Y %H:%M:%S')"
+        git push origin main
+        echo "[✅] IMPÉRIO ATUALIZADO NA NUVEM."
+    fi
+    sleep 30 # Verifica a cada 30 segundos
+done
