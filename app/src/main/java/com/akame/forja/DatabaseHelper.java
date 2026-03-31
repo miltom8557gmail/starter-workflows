@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "akame_final.db";
-    public static final String TABLE_NAME = "historico_imperio";
+    private static final String DATABASE_NAME = "akame_imperium.db";
+    public static final String TABLE_NAME = "historico_geral";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);

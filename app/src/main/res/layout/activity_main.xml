@@ -35,10 +35,16 @@
                     android:id="@+id/profit_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LUCRO TOTAL: R$ 3.890,00"
+                    android:text="LUCRO ACUMULADO: R$ 4.250,00"
                     android:textColor="#00FF00"
                     android:textSize="22sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Criptografia Ativa"
+                    android:textColor="#666"
+                    android:textSize="12sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -56,7 +62,7 @@
             android:id="@+id/btn_obfuscate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="LIMPAR METADADOS DA MÍDIA"
+            android:text="LIMPAR RASTROS DE MÍDIA"
             android:backgroundTint="#444"
             android:layout_marginTop="10dp" />
 
@@ -94,10 +100,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LIVE SCAMMER PROTECTION"
+            android:text="LIVE PROTECTION ACTIVE"
             android:textColor="#00FF00"
+            android:textStyle="bold"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="40dp" />
     </FrameLayout>
-
 </RelativeLayout>

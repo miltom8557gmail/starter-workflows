@@ -25,32 +25,33 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         findViewById(R.id.btn_fake_call).setOnClickListener(v -> {
-            startFakeCall();
+            try {
+                callOverlay.setVisibility(View.VISIBLE);
+                // Busca o vídeo na pasta raw
+                String path = "android.resource://" + getPackageName() + "/" + R.raw.video_influencer;
+                videoView.setVideoURI(Uri.parse(path));
+                videoView.start();
+                dbHelper.addData("LIVE: Chamada iniciada para verificação.");
+            } catch (Exception e) {
+                Toast.makeText(this, "Erro: Adicione o vídeo na pasta res/raw", Toast.LENGTH_LONG).show();
+                callOverlay.setVisibility(View.GONE);
+            }
         });
 
         findViewById(R.id.btn_end_call).setOnClickListener(v -> {
             callOverlay.setVisibility(View.GONE);
             videoView.stopPlayback();
-            dbHelper.addData("CHAMADA ENCERRADA: Sucesso na prova social.");
+            dbHelper.addData("LIVE: Chamada encerrada com sucesso.");
             atualizarLista();
         });
 
         findViewById(R.id.btn_obfuscate).setOnClickListener(v -> {
-            dbHelper.addData("MÍDIA PROTEGIDA: Metadados Exif removidos.");
+            dbHelper.addData("SECURITY: Metadados eliminados.");
             atualizarLista();
-            Toast.makeText(this, "🛡️ Proteção Anti-Ban Aplicada!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "🛡️ Camuflagem Aplicada!", Toast.LENGTH_SHORT).show();
         });
 
         atualizarLista();
-    }
-
-    private void startFakeCall() {
-        callOverlay.setVisibility(View.VISIBLE);
-        // O vídeo deve estar na pasta res/raw/video_influencer.mp4
-        String path = "android.resource://" + getPackageName() + "/" + R.raw.video_influencer;
-        videoView.setVideoURI(Uri.parse(path));
-        videoView.start();
-        dbHelper.addData("LIVE INICIADA: Simulando presença...");
     }
 
     private void atualizarLista() {
