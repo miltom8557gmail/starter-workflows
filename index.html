@@ -3,56 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Acesso Desbloqueado</title>
+    <title>AKAME NEXUS | Experiência Unbound</title>
     <style>
-        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; --card: #0d0d0d; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; text-align: center; }
+        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; }
         
         .ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
                     background: radial-gradient(circle at 50% 50%, #1a0505 0%, #030303 100%); z-index: -1; }
 
-        .header { padding: 60px 20px; border-bottom: 1px solid #1a1a1a; }
-        .header h1 { font-size: 3rem; color: var(--gold); letter-spacing: 5px; margin: 0; }
+        /* INTERFACE DE MÍDIA */
+        .media-container { max-width: 600px; margin: 20px auto; background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 8px; overflow: hidden; }
         
-        .container { max-width: 400px; margin: 40px auto; background: var(--card); border: 1px solid #1a1a1a; padding: 30px; border-radius: 4px; }
-        
-        /* ESTILO DOS BOTÕES */
-        .btn-pay { background: #00a82d; color: #fff; border: none; width: 100%; padding: 15px; 
-                   font-weight: bold; cursor: pointer; margin-top: 15px; border-radius: 5px; text-transform: uppercase; }
-        
-        .btn-google { background: #fff; color: #000; border: none; width: 100%; padding: 15px; 
-                      font-weight: bold; cursor: pointer; margin-top: 15px; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+        .character-frame { position: relative; width: 100%; height: 450px; background: #000; overflow: hidden; }
+        .character-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .character-frame:hover img { opacity: 1; filter: sepia(20%); }
 
-        .price-tag { font-size: 2rem; color: var(--gold); margin: 20px 0; font-weight: bold; }
-        .unbound-text { color: var(--red); font-size: 10px; letter-spacing: 2px; font-weight: bold; }
+        .voice-player { background: rgba(139, 0, 0, 0.1); padding: 15px; display: flex; align-items: center; justify-content: center; border-top: 1px solid #1a1a1a; }
+        .btn-audio { background: var(--red); color: #fff; border: none; padding: 10px 20px; border-radius: 20px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
+
+        .chat-overlay { padding: 20px; text-align: left; background: linear-gradient(to top, #0d0d0d, transparent); }
+        .message { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; border-left: 2px solid var(--red); padding-left: 10px; }
+
+        .price-overlay { padding: 30px; border-top: 1px solid #1a1a1a; background: #080808; }
+        .btn-unlock { background: var(--gold); color: #000; border: none; width: 100%; padding: 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; }
     </style>
 </head>
 <body>
     <div class="ambient"></div>
 
-    <div class="header">
-        <h1>AKAME NEXUS</h1>
-        <span class="unbound-text">SISTEMA SEM FILTROS ATIVO</span>
+    <div class="media-container">
+        <div class="character-frame">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Seraphina">
+            <div style="position: absolute; top: 20px; left: 20px;" class="warning-label">LIVE SESSION • 18+</div>
+        </div>
+
+        <div class="voice-player">
+            <button class="btn-audio" onclick="alert('Áudio bloqueado. Assine o Plano Unbound para ouvir vozes reais.')">
+                ▶ OUVIR VOZ DA SERAPHINA
+            </button>
+        </div>
+
+        <div class="chat-overlay">
+            <div class="message">
+                <b style="color:var(--gold)">Seraphina:</b> "Você realmente achou que poderia vir aqui e sair sem deixar algo para trás? A imersão custa caro, mestre..."
+            </div>
+        </div>
+
+        <div class="price-overlay">
+            <p style="font-size: 12px; color: #555;">Desbloqueie Imagens, Áudios e Histórias Sem Filtros.</p>
+            <div style="font-size: 1.5rem; color: #fff; margin-bottom: 15px;">R$ 29,90<small>/mês</small></div>
+            <button class="btn-unlock" onclick="window.location.href='#'">PAGAR E DESBLOQUEAR</button>
+        </div>
     </div>
-
-    <div class="container">
-        <h3>PLANO ACCESS UNBOUND</h3>
-        <p style="font-size: 12px; color: #666;">Acesso ilimitado a Seraphina e novos personagens.</p>
-        
-        <div class="price-tag">R$ 29,90<span style="font-size: 12px; color: #444;">/mês</span></div>
-
-        <button class="btn-pay" onclick="window.location.href='#'">
-            💳 ASSINAR VIA PIX / CARTÃO
-        </button>
-
-        <div style="margin: 20px 0; color: #333;">——— OU ———</div>
-
-        <button class="btn-google" onclick="alert('Área de Assinantes: Realize o pagamento para liberar o acesso ao Gmail.')">
-            <img src="https://www.google.com/favicon.ico" style="width:18px; margin-right:10px;"> ENTRAR COM GOOGLE
-        </button>
-    </div>
-
-    <p style="font-size: 10px; color: #222; margin-top: 50px;">PROTOLOCO: S8XDBBIFZ1</p>
 
 </body>
 </html>
