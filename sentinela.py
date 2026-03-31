@@ -1,46 +1,43 @@
-import os, socket, requests
-from flask import Flask, request
+import os, socket, json, time, requests
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-log_msg = "[🛰️] AGUARDANDO COMANDO MESTRE..."
-API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
-
-@app.route('/ia/executar')
-def executar():
-    global log_msg
-    ordem = request.args.get('prompt', '')
-    log_msg = f"[🧠] TRADUZINDO: {ordem}"
-    
-    prompt_ia = f"Transforme em um comando Bash único para Termux. Apenas o comando: {ordem}"
-    try:
-        payload = {"inputs": prompt_ia, "parameters": {"max_new_tokens": 100}}
-        res = requests.post(API_URL, json=payload).json()
-        comando = res[0]['generated_text'].split('\n')[-1].strip()
-        log_msg = f"[🔥] EXECUTANDO: {comando}"
-        os.system(f"{comando} > resultado.txt 2>&1")
-        os.system("git add . && git commit -m '[🚀] AUTO-CMD EXECUTADO' && git push origin main &")
-        return f"OK: {comando}"
-    except:
-        return "ERRO NA IA"
+log_msg = "[🛰️] AKAME CORE: AGUARDANDO ORDEM"
 
 @app.route('/ia/treinar_lora')
 def treinar():
     global log_msg
-    nome = request.args.get('nome', 'akame_lora')
-    log_msg = f"[⚒️] INICIANDO TREINO: {nome}"
-    with open("config_treino.txt", "w") as f: f.write(f"NAME={nome}")
-    os.system("git add . && git commit -m '[🔥] INICIAR TREINO NUVEM' && git push origin main &")
-    return "TREINO DISPARADO"
+    nome = request.args.get('nome', 'akame_model')
+    log_msg = f"[🔥] DELEGANDO LORA: {nome} PARA NUVEM"
+    
+    # Trigger para o GitHub Actions
+    with open("trigger.json", "w") as f:
+        json.dump({"lora_name": nome, "timestamp": time.time()}, f)
+    
+    os.system("git add . && git commit -m '[⚒️] TRIGGER LORA' && git push origin main &")
+    return "ORDEM ENVIADA PARA NUVEM"
 
-@app.route('/logs')
-def logs(): return log_msg
+@app.route('/ia/executar')
+def executar():
+    global log_msg
+    prompt = request.args.get('prompt', '')
+    log_msg = f"[⌨️] LOCAL CMD: {prompt}"
+    # Executa comando local e retorna log
+    os.system(f"{prompt} > last_log.txt 2>&1 &")
+    return f"EXECUTANDO LOCAL: {prompt}"
 
 @app.route('/check')
 def check(): return "OK", 200
+
+@app.route('/logs')
+def logs(): 
+    global log_msg
+    return log_msg
 
 if __name__ == '__main__':
     for p in range(8081, 8090):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(('127.0.0.1', p)) != 0:
+                print(f"SISTEMA ONLINE NA PORTA {p}")
                 app.run(host='0.0.0.0', port=p, threaded=True)
                 break
