@@ -1,88 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#000000"
-    android:padding="16dp">
+    android:background="#000000">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AKAME: NÚCLEO DE SEGURANÇA"
-        android:textColor="#FF0000"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textSize="18sp" />
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="#1A1A1A"
-        android:layout_marginTop="20dp">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AKAME: NÚCLEO SUPREMO"
+            android:textColor="#FF0000"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="22sp" />
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-            <TextView
-                android:id="@+id/profit_text"
-                android:layout_width="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="#1A1A1A"
+            android:layout_marginTop="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lucro Estimado: R$ 1.450,00"
-                android:textColor="#00FF00"
-                android:textSize="20sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status: Operacional"
-                android:textColor="#666"
-                android:textSize="12sp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:orientation="vertical"
+                android:padding="15dp">
+                <TextView
+                    android:id="@+id/profit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LUCRO TOTAL: R$ 3.890,00"
+                    android:textColor="#00FF00"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CAMUFLAGEM DIGITAL"
-        android:textColor="#1E90FF"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp" />
+        <Button
+            android:id="@+id/btn_fake_call"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="INICIAR CHAMADA DE VÍDEO FAKE"
+            android:backgroundTint="#FFD700"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp" />
 
-    <CheckBox
-        android:id="@+id/check_metadata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Limpar Rastros (Exif/Metadata)"
-        android:textColor="#AAA"
-        android:checked="true" />
+        <Button
+            android:id="@+id/btn_obfuscate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="LIMPAR METADADOS DA MÍDIA"
+            android:backgroundTint="#444"
+            android:layout_marginTop="10dp" />
 
-    <Button
-        android:id="@+id/btn_obfuscate"
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/call_overlay"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="CRIPTOGRAFAR E LIMPAR MÍDIA"
-        android:backgroundTint="#444"
-        android:layout_marginTop="10dp" />
+        android:layout_height="match_parent"
+        android:background="#000"
+        android:visibility="gone">
+        
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
 
-    <EditText
-        android:id="@+id/etInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Log de atividade ou nova ID..."
-        android:textColorHint="#666"
-        android:textColor="#FFF"
-        android:layout_marginTop="20dp" />
+        <ImageButton
+            android:id="@+id/btn_end_call"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="50dp"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:backgroundTint="#FF0000" />
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LIVE SCAMMER PROTECTION"
+            android:textColor="#00FF00"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="40dp" />
+    </FrameLayout>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="10dp"
-        android:divider="#333"
-        android:dividerHeight="1dp" />
-
-</LinearLayout>
+</RelativeLayout>

@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "akame_imperium.db";
-    public static final String TABLE_NAME = "logs_seguranca";
+    private static final String DATABASE_NAME = "akame_final.db";
+    public static final String TABLE_NAME = "historico_imperio";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOME TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, LOG TEXT)");
     }
 
     @Override
@@ -26,10 +26,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item) {
+    public boolean addData(String log) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("NOME", item);
+        cv.put("LOG", log);
         return db.insert(TABLE_NAME, null, cv) != -1;
     }
 
