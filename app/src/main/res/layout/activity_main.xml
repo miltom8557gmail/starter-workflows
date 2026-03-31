@@ -1,162 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0A0A0A"> <LinearLayout
-        android:id="@+id/top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="#141414"
-        android:padding="10dp"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AKAME"
-            android:textColor="#FF0000"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" FORJA"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"/>
-    </LinearLayout>
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#050505">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_bar"
-        android:layout_below="@id/top_bar"
-        android:padding="15dp">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="15dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="PROJETO: INFLUENCER DIGITAL (LoRA)" android:textColor="#FF0000" android:textStyle="bold" android:layout_gravity="center"/>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#000"
-                android:layout_marginBottom="15dp">
-                <VideoView
-                    android:id="@+id/video_player"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"/>
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@android:drawable/ic_media_play"
-                    android:layout_gravity="center"
-                    app:tint="#80FFFFFF"/>
-            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp" app:cardBackgroundColor="#111" android:layout_marginTop="20dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+                    
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="1. Criar Identidade (Dataset)" android:textColor="#FFF" android:textSize="16sp"/>
+                    
+                    <Button android:id="@+id/btn_select_photos" android:layout_width="match_parent" android:layout_height="55dp"
+                        android:text="SELECIONAR 20 FOTOS DA INFLUENCER" android:backgroundTint="#333" android:layout_marginTop="10dp"/>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#1A1A1A"
-                android:layout_marginBottom="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Criação IA S-Rank"
-                        android:textColor="#FFD700"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="10dp"/>
-                    <Button
-                        android:id="@+id/btn_nsfw"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:text="GERAR IMAGEM (Unsensured)"
-                        android:backgroundTint="#262626"
-                        android:textColor="#FFF"
-                        android:textAllCaps="false"
-                        android:textSize="14sp"/>
-                    <Button
-                        android:id="@+id/btn_veo3"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:text="FORJAR VÍDEO VEO3 (Pro)"
-                        android:backgroundTint="#4B0082"
-                        android:textColor="#FFF"
-                        android:textAllCaps="false"
-                        android:textSize="14sp"
-                        android:layout_marginTop="5dp"/>
+                    <Button android:id="@+id/btn_train_lora" android:layout_width="match_parent" android:layout_height="60dp"
+                        android:text="INICIAR TREINAMENTO (GitHub GPU)" android:backgroundTint="#FFD700" android:textColor="#000" android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#1A1A1A"
-                android:layout_marginBottom="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hub de Mídia"
-                        android:textColor="#1E90FF"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="10dp"/>
-                    <EditText
-                        android:id="@+id/url_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="Link para Download (YT-DLP)..."
-                        android:textColor="#FFF"
-                        android:textColorHint="#555"
-                        android:background="#121212"
-                        android:padding="10dp"
-                        android:textSize="14sp"/>
-                    <Button
-                        android:id="@+id/btn_download"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:text="DOWNLOAD UNIVERSAL"
-                        android:backgroundTint="#8B0000"
-                        android:textColor="#FFF"
-                        android:textAllCaps="false"
-                        android:layout_marginTop="5dp"/>
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp" app:cardBackgroundColor="#111" android:layout_marginTop="15dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+                    
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="2. Gerar Conteúdo (Usar LoRA)" android:textColor="#FFF" android:textSize="16sp"/>
+                    
+                    <EditText android:id="@+id/lora_prompt" android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:hint="Ex: Influencer em Paris, luz de ouro..." android:textColorHint="#555" android:textColor="#00FF00" android:layout_marginTop="10dp"/>
+
+                    <Button android:id="@+id/btn_generate_influencer" android:layout_width="match_parent" android:layout_height="55dp"
+                        android:text="GERAR FOTO/VÍDEO DA INFLUENCER" android:backgroundTint="#8B0000" android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:orientation="horizontal"
-        android:background="#141414"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:padding="5dp">
-        
-        <ImageView android:layout_width="0dp" android:layout_height="30dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_edit" app:tint="#FFF"/>
-        <ImageView android:layout_width="0dp" android:layout_height="30dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_camera" app:tint="#555"/>
-        <ImageView android:layout_width="0dp" android:layout_height="30dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_share" app:tint="#555"/>
-        <ImageView android:layout_width="0dp" android:layout_height="30dp" android:layout_weight="1" android:src="@android:drawable/ic_menu_manage" app:tint="#555"/>
-        
-    </LinearLayout>
-
 </RelativeLayout>
