@@ -3,41 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Narrativas de Elite</title>
+    <title>AKAME NEXUS | Acesso Desbloqueado</title>
     <style>
         :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; --card: #0d0d0d; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; overflow-x: hidden; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; text-align: center; }
         
-        /* Fundo de Profundidade */
         .ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                    background: radial-gradient(circle at 10% 20%, #1a0505 0%, #030303 100%); z-index: -1; }
+                    background: radial-gradient(circle at 50% 50%, #1a0505 0%, #030303 100%); z-index: -1; }
 
-        .header { padding: 60px 20px; text-align: center; border-bottom: 1px solid #1a1a1a; }
-        .header h1 { font-size: 3rem; letter-spacing: 8px; color: var(--gold); text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); margin: 0; text-transform: uppercase; }
-        .header p { color: #555; font-size: 1rem; margin-top: 15px; font-style: italic; }
+        .header { padding: 60px 20px; border-bottom: 1px solid #1a1a1a; }
+        .header h1 { font-size: 3rem; color: var(--gold); letter-spacing: 5px; margin: 0; }
+        
+        .container { max-width: 400px; margin: 40px auto; background: var(--card); border: 1px solid #1a1a1a; padding: 30px; border-radius: 4px; }
+        
+        /* ESTILO DOS BOTÕES */
+        .btn-pay { background: #00a82d; color: #fff; border: none; width: 100%; padding: 15px; 
+                   font-weight: bold; cursor: pointer; margin-top: 15px; border-radius: 5px; text-transform: uppercase; }
+        
+        .btn-google { background: #fff; color: #000; border: none; width: 100%; padding: 15px; 
+                      font-weight: bold; cursor: pointer; margin-top: 15px; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
 
-        .nexus-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px 20px; }
-        
-        .entity-card { background: var(--card); border: 1px solid #1a1a1a; border-radius: 4px; 
-                         width: 340px; transition: 0.5s; position: relative; }
-        .entity-card:hover { border-color: var(--red); box-shadow: 0 0 30px rgba(139, 0, 0, 0.2); }
-        
-        .entity-img { width: 100%; height: 240px; background: #000; display: flex; align-items: center; justify-content: center; filter: grayscale(50%); border-bottom: 1px solid #1a1a1a; }
-        
-        .entity-content { padding: 25px; }
-        .warning-label { font-size: 10px; color: var(--red); border: 1px solid var(--red); padding: 3px 10px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-        
-        .entity-name { font-size: 1.6rem; margin: 15px 0 8px 0; color: #fff; }
-        .entity-desc { font-size: 0.9rem; color: #777; line-height: 1.6; min-height: 80px; }
-        
-        .stats-bar { margin-top: 20px; border-top: 1px solid #1a1a1a; padding-top: 15px; display: flex; justify-content: space-between; font-size: 11px; color: #444; text-transform: uppercase; }
-        .stats-bar b { color: var(--gold); }
-
-        .btn-unbound { background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; padding: 15px; 
-                         font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; }
-        .btn-unbound:hover { background: var(--gold); color: #000; }
-        
-        .referral-footer { text-align: center; padding: 40px; color: #333; font-size: 11px; letter-spacing: 2px; }
+        .price-tag { font-size: 2rem; color: var(--gold); margin: 20px 0; font-weight: bold; }
+        .unbound-text { color: var(--red); font-size: 10px; letter-spacing: 2px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -45,31 +32,27 @@
 
     <div class="header">
         <h1>AKAME NEXUS</h1>
-        <p>"A realidade é opcional. O desejo é absoluto."</p>
+        <span class="unbound-text">SISTEMA SEM FILTROS ATIVO</span>
     </div>
 
-    <div class="nexus-grid">
-        <div class="entity-card">
-            <div class="entity-img">💀</div>
-            <div class="entity-content">
-                <span class="warning-label">UNFILTERED • DARK RP</span>
-                <div class="entity-name">Seraphina Vale</div>
-                <div class="entity-desc">Obsessiva e manipuladora. Uma narrativa onde não existem limites éticos ou filtros de conduta. Domine ou seja dominado.</div>
-                
-                <div class="stats-bar">
-                    <span>Libido: <b>MAX</b></span>
-                    <span>Moral: <b>ZERO</b></span>
-                    <span>Status: <b>LIVRE</b></span>
-                </div>
-                
-                <button class="btn-unbound" onclick="location.href='https://accounts.google.com/gsi/select'">DESBLOQUEAR ACESSO</button>
-            </div>
-        </div>
+    <div class="container">
+        <h3>PLANO ACCESS UNBOUND</h3>
+        <p style="font-size: 12px; color: #666;">Acesso ilimitado a Seraphina e novos personagens.</p>
+        
+        <div class="price-tag">R$ 29,90<span style="font-size: 12px; color: #444;">/mês</span></div>
+
+        <button class="btn-pay" onclick="window.location.href='#'">
+            💳 ASSINAR VIA PIX / CARTÃO
+        </button>
+
+        <div style="margin: 20px 0; color: #333;">——— OU ———</div>
+
+        <button class="btn-google" onclick="alert('Área de Assinantes: Realize o pagamento para liberar o acesso ao Gmail.')">
+            <img src="https://www.google.com/favicon.ico" style="width:18px; margin-right:10px;"> ENTRAR COM GOOGLE
+        </button>
     </div>
 
-    <div class="referral-footer">
-        PROTOCOL S8XDBBIFZ1 // ENCRYPTED CONNECTION
-    </div>
+    <p style="font-size: 10px; color: #222; margin-top: 50px;">PROTOLOCO: S8XDBBIFZ1</p>
 
 </body>
 </html>
