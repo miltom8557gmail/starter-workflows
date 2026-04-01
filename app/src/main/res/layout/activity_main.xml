@@ -4,11 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#000000">
+    android:background="#000000"
+    android:padding="20dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IMPÉRIO NEXUS"
         android:textColor="#FFD700"
-        android:textSize="24sp" />
+        android:textSize="28sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SISTEMA ESTABILIZADO"
+        android:textColor="#00FF00"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp" />
+    <EditText
+        android:id="@+id/pinInput"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Digite o PIN"
+        android:textColorHint="#666"
+        android:textColor="#FFF"
+        android:inputType="numberPassword"
+        android:layout_marginTop="30dp"/>
+    <Button
+        android:id="@+id/btnEntrar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="ACESSAR"
+        android:backgroundTint="#FFD700"
+        android:textColor="#000"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>
