@@ -1,4 +1,4 @@
-name: Deploy do Imperio
+name: RESTAURAÇÃO_DO_IMPERIO
 on:
   push:
     branches: ["main"]
@@ -7,8 +7,15 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Limpo
+        uses: actions/checkout@v4
+        with:
+          submodules: false  # PROÍBE O ERRO 128
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
