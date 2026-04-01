@@ -13,19 +13,11 @@
         android:textColor="#FFD700"
         android:textSize="28sp"
         android:textStyle="bold" />
-    <TextView
-        android:id="@+id/statusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SISTEMA ESTABILIZADO"
-        android:textColor="#00FF00"
-        android:textSize="14sp"
-        android:layout_marginTop="10dp" />
     <EditText
         android:id="@+id/pinInput"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="Digite o PIN"
+        android:hint="PIN DE ACESSO"
         android:textColorHint="#666"
         android:textColor="#FFF"
         android:inputType="numberPassword"
@@ -34,7 +26,7 @@
         android:id="@+id/btnEntrar"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="ACESSAR"
+        android:text="AUTENTICAR"
         android:backgroundTint="#FFD700"
         android:textColor="#000"
         android:layout_marginTop="10dp"/>
