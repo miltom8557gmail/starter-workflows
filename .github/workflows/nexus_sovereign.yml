@@ -1,29 +1,50 @@
 name: 🔱 NEXUS SOVEREIGN
-on: [push]
-permissions: { contents: write, pages: write, id-token: write }
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build_all:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with: { java-version: '17', distribution: 'temurin', cache: gradle }
-      - name: Prep
+      - name: 🛰️ Checkout Código
+        uses: actions/checkout@v4
+
+      - name: ☕ Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: 🏗️ Preparar Estrutura
         run: |
           mkdir -p app/src/main/res/values
           echo '<resources><string name="app_name">Imperio Nexus</string></resources>' > app/src/main/res/values/strings.xml
           chmod +x gradlew
-      - name: Build
+
+      - name: 🔨 Compilar APK (Debug)
         run: ./gradlew assembleDebug --no-daemon
-      - name: Release APK
+
+      - name: 💎 Criar Release e Upload APK
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.0.0
-          name: 💎 Nexus OS - Estabilidade Total
+          tag_name: v2.0.1
+          name: 🔱 Nexus OS - Estabilidade v2.0.1
           files: app/build/outputs/apk/debug/app-debug.apk
-        env: { GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
-      - name: Deploy Site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🌐 Upload Website
         uses: actions/upload-pages-artifact@v3
-        with: { path: '.' }
-      - name: Launch
+        with:
+          path: '.'
+
+      - name: 🚀 Lançar Website
         uses: actions/deploy-pages@v4
