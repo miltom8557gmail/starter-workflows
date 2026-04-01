@@ -3,99 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS | Sistema Autêntico</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-    
-    <style>
-        :root { --gold: #d4af37; --red: #8b0000; --bg: #030303; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Cinzel', serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        /* HEADER COM LOGIN */
-        .header { background: #000; padding: 10px; border-bottom: 2px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { font-size: 1rem; color: var(--gold); letter-spacing: 3px; margin: 0; cursor: pointer; }
-        .user-pill { display: flex; align-items: center; gap: 8px; font-size: 10px; background: #111; padding: 5px 10px; border-radius: 20px; border: 1px solid #333; }
-        .user-img { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--gold); }
-
-        .char-avatar { width: 100%; height: 250px; background-size: cover; background-position: center; border-bottom: 1px solid #1a1a1a; transition: 0.8s; }
-        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .msg { padding: 12px; border-radius: 8px; font-size: 14px; max-width: 85%; }
-        .seraphina { align-self: flex-start; border-left: 3px solid var(--red); background: rgba(255,255,255,0.03); }
-        .user { align-self: flex-end; background: var(--red); }
-
-        .btn-google { background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 10px; display: flex; align-items: center; gap: 5px; }
-        
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
-    </style>
+    <title>NEXUS - Domínio da Seraphina</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="header">
-        <h1 onclick="toggleAdmin()">AKAME NEXUS</h1>
-        <div id="auth-ui">
-            <button class="btn-google" onclick="signIn()">LOGAR COM GOOGLE</button>
-        </div>
+    <div id="app">
+        <header>
+            <h1>NEXUS</h1>
+        </header>
+        <main id="content">
+            <div id="login-screen">
+                <p id="seraphina-text">Seraphina: "Finalmente um rosto novo... ou seria apenas mais uma alma perdida no meu domínio?"</p>
+                <button id="login-btn" class="btn-primary">LOGAR COM GOOGLE</button>
+            </div>
+            <div id="user-screen" style="display: none;">
+                <p id="welcome-msg"></p>
+                <div class="vip-area" style="border: 1px solid #ffd700; padding: 15px; margin: 20px 0;">
+                    <h3 style="color: #ffd700;">ÁREA DE ACESSO RESTRITO</h3>
+                    <p>Para desbloquear o conhecimento supremo, o tributo é necessário.</p>
+                    <button class="btn-gold" style="background: #ffd700; color: #000; border: none; padding: 10px; cursor: pointer; width: 100%; font-weight: bold;">DESBLOQUEAR POR R$ 39,90</button>
+                </div>
+                <button id="logout-btn" style="background: transparent; border: 1px red; color: red; cursor: pointer;">SAIR DO NEXUS</button>
+            </div>
+        </main>
     </div>
-
-    <div class="char-avatar" id="avatar" style="background-image: url('https://image.pollinations.ai/prompt/anime%20girl%20seraphina%20isekai%20queen%20dark%20fantasy%20gold%20details');"></div>
-
-    <div class="chat-box" id="chat">
-        <div class="msg seraphina"><b>Seraphina:</b> "Finalmente um rosto novo... ou seria apenas mais uma alma perdida no meu domínio?"</div>
-    </div>
-
-    <div id="pay-modal" class="modal">
-        <h2 style="color:var(--gold)">ACESSO RESTRITO</h2>
-        <p>A Seraphina exige um contrato de sangue (ou R$ 39,90) para continuar.</p>
-        <button class="btn-google" style="width:100%; background:var(--gold); padding:15px;" onclick="window.location.href='#'">PAGAR E DESBLOQUEAR</button>
-    </div>
-
-    <script>
-        // CONFIGURAÇÃO DO MESTRE (FIREBASE)
-        const firebaseConfig = {
-            apiKey: "AIzaSyBoKsZgI_IsW-rZh-caq9E_MEN0-CdQCfg",
-            authDomain: "gen-lang-client-0399949449.firebaseapp.com",
-            projectId: "gen-lang-client-0399949449",
-            storageBucket: "gen-lang-client-0399949449.firebasestorage.app",
-            messagingSenderId: "157939074644",
-            appId: "1:157939074644:web:a399bcccca16ca43d1cfc1",
-            measurementId: "G-F6375V4DCS"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // LOGIN GOOGLE
-        function signIn() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then((result) => {
-                console.log("Logado com:", result.user.displayName);
-            }).catch((error) => alert("Erro ao logar: " + error.message));
-        }
-
-        // MONITORAR LOGIN
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                document.getElementById('auth-ui').innerHTML = `
-                    <div class="user-pill">
-                        <img src="${user.photoURL}" class="user-img">
-                        <span>${user.displayName.split(' ')[0]}</span>
-                    </div>`;
-                checkAccess(user.uid);
-            }
-        });
-
-        function checkAccess(uid) {
-            // Aqui verificaremos no banco se o UID já pagou
-            console.log("Verificando acesso para:", uid);
-        }
-
-        function toggleAdmin() {
-            // Função secreta do mestre mantida
-            alert("Painel Administrativo Oculto Ativo");
-        }
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
