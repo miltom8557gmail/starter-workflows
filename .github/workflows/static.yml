@@ -1,24 +1,19 @@
-name: VITRINE_IMPERIAL
+name: Deploy do Imperio
 on:
   push:
     branches: ["main"]
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: false
+      - uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'  # AQUI: Comando para ler a raiz absoluta
+          path: '.'
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
