@@ -3,32 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS - Domínio da Seraphina</title>
-    <link rel="stylesheet" href="style.css">
+    <title>IMPÉRIO NEXUS | CENTRAL</title>
+    <style>
+        body { background: #000; color: #FFD700; font-family: sans-serif; text-align: center; padding: 50px; }
+        .card { border: 2px solid #FFD700; padding: 30px; border-radius: 15px; display: inline-block; box-shadow: 0 0 20px #ffd70055; }
+        h1 { font-size: 3em; margin-bottom: 10px; }
+        .status { color: #00FF00; font-weight: bold; margin-bottom: 30px; }
+        .btn { background: #FFD700; color: #000; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; font-size: 1.2em; transition: 0.3s; }
+        .btn:hover { background: #fff; box-shadow: 0 0 30px #fff; }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <header>
-            <h1>NEXUS</h1>
-        </header>
-        <main id="content">
-            <div id="login-screen">
-                <p id="seraphina-text">Seraphina: "Finalmente um rosto novo... ou seria apenas mais uma alma perdida no meu domínio?"</p>
-                <button id="login-btn" class="btn-primary">LOGAR COM GOOGLE</button>
-            </div>
-            <div id="user-screen" style="display: none;">
-                <p id="welcome-msg"></p>
-                <div class="vip-area" style="border: 1px solid #ffd700; padding: 15px; margin: 20px 0;">
-                    <h3 style="color: #ffd700;">ÁREA DE ACESSO RESTRITO</h3>
-                    <p>Para desbloquear o conhecimento supremo, o tributo é necessário.</p>
-                    <button class="btn-gold" style="background: #ffd700; color: #000; border: none; padding: 10px; cursor: pointer; width: 100%; font-weight: bold;">DESBLOQUEAR POR R$ 39,90</button>
-                </div>
-                <button id="logout-btn" style="background: transparent; border: 1px red; color: red; cursor: pointer;">SAIR DO NEXUS</button>
-            </div>
-        </main>
+    <div class="card">
+        <h1>IMPÉRIO NEXUS</h1>
+        <p class="status">● SISTEMA ONLINE E ESTABILIZADO</p>
+        <p>Acesse a tecnologia de elite do seu terminal diretamente no Android.</p>
+        <br><br>
+        <a href="https://github.com/miltom8557gmail/starter-workflows/releases/latest" class="btn">BAIXAR APK IMPERIAL</a>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
