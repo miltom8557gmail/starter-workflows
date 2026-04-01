@@ -1,19 +1,14 @@
-name: NEXUS_FINAL_DEBBUG
+name: Deploy do Imperio
 on:
   push:
     branches: ["main"]
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     steps:
-      - name: Checkout Direto
-        uses: actions/checkout@v4
-        with:
-          submodules: false  # ISSO MATA O ERRO 128 DE VEZ
+      - uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
