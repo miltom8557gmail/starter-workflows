@@ -1,4 +1,4 @@
-name: Deploy Final do Imperio
+name: SOBERANIA_DO_IMPERIO
 on:
   push:
     branches: ["main"]
@@ -7,10 +7,12 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: false
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
@@ -18,4 +20,5 @@ jobs:
         with:
           path: '.'
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
