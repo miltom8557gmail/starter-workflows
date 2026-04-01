@@ -1,0 +1,17 @@
+name: 🚀 Fabricar APK Imperial
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with: { java-version: '17', distribution: 'temurin' }
+      - name: Dar permissão ao Gradlew
+        run: chmod +x gradlew
+      - name: Construir APK
+        run: ./gradlew assembleDebug
+      - name: Upload do APK
+        uses: actions/upload-artifact@v3
+        with: { name: App-Imperio, path: app/build/outputs/apk/debug/app-debug.apk }
