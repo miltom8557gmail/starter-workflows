@@ -1,26 +1,24 @@
-name: RESTAURAÇÃO_DO_IMPERIO
+name: VITRINE_IMPERIAL
 on:
   push:
     branches: ["main"]
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       pages: write
       id-token: write
     steps:
-      - name: Checkout Limpo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: false  # PROÍBE O ERRO 128
+          submodules: false
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '.'  # AQUI: Comando para ler a raiz absoluta
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
