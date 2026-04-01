@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS | COMMAND CENTER</title>
+    <title>NEXUS OS | CENTRAL</title>
     <style>
-        body { background: radial-gradient(circle, #1a1a1a 0%, #000 100%); color: #FFD700; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; }
-        .panel { border: 1px solid #FFD700; padding: 40px; border-radius: 20px; background: rgba(255, 215, 0, 0.05); backdrop-filter: blur(10px); box-shadow: 0 0 50px rgba(255, 215, 0, 0.2); text-align: center; }
-        h1 { letter-spacing: 10px; text-shadow: 0 0 10px #FFD700; }
-        .download-btn { display: inline-block; margin-top: 20px; padding: 15px 40px; background: #FFD700; color: #000; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.5s; }
-        .download-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px #fff; background: #fff; }
+        body { background: #000; color: #FFD700; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; justify-content: center; text-align: center; }
+        .glass { background: rgba(255, 215, 0, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 215, 0, 0.3); padding: 40px; border-radius: 30px; box-shadow: 0 0 50px rgba(255, 215, 0, 0.1); width: 80%; max-width: 400px; }
+        .qr-code { background: #fff; padding: 10px; border-radius: 10px; margin: 20px auto; width: 150px; height: 150px; }
+        .btn { display: block; background: #FFD700; color: #000; padding: 15px; margin-top: 20px; text-decoration: none; font-weight: bold; border-radius: 10px; transition: 0.3s; }
+        .btn:hover { background: #fff; box-shadow: 0 0 20px #fff; }
+        .status-blink { color: #0f0; font-size: 0.8em; animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
-    <div class="panel">
-        <h1>NEXUS</h1>
-        <p>SISTEMA OPERACIONAL ESTABILIZADO</p>
-        <div style="font-size: 0.8em; color: #0f0;">● ENCRYPTED CONNECTION ACTIVE</div>
-        <a href="https://github.com/miltom8557gmail/starter-workflows/releases/latest" class="download-btn">OBTER APK IMPERIAL</a>
+    <div class="glass">
+        <h1 style="letter-spacing: 5px;">NEXUS OS</h1>
+        <p class="status-blink">● SISTEMA OPERACIONAL ATIVO</p>
+        <div class="qr-code">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/miltom8557gmail/starter-workflows/releases/latest" alt="QR Code Download">
+        </div>
+        <p style="font-size: 0.8em; opacity: 0.7;">Aponte a câmera para instalar</p>
+        <a href="https://github.com/miltom8557gmail/starter-workflows/releases/latest" class="btn">DOWNLOAD APK v1.5.0</a>
     </div>
 </body>
 </html>
