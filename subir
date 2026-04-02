@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "🛡️ [AKAME NEXUS] Iniciando Sincronização..."
+git add .
+read -p "📝 O que você mudou? (Aperte Enter para padrão): " msg
+if [ -z "$msg" ]; then
+  msg="✨ Atualização de Rotina do Império"
+fi
+git commit -m "$msg"
+git push origin main -f
+echo "✅ [VITÓRIA] Site atualizado com sucesso no GitHub!"
