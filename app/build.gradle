@@ -6,9 +6,10 @@ android {
         applicationId "com.nexus.app"
         minSdk 24
         targetSdk 34
-        versionCode 705
-        versionName "7.0.5-OMNI"
+        versionCode 710
+        versionName "7.1.0-OMNI"
     }
+    buildTypes { release { minifyEnabled false } }
 }
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
