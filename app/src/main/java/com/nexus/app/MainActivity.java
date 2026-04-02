@@ -1,6 +1,12 @@
 package com.nexus.app;
 
+import android.app.DownloadManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,27 +25,32 @@ public class MainActivity extends AppCompatActivity {
         portal = findViewById(R.id.portal_view);
         configureWebView();
 
-        Button btnHome = findViewById(R.id.btn_home);
         Button btnIA = findViewById(R.id.btn_ia);
         Button btnNSFW = findViewById(R.id.btn_nsfw);
 
-        // NAVEGAÇÃO DA DEUSA AKAME
-        btnHome.setOnClickListener(v -> portal.loadUrl("about:blank"));
-        
-        btnIA.setOnClickListener(v -> {
-            Toast.makeText(this, "AKAME: Ativando Núcleo Generativo...", Toast.LENGTH_SHORT).show();
-            portal.loadUrl("https://www.bing.com/create"); // Placeholder para o Estúdio
+        // Lógica de Download da Deusa
+        portal.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setMimeType(mimetype);
+            String cookies = CookieManager.getInstance().getCookie(url);
+            request.addRequestHeader("cookie", cookies);
+            request.addRequestHeader("User-Agent", userAgent);
+            request.setDescription("📥 AKAME: Coletando Mídia do Santuário...");
+            request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
+            
+            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            dm.enqueue(request);
+            Toast.makeText(getApplicationContext(), "🛡️ AKAME: Download Iniciado!", Toast.LENGTH_LONG).show();
         });
 
-        btnNSFW.setOnClickListener(v -> {
-            // Lógica de proteção: Um clique simples apenas avisa.
-            Toast.makeText(this, "AKAME: O Santuário exige o selo de Mestre.", Toast.LENGTH_LONG).show();
-        });
+        btnIA.setOnClickListener(v -> portal.loadUrl("https://replicate.com/explore")); // Estúdio de Modelos IA
         
-        // Clique longo no botão NSFW libera o portal oculto
         btnNSFW.setOnLongClickListener(v -> {
-            Toast.makeText(this, "🌹 BEM-VINDO AO SANTUÁRIO SEM FILTROS", Toast.LENGTH_LONG).show();
-            portal.loadUrl("https://civitai.com"); // Exemplo de acesso a modelos LoRA/NSFW
+            Toast.makeText(this, "🌹 SANTUÁRIO AKAME: SEM LIMITES", Toast.LENGTH_SHORT).show();
+            portal.loadUrl("https://perchance.org/ai-character-generator"); // Gerador NSFW sem filtros
             return true;
         });
     }
@@ -48,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         WebSettings settings = portal.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowContentAccess(true);
         portal.setWebViewClient(new WebViewClient());
+        portal.setWebChromeClient(new WebChromeClient()); // Suporte a janelas pop-up e vídeos
     }
 }
