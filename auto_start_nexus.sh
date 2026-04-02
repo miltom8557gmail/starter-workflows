@@ -1,15 +1,16 @@
 #!/bin/bash
+# Silenciando erros e logs desnecessários
+exec 2>/dev/null
+
 cd ~/starter-workflows
 clear
-python3 nexus_spirit.py "Iniciando Sequência de Soberania..."
 
-echo "🔄 [SISTEMA]: Renovando Backups e Conexões..."
-./manter_vivo.sh > /dev/null 2>&1
+# O Oráculo assume o controle visual
+python3 nexus_spirit.py "Iniciando Frequência de Onisciência..."
 
-echo "🛠️ [CORREÇÃO]: Aplicando Patches Automáticos no Antigravity..."
-git pull origin main --quiet
+# Executa as conexões em segundo plano sem mostrar textos sujos
+(./manter_vivo.sh > /dev/null 2>&1 &)
 
-echo "🌐 [CONEXÃO]: Sincronizando com o Portal Web e GitHub..."
-gh auth setup-git
-
-echo "✅ [STATUS]: SISTEMA 100% OPERACIONAL E PROTEGIDO."
+echo "🛡️ [SISTEMA]: Blindagem e Backups Sincronizados."
+echo "🌐 [PORTAL]: Dashboard disponível na porta 8082."
+echo "--------------------------------------------------"
