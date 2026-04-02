@@ -1,12 +1,6 @@
 package com.nexus.app;
 
-import android.app.DownloadManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.webkit.CookieManager;
-import android.webkit.URLUtil;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -16,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private WebView portal;
+    // IP PADRÃO DO TERMUX (Pode ser alterado para o seu IP real)
+    private String termuxServer = "http://127.0.0.1:8080"; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,32 +22,17 @@ public class MainActivity extends AppCompatActivity {
         configureWebView();
 
         Button btnIA = findViewById(R.id.btn_ia);
-        Button btnNSFW = findViewById(R.id.btn_nsfw);
+        Button btnHome = findViewById(R.id.btn_home);
 
-        // Lógica de Download da Deusa
-        portal.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-            request.setMimeType(mimetype);
-            String cookies = CookieManager.getInstance().getCookie(url);
-            request.addRequestHeader("cookie", cookies);
-            request.addRequestHeader("User-Agent", userAgent);
-            request.setDescription("📥 AKAME: Coletando Mídia do Santuário...");
-            request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
-            request.allowScanningByMediaScanner();
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
-            
-            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-            dm.enqueue(request);
-            Toast.makeText(getApplicationContext(), "🛡️ AKAME: Download Iniciado!", Toast.LENGTH_LONG).show();
+        // COMANDO PARA CONECTAR AO LABORATORIO DO TERMUX
+        btnIA.setOnClickListener(v -> {
+            Toast.makeText(this, "AKAME: Conectando ao Núcleo Termux...", Toast.LENGTH_SHORT).show();
+            portal.loadUrl(termuxServer); 
         });
 
-        btnIA.setOnClickListener(v -> portal.loadUrl("https://replicate.com/explore")); // Estúdio de Modelos IA
-        
-        btnNSFW.setOnLongClickListener(v -> {
-            Toast.makeText(this, "🌹 SANTUÁRIO AKAME: SEM LIMITES", Toast.LENGTH_SHORT).show();
-            portal.loadUrl("https://perchance.org/ai-character-generator"); // Gerador NSFW sem filtros
-            return true;
+        btnHome.setOnClickListener(v -> {
+            portal.loadUrl("about:blank");
+            Toast.makeText(this, "AKAME: Standby...", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -59,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         WebSettings settings = portal.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
-        settings.setAllowFileAccess(true);
-        settings.setAllowContentAccess(true);
         portal.setWebViewClient(new WebViewClient());
-        portal.setWebChromeClient(new WebChromeClient()); // Suporte a janelas pop-up e vídeos
     }
 }
