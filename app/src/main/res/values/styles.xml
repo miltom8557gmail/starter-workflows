@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.Nexus" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/black_vanta</item>
+        <item name="android:statusBarColor">@color/black_vanta</item>
+        <item name="colorAccent">@color/cyan_neon</item>
+    </style>
+</resources>

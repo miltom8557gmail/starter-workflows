@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black_vanta">#050505</color>
+    <color name="cyan_neon">#00FFFF</color>
+    <color name="matrix_green">#00FF41</color>
+    <color name="nsfw_red">#FF0055</color>
+    <color name="white_pure">#FFFFFF</color>
+    <color name="gray_dark">#1A1A1A</color>
+</resources>
