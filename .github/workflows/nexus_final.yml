@@ -1,0 +1,30 @@
+name: 🔱 NEXUS SUPREMO v4.5
+on: [push]
+jobs:
+  build_app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { java-version: '17', distribution: 'temurin' }
+      - name: 🔨 Forjar APK Nativo
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+      - name: 📦 Lançar APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v4.5.0
+          files: app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy_website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🌐 Ativar Portal Web
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .
+          branch: gh-pages
