@@ -1,6 +1,0 @@
-<resources>
-    <style name="Theme.AKAME" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#00FFFF</item>
-        <item name="android:windowBackground">#050505</item>
-    </style>
-</resources>
