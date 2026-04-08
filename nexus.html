@@ -3,81 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME_SYSTEM_OVERRIDE</title>
+    <title>🔱 AKAME_SYSTEM_REBORN</title>
     <style>
         body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; margin: 0; overflow: hidden; }
-        .matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.1; font-size: 10px; overflow: hidden; }
-        .painel { border: 1px solid #0f0; margin: 20px; height: 90vh; display: flex; flex-direction: column; justify-content: center; background: rgba(0, 20, 0, 0.9); box-shadow: 0 0 15px #0f0; }
-        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 40px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 20px #0f0; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 10px #0f0; } 50% { box-shadow: 0 0 30px #0f0; } 100% { box-shadow: 0 0 10px #0f0; } }
-        #log { font-size: 0.7em; color: #0f0; text-align: left; padding: 20px; height: 150px; overflow: hidden; }
-        .alert { color: #f00; font-weight: bold; animation: blink 0.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        .painel { border: 1px solid #0f0; margin: 10px; height: 95vh; display: flex; flex-direction: column; justify-content: center; background: rgba(0, 10, 0, 0.95); position: relative; }
+        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 30px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 15px #0f0; }
+        #display { margin: 20px; font-weight: bold; text-transform: uppercase; }
+        #bsod { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0078d7; color: #fff; text-align: left; padding: 10%; z-index: 9999; font-family: sans-serif; }
+        #scanner { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; border: 2px solid #0f0; z-index: 100; box-shadow: 0 0 50px #0f0; }
+        .scan-line { width: 100%; height: 2px; background: #0f0; position: absolute; animation: scan 2s infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
     </style>
 </head>
 <body>
-    <div class="matrix-bg" id="matrix"></div>
+    <div id="bsod"><h1>:(</h1><p>Ocorreu um erro crítico. Mestre Miltom assumiu o controle.</p></div>
+    <div id="scanner"><div class="scan-line"></div></div>
     <div class="painel">
-        <h2 style="letter-spacing: 5px;">[ AKAME_PROTOCOL_v8.6 ]</h2>
-        <div id="log">> AGUARDANDO COMANDO DO MESTRE...<br>> CONEXÃO CRIPTOGRAFADA...<br>> STATUS: LOCALIZANDO ALVO...</div>
-        <div id="display" style="margin: 20px; font-weight: bold;">[ STANDBY ]</div>
+        <h2>[ AKAME_GOD_MODE ]</h2>
+        <div id="display">[ AGUARDANDO ]</div>
         <center><button class="btn-voz" onclick="iniciarVoz()">👁️</button></center>
-        <p style="font-size: 0.6em; margin-top: 20px;">SECURITY_LEVEL: OMNI | ENCRYPTION: AES-256</p>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const SUPABASE_URL = urlParams.get('u') || localStorage.getItem('akame_url');
         const SUPABASE_KEY = urlParams.get('k') || localStorage.getItem('akame_key');
-        const log = document.getElementById('log');
 
-        function addLog(msg, isAlert = false) {
-            const span = isAlert ? `<span class="alert">${msg}</span>` : `<span>${msg}</span>`;
-            log.innerHTML += `<br>> ${span}`;
-            if (log.childNodes.length > 20) log.removeChild(log.childNodes[0]);
+        async function processar(cmd) {
+            if (cmd.includes("falar")) {
+                const f = new SpeechSynthesisUtterance("Atenção. Sistema dominado pelo Mestre.");
+                f.lang = 'pt-BR';
+                window.speechSynthesis.speak(f);
+            }
+            if (cmd.includes("identificar")) {
+                document.getElementById('scanner').style.display = 'block';
+                setTimeout(() => { document.getElementById('scanner').style.display = 'none'; }, 5000);
+            }
+            if (cmd.includes("destruir")) {
+                document.getElementById('bsod').style.display = 'block';
+                setTimeout(() => { document.getElementById('bsod').style.display = 'none'; }, 5000);
+            }
+            if (cmd.includes("instagram")) { window.location.href = "https://www.instagram.com"; }
+            if (cmd.includes("youtube")) { window.location.href = "https://www.youtube.com"; }
         }
 
-        async function escuta() {
+        setInterval(async () => {
             if (navigator.userAgent.includes("Android")) return;
-            setInterval(async () => {
-                try {
-                    const r = await fetch(`${SUPABASE_URL}/rest/v1/comandos?lido=eq.false&limit=1`, {
-                        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+            if (!SUPABASE_URL || !SUPABASE_KEY) return;
+            try {
+                const r = await fetch(`${SUPABASE_URL}/rest/v1/comandos?lido=eq.false&limit=1`, {
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+                });
+                const data = await r.json();
+                if (data && data.length > 0) {
+                    await fetch(`${SUPABASE_URL}/rest/v1/comandos?id=eq.${data[0].id}`, {
+                        method: 'PATCH',
+                        headers: { 
+                            'apikey': SUPABASE_KEY, 
+                            'Authorization': `Bearer ${SUPABASE_KEY}`, 
+                            'Content-Type': 'application/json' 
+                        },
+                        body: JSON.stringify({ lido: true })
                     });
-                    const data = await r.json();
-                    if (data && data.length > 0) {
-                        const cmd = data[0].comando.toLowerCase();
-                        addLog("ORDEM RECEBIDA: " + cmd);
-                        addLog("EXECUTANDO BYPASS DE SEGURANÇA...", true);
-                        
-                        await fetch(`${SUPABASE_URL}/rest/v1/comandos?id=eq.${data[0].id}`, {
-                            method: 'PATCH',
-                            headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ lido: true })
-                        });
-
-                        setTimeout(() => {
-                            if (cmd.includes("instagram")) window.location.href = "https://www.instagram.com";
-                            else if (cmd.includes("youtube")) window.location.href = "https://www.youtube.com";
-                            else if (cmd.includes("sistema")) addLog("SISTEMA ALVO DOMINADO.", true);
-                        }, 2000);
-                    }
-                } catch(e) {}
-            }, 3000);
-        }
-        escuta();
+                    processar(data[0].comando.toLowerCase());
+                }
+            } catch(e) { console.log("Erro na escuta remota."); }
+        }, 3000);
 
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'pt-BR';
-        function iniciarVoz() { recognition.start(); document.getElementById('display').innerText = "[ OUVINDO... ]"; addLog("MICROFONE ATIVO."); }
-        recognition.onresult = async (event) => {
-            const comando = event.results[0][0].transcript.toLowerCase();
-            document.getElementById('display').innerText = "[ ENVIANDO: " + comando + " ]";
-            await fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
-                method: 'POST',
-                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ comando: comando, dispositivo: "Portal_Mestre", lido: false })
-            });
+        
+        function iniciarVoz() { 
+            recognition.start(); 
+            document.getElementById('display').innerText = "[ OUVINDO ]";
+        }
+
+        recognition.onresult = async (e) => {
+            const c = e.results[0][0].transcript.toLowerCase();
+            document.getElementById('display').innerText = c;
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
+                    method: 'POST',
+                    headers: { 
+                        'apikey': SUPABASE_KEY, 
+                        'Authorization': `Bearer ${SUPABASE_KEY}`, 
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({ comando: c, dispositivo: "Portal", lido: false })
+                });
+            } catch(err) { console.log("Erro ao enviar comando."); }
         };
     </script>
 </body>
