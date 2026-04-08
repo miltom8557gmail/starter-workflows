@@ -20,6 +20,7 @@
 
     <div id="arsenal">
         <button class="arsenal-btn" onclick="varreduraMurasame()">🛡️ Escudo Murasame (Status)</button>
+<button class="arsenal-btn" style="background:#001a00; color:#00ff00; border:1px solid #008B00; padding:15px; margin:10px; border-radius:8px; font-weight:bold;" onclick="abrirForja()">⚒️ Forja de Código</button>
     </div>
 
     <script>
@@ -36,6 +37,7 @@
             }
         }
 
+function abrirForja(){ let cmd=prompt("🔱 O que deseja que a Akame crie agora?"); if(cmd){ alert("🛠️ Processando: " + cmd); }}
         function varreduraMurasame() {
             alert("🌀 VARREDURA ATIVA:\n- Conexão: OK\n- Banco: Sincronizado\n- Perímetro: Protegido");
         }
