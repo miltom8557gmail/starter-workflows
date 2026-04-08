@@ -3,86 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME NEXUS OS - SOBERANIA</title>
+    <title>🔱 AKAME NEXUS OS</title>
     <style>
         body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
         .painel { border: 2px solid #ff0000; margin: 10px; height: 90vh; display: flex; flex-direction: column; justify-content: space-around; }
         .btn-voz { background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 30px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 20px #ff0000; }
-        .status { font-size: 0.8em; color: #fff; }
     </style>
 </head>
 <body>
     <div class="painel">
-        <h2>🔱 AKAME NEXUS</h2>
-        <div class="status" id="display">AGUARDANDO ORDEM...</div>
+        <h2>🔱 COMANDO SOBERANO</h2>
+        <div id="display">AGUARDANDO...</div>
         <button class="btn-voz" onclick="iniciarVoz()">👁️</button>
     </div>
 
     <script>
-        // --- COLOQUE SEUS DADOS AQUI ---
         const SUPABASE_URL = "SUA_URL_AQUI";
         const SUPABASE_KEY = "SUA_KEY_AQUI";
         
-        // --- FUNÇÃO DE ESCUTA (PARA O PC DO AMIGO) ---
         async function escutaRemota() {
             setInterval(async () => {
                 try {
-                    const r = await fetch(`${SUPABASE_URL}/rest/v1/comandos?comando=eq.abrir_youtube&lido=eq.false`, {
+                    const r = await fetch(`${SUPABASE_URL}/rest/v1/comandos?lido=eq.false&order=created_at.desc&limit=1`, {
                         headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
                     });
                     const data = await r.json();
                     if (data && data.length > 0) {
-                        // Marca como lido no banco
+                        const cmd = data[0].comando.toLowerCase();
+                        
+                        // Marca como lido primeiro para evitar loops
                         await fetch(`${SUPABASE_URL}/rest/v1/comandos?id=eq.${data[0].id}`, {
                             method: 'PATCH',
-                            headers: { 
-                                'apikey': SUPABASE_KEY, 
-                                'Authorization': `Bearer ${SUPABASE_KEY}`, 
-                                'Content-Type': 'application/json' 
-                            },
+                            headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
                             body: JSON.stringify({ lido: true })
                         });
-                        // Executa a dominação
-                        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+                        // 🔱 LÓGICA DE REDIRECIONAMENTO REMOTO
+                        if (cmd.includes("instagram")) {
+                            window.location.href = "https://www.instagram.com";
+                        } else if (cmd.includes("youtube")) {
+                            window.location.href = "https://www.youtube.com";
+                        } else if (cmd.includes("google")) {
+                            window.location.href = "https://www.google.com";
+                        }
                     }
-                } catch(e) { console.error("Erro na escuta"); }
+                } catch(e) {}
             }, 3000);
         }
 
-        // Se for PC (não Android), ativa modo escravo
-        if (!navigator.userAgent.includes("Android")) {
-            escutaRemota();
-        }
+        if (!navigator.userAgent.includes("Android")) escutaRemota();
 
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'pt-BR';
 
-        function iniciarVoz() {
-            recognition.start();
-            document.getElementById('display').innerText = "🔴 OUVINDO...";
-        }
+        function iniciarVoz() { recognition.start(); document.getElementById('display').innerText = "🔴 OUVINDO..."; }
 
         recognition.onresult = async (event) => {
             const comando = event.results[0][0].transcript.toLowerCase();
             document.getElementById('display').innerText = "ORDEM: " + comando;
-            if (comando.includes("abrir youtube")) {
-                await enviarComando("abrir_youtube");
-            } else {
-                await enviarComando(comando);
-            }
-        };
-
-        async function enviarComando(texto) {
             await fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
                 method: 'POST',
-                headers: { 
-                    'apikey': SUPABASE_KEY, 
-                    'Authorization': `Bearer ${SUPABASE_KEY}`, 
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify({ comando: texto, dispositivo: "Portal_Web", lido: false })
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comando: comando, dispositivo: "Portal_Web", lido: false })
             });
-        }
+        };
     </script>
 </body>
 </html>
