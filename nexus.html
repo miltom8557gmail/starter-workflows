@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME_REALTIME_CORE</title>
+    <title>🔱 AKAME_NEXUS_V7</title>
     <style>
         body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
         .trindade-status { display: flex; justify-content: space-around; background: #080808; padding: 12px; border-bottom: 2px solid #0f0; }
-        .pilar { display: flex; flex-direction: column; align-items: center; font-size: 0.5em; font-weight: bold; }
+        .pilar { display: flex; flex-direction: column; align-items: center; font-size: 0.5em; }
         .led { width: 12px; height: 12px; border-radius: 50%; background: #200; margin-top: 5px; transition: 0.3s; }
-        .online { background: #0f0; box-shadow: 0 0 15px #0f0; border: 1px solid #fff; }
+        .online { background: #0f0; box-shadow: 0 0 15px #0f0; }
         .offline { background: #f00; box-shadow: 0 0 15px #f00; }
-        .painel { border: 1px solid #0f0; margin: 10px; height: 80vh; display: flex; flex-direction: column; background: #000; box-shadow: inset 0 0 20px #030; }
-        #log { font-size: 0.6em; text-align: left; padding: 10px; height: 150px; overflow-y: auto; border-bottom: 1px solid #030; color: #0f0; }
-        .btn-voz { background: #000; color: #0f0; border: 2px solid #0f0; padding: 30px; border-radius: 50%; font-size: 2.5em; cursor: pointer; margin: 20px; transition: 0.5s; }
-        .btn-voz:active { transform: scale(0.9); box-shadow: 0 0 30px #0f0; }
+        .painel { border: 1px solid #0f0; margin: 10px; height: 80vh; display: flex; flex-direction: column; background: #000; }
+        #log { font-size: 0.6em; text-align: left; padding: 10px; height: 150px; overflow-y: auto; color: #0f0; }
+        .btn-voz { background: #000; color: #0f0; border: 2px solid #0f0; padding: 30px; border-radius: 50%; font-size: 2.5em; cursor: pointer; margin: 20px; }
     </style>
 </head>
 <body>
@@ -24,68 +23,64 @@
         <div class="pilar">HOST (GH)<div id="led-gh" class="led"></div></div>
     </div>
     <div class="painel">
-        <div id="log">> AKAME_OS V6.0: ONLINE...</div>
-        <div id="display" style="font-size: 1.2em; margin: 10px;">[ AGUARDANDO MESTRE ]</div>
+        <div id="log">> AKAME_NEXUS: URL_ATUALIZADA...</div>
+        <div id="display" style="font-size: 1.2em; margin: 10px;">[ STANDBY ]</div>
         <center><button class="btn-voz" onclick="iniciarVoz()">👁️</button></center>
         <div id="debug" style="font-size:0.5em; color:red;"></div>
     </div>
 
     <script>
-        const SB_URL = "https://ocidpmlpxvcttstglsvv.supabase.co";
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9-9P_xXq_Z8_L_S_m_p_4m0";
+        // URL ATUALIZADA PELO MESTRE
+        const SB_URL = "https://bfriplrxtleleplhpgwd.supabase.co";
+        // Pegando a KEY da URL ou do que foi salvo antes
+        const urlParams = new URLSearchParams(window.location.search);
+        let SB_KEY = urlParams.get('k') || localStorage.getItem('akame_key_v7');
+        
+        if(urlParams.get('k')) localStorage.setItem('akame_key_v7', urlParams.get('k'));
 
         async function monitor() {
-            // Sincronia Supabase (Tempo Real)
+            if(!SB_KEY) {
+                document.getElementById('debug').innerText = "ERRO: FALTA A KEY NA URL (?k=...)";
+                return;
+            }
             try {
-                const res = await fetch(`${SB_URL}/rest/v1/comandos?limit=1`, { headers: { 'apikey': SB_KEY } });
-                if(res.ok) {
-                    document.getElementById('led-sb').className = 'led online';
-                    document.getElementById('debug').innerText = "";
-                } else {
-                    document.getElementById('led-sb').className = 'led offline';
-                    document.getElementById('debug').innerText = "ERRO SB: " + res.status;
-                }
+                const res = await fetch(`${SB_URL}/rest/v1/comandos?limit=1`, { 
+                    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } 
+                });
+                document.getElementById('led-sb').className = res.ok ? 'led online' : 'led offline';
+                if(!res.ok) document.getElementById('debug').innerText = "STATUS: " + res.status;
             } catch(e) { document.getElementById('led-sb').className = 'led offline'; }
-
             document.getElementById('led-hf').className = 'led online';
             document.getElementById('led-gh').className = 'led online';
         }
-        setInterval(monitor, 2000); // Registro em tempo real a cada 2s
+        setInterval(monitor, 3000);
         monitor();
 
         function falar(t) {
-            const s = window.speechSynthesis;
             const u = new SpeechSynthesisUtterance(t);
             u.lang = 'pt-BR';
-            u.rate = 1.1;
-            s.speak(u);
+            window.speechSynthesis.speak(u);
         }
 
         async function acionar(cmd) {
             document.getElementById('log').innerHTML += `<br>> TRANSMITINDO: ${cmd}`;
-            
-            // Reação Paralela: Envia e Pensa ao mesmo tempo
-            const pSupabase = fetch(`${SB_URL}/rest/v1/comandos`, {
+            fetch(`${SB_URL}/rest/v1/comandos`, {
                 method: 'POST',
                 headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ comando: cmd, dispositivo: "Mobile_Akame", lido: false })
+                body: JSON.stringify({ comando: cmd, dispositivo: "Nexus_V7", lido: false })
             });
 
-            const pIA = fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA leal ao Mestre Miltom. Reaja com personalidade, não apenas copie.`);
-
-            const [resSB, resIA] = await Promise.all([pSupabase, pIA]);
+            const resIA = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA fiel ao Mestre Miltom.`);
             const txt = await resIA.text();
-            
             document.getElementById('log').innerHTML += `<br>> AKAME: ${txt}`;
             falar(txt);
         }
 
         const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         rec.lang = 'pt-BR';
-        function iniciarVoz() { rec.start(); document.getElementById('display').innerText = "[ OUVINDO... ]"; }
+        function iniciarVoz() { rec.start(); document.getElementById('display').innerText = "[ OUVINDO ]"; }
         rec.onresult = (e) => {
             const c = e.results[0][0].transcript;
-            document.getElementById('display').innerText = "[ PENSANDO... ]";
             acionar(c);
         };
     </script>
