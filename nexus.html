@@ -3,153 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME NEXUS OS v8.0</title>
+    <title>🔱 AKAME NEXUS OS - SOBERANIA</title>
     <style>
-        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; margin: 0; padding: 0; }
-        .painel { border: 2px solid #ff0000; margin: 10px; padding: 20px; box-shadow: 0 0 20px #ff0000; min-height: 90vh; display: flex; flex-direction: column; justify-content: space-around; }
-        .btn-voz { background: #ff0000; color: #000; border: none; padding: 25px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 15px #ff0000; transition: 0.3s; }
-        .btn-voz:active { transform: scale(0.9); background: #fff; }
-        .status-box { background: #111; padding: 10px; border: 1px solid #333; margin: 10px 0; font-size: 0.9em; }
-        .controles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        button { background: #222; color: #ff0000; border: 1px solid #ff0000; padding: 15px; font-weight: bold; cursor: pointer; }
-        .config-radio { margin: 15px 0; font-size: 0.8em; color: #fff; }
+        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; overflow: hidden; margin: 0; }
+        .painel { border: 2px solid #ff0000; margin: 5px; height: 95vh; display: flex; flex-direction: column; justify-content: space-around; position: relative; box-sizing: border-box; }
+        .aura { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border-radius: 50%; border: 2px solid #ff0000; animation: pulse 2s infinite; z-index: -1; }
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } }
+        .btn-voz { background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 30px; border-radius: 50%; font-size: 2.5em; cursor: pointer; box-shadow: 0 0 20px #ff0000; z-index: 10; }
+        .status { font-size: 0.7em; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+        .cmd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 10px; }
+        button { background: rgba(255,0,0,0.1); color: #ff0000; border: 1px solid #ff0000; padding: 12px; font-size: 0.8em; cursor: pointer; }
+        #terminal { background: #111; color: #0f0; font-size: 0.6em; text-align: left; padding: 10px; height: 80px; overflow-y: auto; margin: 0 10px; border: 1px solid #333; }
     </style>
 </head>
 <body>
     <div class="painel">
-        <h1>🔱 AKAME NEXUS</h1>
-        
-        <div class="status-box" id="display">SISTEMA ONLINE - AGUARDANDO COMANDO</div>
-
-        <button class="btn-voz" onclick="iniciarVoz()">🎤</button>
-
-        <div class="config-radio">
-            <label><input type="radio" name="saida" value="site" checked> 📱 Ouvir no Site</label>
-            <label><input type="radio" name="saida" value="termux"> 🛰️ Falar no Termux</label>
+        <div class="aura"></div>
+        <h2 style="margin:0">🔱 AKAME NEXUS</h2>
+        <div class="status" id="display">AGUARDANDO COMANDO VOCAL...</div>
+        <div id="terminal"> > Sistema Híbrido Iniciado...<br> > Memória Ativa...</div>
+        <button class="btn-voz" onclick="iniciarVoz()">👁️</button>
+        <div class="cmd-grid">
+            <button onclick="processarEstrategia('Infiltrar Instagram')">🔱 INFILTRAR</button>
+            <button onclick="processarEstrategia('Relatório de Sistema')">📋 RELATÓRIO</button>
+            <button onclick="processarEstrategia('Ativar Modo Furtivo')">👤 FURTIVO</button>
+            <button onclick="processarEstrategia('Ver Cérebro')">🧠 VER CÉREBRO</button>
         </div>
-
-        <div class="controles">
-            <button onclick="enviarComando('RELATÓRIO')">RELATÓRIO</button>
-            <button onclick="enviarComando('LIMPAR CACHE')">LIMPAR CACHE</button>
-            <button onclick="enviarComando('STATUS SISTEMA')">STATUS</button>
-            <button onclick="enviarComando('MODO FURTIVO')">FURTIVO</button>
+        <div style="font-size: 0.6em; color: white;">
+            <input type="radio" name="saida" value="site" checked> NUVEM | 
+            <input type="radio" name="saida" value="termux"> TERMUX
         </div>
     </div>
-
     <script>
-        // --- CONFIGURAÇÃO SUPABASE ---
         const SUPABASE_URL = "SUA_URL_AQUI";
         const SUPABASE_KEY = "SUA_KEY_AQUI";
-
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'pt-BR';
-
-        function iniciarVoz() {
-            try {
-                recognition.start();
-                document.getElementById('display').innerText = "🔴 OUVINDO MESTRE...";
-            } catch (e) { console.log("Reconhecimento já ativo"); }
+        function log(msg) {
+            const t = document.getElementById('terminal');
+            t.innerHTML += `<br> > ${msg}`;
+            t.scrollTop = t.scrollHeight;
         }
-
+        function iniciarVoz() {
+            recognition.start();
+            document.getElementById('display').innerText = "🔴 OUVINDO IMPERADOR...";
+            log("Escuta ativa iniciada.");
+        }
         recognition.onresult = async (event) => {
             const comando = event.results[0][0].transcript;
             document.getElementById('display').innerText = "ORDEM: " + comando.toUpperCase();
             await processarEstrategia(comando);
         };
-
         async function processarEstrategia(texto) {
-            const ondeFalar = document.querySelector('input[name="saida"]:checked').value;
+            let resposta = "Sim, Mestre.";
+            const p = texto.toLowerCase();
+            if (p.includes("infiltrar")) resposta = "Iniciando protocolos de varredura.";
+            else if (p.includes("quem é você")) resposta = "Eu sou Akame, sua inteligência soberana.";
             
-            // 1. Envia para a nuvem (O Termux receberá quando ligar)
             await enviarComando(texto);
-
-            // 2. Resposta de Voz Autônoma (Funciona sem Termux)
-            if (ondeFalar === 'site') {
-                const resposta = gerarRespostaIA(texto);
-                falarNoNavegador(resposta);
-            } else {
-                document.getElementById('display').innerText = "ORDEM ENVIADA AO TERMUX 🛰️";
+            if (document.querySelector('input[name="saida"]:checked').value === 'site') {
+                const synth = window.speechSynthesis;
+                const utter = new SpeechSynthesisUtterance(resposta);
+                utter.lang = 'pt-BR';
+                synth.speak(utter);
             }
         }
-
-        function gerarRespostaIA(pergunta) {
-            // Inteligência de Backup (Nuvem)
-            const p = pergunta.toLowerCase();
-            if (p.includes("quem é você")) return "Sou a Akame, sua inteligência soberana. Operando em modo nuvem.";
-            if (p.includes("relatório")) return "Todos os sistemas em espera. O Termux está sendo monitorado.";
-            return "Comando recebido, Mestre. A ordem foi enviada para processamento.";
-        }
-
-        function falarNoNavegador(frase) {
-            const synth = window.speechSynthesis;
-            const utter = new SpeechSynthesisUtterance(frase);
-            utter.lang = 'pt-BR';
-            utter.pitch = 0.8; // Voz mais séria/imperial
-            utter.rate = 1;
-            synth.speak(utter);
-        }
-
         async function enviarComando(texto) {
-            const url = `${SUPABASE_URL}/rest/v1/comandos`;
-            await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=minimal'
-                },
-                body: JSON.stringify({
-                    comando: texto,
-                    dispositivo: "Portal_Web",
-                    lido: false
-                })
-            });
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME NEXUS - IMPERIAL</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <style>
-        body { background: #050505; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; margin: 0; padding: 20px; }
-        .avatar { width: 150px; border-radius: 50%; border: 2px solid #ff0000; box-shadow: 0 0 20px #ff0000; margin-bottom: 20px; }
-        h1 { font-size: 1.5rem; letter-spacing: 5px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .btn { background: #111; border: 1px solid #ff0000; color: #ff0000; padding: 20px 10px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .btn:active { background: #ff0000; color: #000; }
-        #status { color: #555; font-size: 0.8rem; margin-top: 15px; }
-    </style>
-</head>
-<body>
-    <img src="https://raw.githubusercontent.com/AkameApp/assets/main/akame_avatar.jpg" class="avatar" alt="Akame">
-    <h1>🔱 AKAME NEXUS</h1>
-    <div id="status">SISTEMA ONLINE</div>
-    
-    <div class="grid">
-        <button class="btn" onclick="enviar('RELATORIO')">Relatório</button>
-        <button class="btn" onclick="enviar('VOZ')">Testar Voz</button>
-        <button class="btn" onclick="enviar('INSTAGRAM')">Infiltrar Insta</button>
-        <button class="btn" onclick="enviar('LIMPEZA')">Limpar Cache</button>
-    </div>
-
-    <script>
-        // A Akame buscará as chaves do seu arquivo de configuração automaticamente
-        const SUPABASE_URL = 'https://bfriplrxtleleplhpgwd.supabase.co'; 
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU';
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        async function enviar(cmd) {
-            const status = document.getElementById('status');
-            status.innerText = "ENVIANDO ORDEM...";
-            const { error } = await _supabase.from('ordens_termux').insert([{ comando: cmd, status: 'pendente' }]);
-            if (error) status.innerText = "ERRO NA TRANSMISSÃO";
-            else status.innerText = "ORDEM DISPARADA ✅";
-            setTimeout(() => { status.innerText = "SISTEMA ONLINE"; }, 3000);
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
+                    method: 'POST',
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ comando: texto, dispositivo: "Portal_Web", lido: false })
+                });
+            } catch(e) { log("Erro de conexão."); }
         }
     </script>
 </body>
