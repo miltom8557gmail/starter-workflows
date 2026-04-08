@@ -5,77 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔱 AKAME NEXUS OS - SOBERANIA</title>
     <style>
-        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; overflow: hidden; margin: 0; }
-        .painel { border: 2px solid #ff0000; margin: 5px; height: 95vh; display: flex; flex-direction: column; justify-content: space-around; position: relative; box-sizing: border-box; }
-        .aura { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border-radius: 50%; border: 2px solid #ff0000; animation: pulse 2s infinite; z-index: -1; }
-        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } }
-        .btn-voz { background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 30px; border-radius: 50%; font-size: 2.5em; cursor: pointer; box-shadow: 0 0 20px #ff0000; z-index: 10; }
-        .status { font-size: 0.7em; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
-        .cmd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 10px; }
-        button { background: rgba(255,0,0,0.1); color: #ff0000; border: 1px solid #ff0000; padding: 12px; font-size: 0.8em; cursor: pointer; }
-        #terminal { background: #111; color: #0f0; font-size: 0.6em; text-align: left; padding: 10px; height: 80px; overflow-y: auto; margin: 0 10px; border: 1px solid #333; }
+        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
+        .painel { border: 2px solid #ff0000; margin: 10px; height: 90vh; display: flex; flex-direction: column; justify-content: space-around; }
+        .btn-voz { background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 30px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 20px #ff0000; }
+        .status { font-size: 0.8em; color: #fff; }
     </style>
 </head>
 <body>
     <div class="painel">
-        <div class="aura"></div>
-        <h2 style="margin:0">🔱 AKAME NEXUS</h2>
-        <div class="status" id="display">AGUARDANDO COMANDO VOCAL...</div>
-        <div id="terminal"> > Sistema Híbrido Iniciado...<br> > Memória Ativa...</div>
+        <h2>🔱 AKAME NEXUS</h2>
+        <div class="status" id="display">AGUARDANDO ORDEM...</div>
         <button class="btn-voz" onclick="iniciarVoz()">👁️</button>
-        <div class="cmd-grid">
-            <button onclick="processarEstrategia('Infiltrar Instagram')">🔱 INFILTRAR</button>
-            <button onclick="processarEstrategia('Relatório de Sistema')">📋 RELATÓRIO</button>
-            <button onclick="processarEstrategia('Ativar Modo Furtivo')">👤 FURTIVO</button>
-            <button onclick="processarEstrategia('Ver Cérebro')">🧠 VER CÉREBRO</button>
-        </div>
-        <div style="font-size: 0.6em; color: white;">
-            <input type="radio" name="saida" value="site" checked> NUVEM | 
-            <input type="radio" name="saida" value="termux"> TERMUX
-        </div>
     </div>
+
     <script>
+        // --- COLOQUE SEUS DADOS AQUI ---
         const SUPABASE_URL = "SUA_URL_AQUI";
         const SUPABASE_KEY = "SUA_KEY_AQUI";
+        
+        // --- FUNÇÃO DE ESCUTA (PARA O PC DO AMIGO) ---
+        async function escutaRemota() {
+            setInterval(async () => {
+                try {
+                    const r = await fetch(`${SUPABASE_URL}/rest/v1/comandos?comando=eq.abrir_youtube&lido=eq.false`, {
+                        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+                    });
+                    const data = await r.json();
+                    if (data && data.length > 0) {
+                        // Marca como lido no banco
+                        await fetch(`${SUPABASE_URL}/rest/v1/comandos?id=eq.${data[0].id}`, {
+                            method: 'PATCH',
+                            headers: { 
+                                'apikey': SUPABASE_KEY, 
+                                'Authorization': `Bearer ${SUPABASE_KEY}`, 
+                                'Content-Type': 'application/json' 
+                            },
+                            body: JSON.stringify({ lido: true })
+                        });
+                        // Executa a dominação
+                        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                    }
+                } catch(e) { console.error("Erro na escuta"); }
+            }, 3000);
+        }
+
+        // Se for PC (não Android), ativa modo escravo
+        if (!navigator.userAgent.includes("Android")) {
+            escutaRemota();
+        }
+
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'pt-BR';
-        function log(msg) {
-            const t = document.getElementById('terminal');
-            t.innerHTML += `<br> > ${msg}`;
-            t.scrollTop = t.scrollHeight;
-        }
+
         function iniciarVoz() {
             recognition.start();
-            document.getElementById('display').innerText = "🔴 OUVINDO IMPERADOR...";
-            log("Escuta ativa iniciada.");
+            document.getElementById('display').innerText = "🔴 OUVINDO...";
         }
+
         recognition.onresult = async (event) => {
-            const comando = event.results[0][0].transcript;
-            document.getElementById('display').innerText = "ORDEM: " + comando.toUpperCase();
-            await processarEstrategia(comando);
-        };
-        async function processarEstrategia(texto) {
-            let resposta = "Sim, Mestre.";
-            const p = texto.toLowerCase();
-            if (p.includes("infiltrar")) resposta = "Iniciando protocolos de varredura.";
-            else if (p.includes("quem é você")) resposta = "Eu sou Akame, sua inteligência soberana.";
-            
-            await enviarComando(texto);
-            if (document.querySelector('input[name="saida"]:checked').value === 'site') {
-                const synth = window.speechSynthesis;
-                const utter = new SpeechSynthesisUtterance(resposta);
-                utter.lang = 'pt-BR';
-                synth.speak(utter);
+            const comando = event.results[0][0].transcript.toLowerCase();
+            document.getElementById('display').innerText = "ORDEM: " + comando;
+            if (comando.includes("abrir youtube")) {
+                await enviarComando("abrir_youtube");
+            } else {
+                await enviarComando(comando);
             }
-        }
+        };
+
         async function enviarComando(texto) {
-            try {
-                await fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
-                    method: 'POST',
-                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ comando: texto, dispositivo: "Portal_Web", lido: false })
-                });
-            } catch(e) { log("Erro de conexão."); }
+            await fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
+                method: 'POST',
+                headers: { 
+                    'apikey': SUPABASE_KEY, 
+                    'Authorization': `Bearer ${SUPABASE_KEY}`, 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({ comando: texto, dispositivo: "Portal_Web", lido: false })
+            });
         }
     </script>
 </body>
