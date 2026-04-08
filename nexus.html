@@ -35,8 +35,8 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const SUPABASE_URL = urlParams.get('u') || localStorage.getItem('akame_url');
-        const SUPABASE_KEY = urlParams.get('k') || localStorage.getItem('akame_key');
+        const SUPABASE_URL = urlParams.get('u') || 'https://ocidpmlpxvcttstglsvv.supabase.co';
+        const SUPABASE_KEY = urlParams.get('k') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9_9P_xXq_Z8_L_S_m_p_4m0';
 
         // TESTE DE CONEXÃO DA TRINDADE
         async function checkStatus() {
