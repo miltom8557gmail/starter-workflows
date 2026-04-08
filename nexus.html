@@ -39,7 +39,25 @@
         }
 
 function abrirForja(){ let cmd=prompt("🔱 O que deseja que a Akame crie agora?"); if(cmd){ alert("🛠️ Processando: " + cmd); }}
+            fetch("https://bfriplrxtleleplhpgwd.supabase.co/rest/v1/memoria", { 
+                method: "POST", 
+                headers: { 
+                    "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU", 
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU", 
+                    "Content-Type": "application/json" 
+                }, 
+                body: JSON.stringify({ evento: "Comando Forja", detalhes: cmd }) 
+            }).then(() => alert("✨ Pedido entregue ao Termux, Mestre!"));
 function abrirForja(){ let cmd=prompt("🔱 O que deseja que a Akame crie agora?"); if(cmd){ alert("🛠️ Processando pedido: " + cmd + "\nAguarde a sincronização com o Termux..."); /* Aqui integraremos o envio para o Supabase no próximo passo */ }}
+            fetch("https://bfriplrxtleleplhpgwd.supabase.co/rest/v1/memoria", { 
+                method: "POST", 
+                headers: { 
+                    "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU", 
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU", 
+                    "Content-Type": "application/json" 
+                }, 
+                body: JSON.stringify({ evento: "Comando Forja", detalhes: cmd }) 
+            }).then(() => alert("✨ Pedido entregue ao Termux, Mestre!"));
         function varreduraMurasame() {
             alert("🌀 VARREDURA ATIVA:\n- Conexão: OK\n- Banco: Sincronizado\n- Perímetro: Protegido");
         }
