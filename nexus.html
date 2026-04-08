@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME_SYNCHRO_CORE</title>
+    <title>🔱 AKAME_ULTIMATE_SYNC</title>
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; margin: 0; overflow: hidden; }
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
         .trindade-status { display: flex; justify-content: space-around; background: #050505; padding: 10px; border-bottom: 1px dashed #0f0; font-size: 0.6em; }
         .pilar { display: flex; align-items: center; gap: 5px; }
-        .led { width: 8px; height: 8px; border-radius: 50%; background: #333; box-shadow: 0 0 5px #000; }
+        .led { width: 8px; height: 8px; border-radius: 50%; background: #333; }
         .online { background: #0f0; box-shadow: 0 0 8px #0f0; }
         .offline { background: #f00; box-shadow: 0 0 8px #f00; }
-        
-        .painel { border: 1px solid #0f0; margin: 10px; height: 85vh; display: flex; flex-direction: column; justify-content: space-between; background: black; }
-        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 25px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 15px #0f0; }
+        .painel { border: 1px solid #0f0; margin: 10px; height: 85vh; display: flex; flex-direction: column; justify-content: space-between; }
+        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 25px; border-radius: 50%; font-size: 2em; cursor: pointer; }
         #log { font-size: 0.7em; text-align: left; padding: 15px; height: 120px; overflow-y: auto; color: #0f0; }
-        #art-display { max-width: 80%; border: 1px solid #0f0; display: none; margin: 5px auto; }
     </style>
 </head>
 <body>
@@ -24,78 +22,52 @@
         <div class="pilar"><span>SUPABASE</span><div id="led-sb" class="led"></div></div>
         <div class="pilar"><span>GITHUB</span><div id="led-gh" class="led"></div></div>
     </div>
-
     <div class="painel">
-        <div id="log">> INICIALIZANDO PROTOCOLO DE SINCRONIA...</div>
-        <img id="art-display" src="">
-        <div id="display" style="font-size: 1.2em; text-shadow: 0 0 10px #0f0;">[ STANDBY ]</div>
+        <div id="log">> AGUARDANDO COMANDO...</div>
+        <div id="display">[ AKAME PRONTA ]</div>
         <center><button class="btn-voz" onclick="iniciarVoz()">👁️</button></center>
-        <div style="font-size: 0.5em; color: #030; margin-bottom: 5px;">SISTEMA_MILTOM_V10.5</div>
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const SUPABASE_URL = urlParams.get('u') || 'https://ocidpmlpxvcttstglsvv.supabase.co';
-        const SUPABASE_KEY = urlParams.get('k') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9_9P_xXq_Z8_L_S_m_p_4m0';
+        // CHAVES INJETADAS DIRETAMENTE PELO MESTRE
+        const SUPABASE_URL = "https://ocidpmlpxvcttstglsvv.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9_9P_xXq_Z8_L_S_m_p_4m0";
 
-        // TESTE DE CONEXÃO DA TRINDADE
         async function checkStatus() {
-            // Check Supabase
             try {
                 const s = await fetch(`${SUPABASE_URL}/rest/v1/`, { headers: { 'apikey': SUPABASE_KEY } });
                 document.getElementById('led-sb').className = s.ok ? 'led online' : 'led offline';
             } catch(e) { document.getElementById('led-sb').className = 'led offline'; }
-
-            // Check HuggingFace/AI
-            try {
-                const h = await fetch(`https://text.pollinations.ai/status`);
-                document.getElementById('led-hf').className = h.ok ? 'led online' : 'led offline';
-            } catch(e) { document.getElementById('led-hf').className = 'led offline'; }
-
-            // Check GitHub (Host)
-            document.getElementById('led-gh').className = 'led online'; 
+            document.getElementById('led-hf').className = 'led online';
+            document.getElementById('led-gh').className = 'led online';
         }
-        setInterval(checkStatus, 10000);
+        setInterval(checkStatus, 5000);
         checkStatus();
 
         function falar(texto) {
             const f = new SpeechSynthesisUtterance(texto);
             f.lang = 'pt-BR';
-            const voices = window.speechSynthesis.getVoices();
-            f.voice = voices.find(v => v.name.includes('Google') && v.lang.includes('pt-BR')) || voices[0];
-            f.pitch = 0.9; f.rate = 1.0;
             window.speechSynthesis.speak(f);
         }
 
         async function acionarAkame(cmd) {
-            document.getElementById('log').innerHTML += `<br>> SINCRO: ${cmd}`;
-            
-            // 1. DISPARO SUPABASE (Nervos)
             fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
                 method: 'POST',
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ comando: cmd, dispositivo: "Mestre_Mobile", lido: false })
             });
-
-            // 2. DISPARO HUGGINGFACE (Cérebro/Voz)
-            try {
-                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA fiel ao Mestre Miltom. Responda de forma curta e humana.`);
-                const txt = await res.text();
-                falar(txt);
-                document.getElementById('log').innerHTML += `<br>> AKAME: ${txt}`;
-            } catch(e) { falar("Falha na sincronia neural."); }
+            const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA fiel ao Mestre Miltom.`);
+            const txt = await res.text();
+            falar(txt);
         }
 
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'pt-BR';
-        function iniciarVoz() { recognition.start(); document.getElementById('display').innerText = "[ OUVINDO ]"; }
-
+        function iniciarVoz() { recognition.start(); }
         recognition.onresult = (e) => {
             const c = e.results[0][0].transcript.toLowerCase();
-            document.getElementById('display').innerText = "[ SINCRONIZANDO ]";
             acionarAkame(c);
         };
-        window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
     </script>
 </body>
 </html>
