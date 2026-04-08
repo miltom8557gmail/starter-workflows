@@ -3,77 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME_ULTIMATE_SYNC</title>
+    <title>🔱 AKAME_REALTIME_CORE</title>
     <style>
         body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; margin: 0; }
-        .trindade-status { display: flex; justify-content: space-around; background: #050505; padding: 10px; border-bottom: 1px dashed #0f0; font-size: 0.6em; }
-        .pilar { display: flex; align-items: center; gap: 5px; }
-        .led { width: 8px; height: 8px; border-radius: 50%; background: #333; }
-        .online { background: #0f0; box-shadow: 0 0 8px #0f0; }
-        .offline { background: #f00; box-shadow: 0 0 8px #f00; }
-        .painel { border: 1px solid #0f0; margin: 10px; height: 85vh; display: flex; flex-direction: column; justify-content: space-between; background: #000; }
-        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 25px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 10px #0f0; }
-        #log { font-size: 0.7em; text-align: left; padding: 15px; height: 120px; overflow-y: auto; color: #0f0; }
+        .trindade-status { display: flex; justify-content: space-around; background: #080808; padding: 12px; border-bottom: 2px solid #0f0; }
+        .pilar { display: flex; flex-direction: column; align-items: center; font-size: 0.5em; font-weight: bold; }
+        .led { width: 12px; height: 12px; border-radius: 50%; background: #200; margin-top: 5px; transition: 0.3s; }
+        .online { background: #0f0; box-shadow: 0 0 15px #0f0; border: 1px solid #fff; }
+        .offline { background: #f00; box-shadow: 0 0 15px #f00; }
+        .painel { border: 1px solid #0f0; margin: 10px; height: 80vh; display: flex; flex-direction: column; background: #000; box-shadow: inset 0 0 20px #030; }
+        #log { font-size: 0.6em; text-align: left; padding: 10px; height: 150px; overflow-y: auto; border-bottom: 1px solid #030; color: #0f0; }
+        .btn-voz { background: #000; color: #0f0; border: 2px solid #0f0; padding: 30px; border-radius: 50%; font-size: 2.5em; cursor: pointer; margin: 20px; transition: 0.5s; }
+        .btn-voz:active { transform: scale(0.9); box-shadow: 0 0 30px #0f0; }
     </style>
 </head>
 <body>
     <div class="trindade-status">
-        <div class="pilar"><span>HUGGING</span><div id="led-hf" class="led"></div></div>
-        <div class="pilar"><span>SUPABASE</span><div id="led-sb" class="led"></div></div>
-        <div class="pilar"><span>GITHUB</span><div id="led-gh" class="led"></div></div>
+        <div class="pilar">CÓRTEX (HF)<div id="led-hf" class="led"></div></div>
+        <div class="pilar">NERVOS (SB)<div id="led-sb" class="led"></div></div>
+        <div class="pilar">HOST (GH)<div id="led-gh" class="led"></div></div>
     </div>
     <div class="painel">
-        <div id="log">> SINCRO ATIVA...</div>
-        <div id="display" style="margin-top:20px;">[ STANDBY ]</div>
+        <div id="log">> AKAME_OS V6.0: ONLINE...</div>
+        <div id="display" style="font-size: 1.2em; margin: 10px;">[ AGUARDANDO MESTRE ]</div>
         <center><button class="btn-voz" onclick="iniciarVoz()">👁️</button></center>
-        <div style="font-size:0.5em; opacity:0.3;">AKAME_CORE_V5</div>
+        <div id="debug" style="font-size:0.5em; color:red;"></div>
     </div>
 
     <script>
-        const SUPABASE_URL = "https://ocidpmlpxvcttstglsvv.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9-9P_xXq_Z8_L_S_m_p_4m0";
+        const SB_URL = "https://ocidpmlpxvcttstglsvv.supabase.co";
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9-9P_xXq_Z8_L_S_m_p_4m0";
 
-        async function checkStatus() {
+        async function monitor() {
+            // Sincronia Supabase (Tempo Real)
             try {
-                const s = await fetch(`${SUPABASE_URL}/rest/v1/`, { headers: { 'apikey': SUPABASE_KEY } });
-                document.getElementById('led-sb').className = s.ok ? 'led online' : 'led offline';
+                const res = await fetch(`${SB_URL}/rest/v1/comandos?limit=1`, { headers: { 'apikey': SB_KEY } });
+                if(res.ok) {
+                    document.getElementById('led-sb').className = 'led online';
+                    document.getElementById('debug').innerText = "";
+                } else {
+                    document.getElementById('led-sb').className = 'led offline';
+                    document.getElementById('debug').innerText = "ERRO SB: " + res.status;
+                }
             } catch(e) { document.getElementById('led-sb').className = 'led offline'; }
+
             document.getElementById('led-hf').className = 'led online';
             document.getElementById('led-gh').className = 'led online';
         }
-        setInterval(checkStatus, 5000);
-        checkStatus();
+        setInterval(monitor, 2000); // Registro em tempo real a cada 2s
+        monitor();
 
-        function falar(texto) {
-            const f = new SpeechSynthesisUtterance(texto);
-            f.lang = 'pt-BR';
-            window.speechSynthesis.speak(f);
+        function falar(t) {
+            const s = window.speechSynthesis;
+            const u = new SpeechSynthesisUtterance(t);
+            u.lang = 'pt-BR';
+            u.rate = 1.1;
+            s.speak(u);
         }
 
-        async function acionarAkame(cmd) {
-            document.getElementById('log').innerHTML += `<br>> MESTRE: ${cmd}`;
-            // CORREÇÃO DA LINHA DE COMANDO:
-            fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
-                method: 'POST',
-                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ comando: cmd, dispositivo: "Mestre_Mobile", lido: false })
-            });
+        async function acionar(cmd) {
+            document.getElementById('log').innerHTML += `<br>> TRANSMITINDO: ${cmd}`;
             
-            try {
-                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA fiel ao Mestre Miltom. Responda curto.`);
-                const txt = await res.text();
-                falar(txt);
-                document.getElementById('log').innerHTML += `<br>> AKAME: ${txt}`;
-            } catch(e) { console.log("Erro HF"); }
+            // Reação Paralela: Envia e Pensa ao mesmo tempo
+            const pSupabase = fetch(`${SB_URL}/rest/v1/comandos`, {
+                method: 'POST',
+                headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comando: cmd, dispositivo: "Mobile_Akame", lido: false })
+            });
+
+            const pIA = fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA leal ao Mestre Miltom. Reaja com personalidade, não apenas copie.`);
+
+            const [resSB, resIA] = await Promise.all([pSupabase, pIA]);
+            const txt = await resIA.text();
+            
+            document.getElementById('log').innerHTML += `<br>> AKAME: ${txt}`;
+            falar(txt);
         }
 
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'pt-BR';
-        function iniciarVoz() { recognition.start(); document.getElementById('display').innerText = "[ ESCUTANDO ]"; }
-        recognition.onresult = (e) => {
-            const c = e.results[0][0].transcript.toLowerCase();
-            document.getElementById('display').innerText = "[ PROCESSANDO ]";
-            acionarAkame(c);
+        const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        rec.lang = 'pt-BR';
+        function iniciarVoz() { rec.start(); document.getElementById('display').innerText = "[ OUVINDO... ]"; }
+        rec.onresult = (e) => {
+            const c = e.results[0][0].transcript;
+            document.getElementById('display').innerText = "[ PENSANDO... ]";
+            acionar(c);
         };
     </script>
 </body>
