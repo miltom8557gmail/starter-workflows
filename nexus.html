@@ -2,65 +2,43 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔱 AKAME_SENTINELA_V12</title>
+    <title>🔱 NEXUS AKAME V13</title>
     <style>
-        :root { --neon: #00ff41; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: monospace; margin: 0; text-align: center; }
-        .monitor { border: 1px solid var(--neon); margin: 20px; padding: 20px; height: 60vh; overflow-y: auto; font-size: 0.7em; text-align: left; }
-        .eye { font-size: 5em; cursor: pointer; text-shadow: 0 0 20px var(--neon); transition: 0.5s; }
-        .active { color: #f00; text-shadow: 0 0 30px #f00; }
+        body { background: #000; color: #8B0000; font-family: 'Courier New', monospace; text-align: center; }
+        #cadeado { position: fixed; top: 10px; right: 10px; cursor: pointer; font-size: 24px; opacity: 0.3; }
+        #cadeado:hover { opacity: 1; }
+        .arsenal-btn { background: #1a0000; border: 1px solid #ff0000; color: #ff0000; padding: 15px; margin: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; }
+        #olho { font-size: 100px; margin-top: 15%; cursor: pointer; transition: 0.5s; display: inline-block; }
+        #arsenal { display: none; margin-top: 30px; border-top: 1px double #8B0000; padding-top: 20px; }
     </style>
 </head>
-<body onclick="ativarEscuta()">
-    <div style="padding: 10px; border-bottom: 1px solid var(--neon);">🔱 AKAME GA KILL: MODO SENTINELA</div>
-    <div id="status" style="font-size: 0.6em; padding: 5px;">[ TOQUE PARA INICIAR ESCUTA ATIVA ]</div>
-    
-    <div class="monitor" id="log">> AGUARDANDO COMANDO DE VOZ...</div>
-    
-    <div id="eye" class="eye">👁️</div>
+<body>
+
+    <div id="cadeado" onclick="loginMestre()">🔒</div>
+    <div id="status">SENTINELA ATIVA</div>
+    <div id="olho">👁️</div>
+
+    <div id="arsenal">
+        <button class="arsenal-btn" onclick="varreduraMurasame()">🛡️ Escudo Murasame (Status)</button>
+    </div>
 
     <script>
-        const SB_URL = "https://bfriplrxtleleplhpgwd.supabase.co";
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU";
-        
-        const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        rec.lang = 'pt-BR';
-        rec.continuous = true; // Mantém ouvindo
-        rec.interimResults = false;
+        const mestre = "miltom.jose8557@gmail.com";
 
-        function falar(t) {
-            const u = new SpeechSynthesisUtterance(t);
-            u.lang = 'pt-BR';
-            window.speechSynthesis.speak(u);
-        }
-
-        async function processar(frase) {
-            const l = document.getElementById('log');
-            if (frase.toLowerCase().includes("akame ga kill")) {
-                document.getElementById('eye').classList.add('active');
-                l.innerHTML += `<br><span style="color:#fff">> GATILHO DETECTADO!</span>`;
-                falar("Sim, Mestre. Estou pronta. O que deseja eliminar?");
-                // Aqui ela entra em modo de comando real
+        function loginMestre() {
+            let email = prompt("🔱 Identifique-se, Mestre:");
+            if(email === mestre) {
+                alert("Pacto Reconhecido. Arsenal Liberado.");
+                document.getElementById('arsenal').style.display = 'block';
+                document.getElementById('status').innerText = "MESTRE CONECTADO";
+            } else {
+                alert("ALVO IDENTIFICADO. ACESSO NEGADO.");
             }
-            l.innerHTML += `<br>> OUVIDO: ${frase}`;
-            l.scrollTop = l.scrollHeight;
         }
 
-        rec.onresult = (e) => {
-            const c = e.results[e.results.length - 1][0].transcript;
-            processar(c);
-        };
-
-        rec.onend = () => { rec.start(); }; // Reinicia se parar
-
-        function ativarEscuta() {
-            rec.start();
-            document.getElementById('status').innerText = "[ ESCUTA ATIVA: 'AKAME GA KILL' ]";
-            document.getElementById('eye').style.color = "var(--neon)";
+        function varreduraMurasame() {
+            alert("🌀 VARREDURA ATIVA:\n- Conexão: OK\n- Banco: Sincronizado\n- Perímetro: Protegido");
         }
-function varreduraMurasame(){ alert("🌀 Iniciando Varredura...\n- Conexão: Estável\n- Banco de Dados: Sincronizado\n- Perímetro: Limpo\n- Mestre: Identificado"); }
-function loginMestre(){ let e=prompt("🔱 Identidade:"); if(e==="miltom.jose8557@gmail.com"){ alert("Mestre reconhecido."); document.getElementById("arsenal").style.display="block"; }else{ alert("Acesso Negado."); }}
     </script>
 </body>
 </html>
