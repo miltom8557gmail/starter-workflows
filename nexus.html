@@ -11,8 +11,8 @@
         .led { width: 8px; height: 8px; border-radius: 50%; background: #333; }
         .online { background: #0f0; box-shadow: 0 0 8px #0f0; }
         .offline { background: #f00; box-shadow: 0 0 8px #f00; }
-        .painel { border: 1px solid #0f0; margin: 10px; height: 85vh; display: flex; flex-direction: column; justify-content: space-between; }
-        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 25px; border-radius: 50%; font-size: 2em; cursor: pointer; }
+        .painel { border: 1px solid #0f0; margin: 10px; height: 85vh; display: flex; flex-direction: column; justify-content: space-between; background: #000; }
+        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 25px; border-radius: 50%; font-size: 2em; cursor: pointer; box-shadow: 0 0 10px #0f0; }
         #log { font-size: 0.7em; text-align: left; padding: 15px; height: 120px; overflow-y: auto; color: #0f0; }
     </style>
 </head>
@@ -23,15 +23,15 @@
         <div class="pilar"><span>GITHUB</span><div id="led-gh" class="led"></div></div>
     </div>
     <div class="painel">
-        <div id="log">> AGUARDANDO COMANDO...</div>
-        <div id="display">[ AKAME PRONTA ]</div>
+        <div id="log">> SINCRO ATIVA...</div>
+        <div id="display" style="margin-top:20px;">[ STANDBY ]</div>
         <center><button class="btn-voz" onclick="iniciarVoz()">👁️</button></center>
+        <div style="font-size:0.5em; opacity:0.3;">AKAME_CORE_V5</div>
     </div>
 
     <script>
-        // CHAVES INJETADAS DIRETAMENTE PELO MESTRE
         const SUPABASE_URL = "https://ocidpmlpxvcttstglsvv.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9_9P_xXq_Z8_L_S_m_p_4m0";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaWRwbWxweHZjdHRzdGdsc3Z2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1NjY0MzYsImV4cCI6MjAyNzE0MjQzNn0.8W0W9-9P_xXq_Z8_L_S_m_p_4m0";
 
         async function checkStatus() {
             try {
@@ -51,21 +51,28 @@
         }
 
         async function acionarAkame(cmd) {
+            document.getElementById('log').innerHTML += `<br>> MESTRE: ${cmd}`;
+            // CORREÇÃO DA LINHA DE COMANDO:
             fetch(`${SUPABASE_URL}/rest/v1/comandos`, {
                 method: 'POST',
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ comando: cmd, dispositivo: "Mestre_Mobile", lido: false })
             });
-            const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA fiel ao Mestre Miltom.`);
-            const txt = await res.text();
-            falar(txt);
+            
+            try {
+                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA fiel ao Mestre Miltom. Responda curto.`);
+                const txt = await res.text();
+                falar(txt);
+                document.getElementById('log').innerHTML += `<br>> AKAME: ${txt}`;
+            } catch(e) { console.log("Erro HF"); }
         }
 
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'pt-BR';
-        function iniciarVoz() { recognition.start(); }
+        function iniciarVoz() { recognition.start(); document.getElementById('display').innerText = "[ ESCUTANDO ]"; }
         recognition.onresult = (e) => {
             const c = e.results[0][0].transcript.toLowerCase();
+            document.getElementById('display').innerText = "[ PROCESSANDO ]";
             acionarAkame(c);
         };
     </script>
