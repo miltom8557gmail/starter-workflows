@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔱 AKAME_NEXUS_V8</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; margin: 0; overflow: hidden; }
+        .trindade-status { display: flex; justify-content: space-around; background: #080808; padding: 12px; border-bottom: 2px solid #0f0; }
+        .pilar { display: flex; flex-direction: column; align-items: center; font-size: 0.5em; font-weight: bold; }
+        .led { width: 12px; height: 12px; border-radius: 50%; background: #200; margin-top: 5px; transition: 0.3s; }
+        .online { background: #0f0; box-shadow: 0 0 15px #0f0; border: 1px solid #fff; }
+        .offline { background: #f00; box-shadow: 0 0 15px #f00; }
+        .painel { border: 1px solid #0f0; margin: 10px; height: 85vh; display: flex; flex-direction: column; background: #000; box-shadow: inset 0 0 20px #030; }
+        #log { font-size: 0.6em; text-align: left; padding: 10px; height: 150px; overflow-y: auto; color: #0f0; border-bottom: 1px solid #030; }
+        .btn-voz { background: transparent; color: #0f0; border: 2px solid #0f0; padding: 35px; border-radius: 50%; font-size: 2.5em; cursor: pointer; margin: 20px; transition: 0.3s; box-shadow: 0 0 15px #030; }
+        .btn-voz:active { transform: scale(0.9); box-shadow: 0 0 30px #0f0; }
+        #display { font-size: 1.2em; margin-top: 10px; text-shadow: 0 0 10px #0f0; }
+    </style>
+</head>
+<body>
+    <div class="trindade-status">
+        <div class="pilar">CÓRTEX (HF)<div id="led-hf" class="led"></div></div>
+        <div class="pilar">NERVOS (SB)<div id="led-sb" class="led"></div></div>
+        <div class="pilar">HOST (GH)<div id="led-gh" class="led"></div></div>
+    </div>
+    <div class="painel">
+        <div id="log">> AKAME_OS V8.0: SISTEMA PRONTO.</div>
+        <div id="display">[ AGUARDANDO MESTRE ]</div>
+        <center><button class="btn-voz" onclick="iniciarVoz()">👁️</button></center>
+        <div id="debug" style="font-size:0.5em; color:#f00; padding:5px;"></div>
+    </div>
+
+    <script>
+        const SB_URL = "https://bfriplrxtleleplhpgwd.supabase.co";
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU";
+
+        async function monitor() {
+            try {
+                const res = await fetch(`${SB_URL}/rest/v1/comandos?limit=1`, { 
+                    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } 
+                });
+                document.getElementById('led-sb').className = res.ok ? 'led online' : 'led offline';
+                if(!res.ok) document.getElementById('debug').innerText = "ERRO CONEXÃO: " + res.status;
+                else document.getElementById('debug').innerText = "";
+            } catch(e) { 
+                document.getElementById('led-sb').className = 'led offline'; 
+                document.getElementById('debug').innerText = "ERRO DE REDE";
+            }
+            document.getElementById('led-hf').className = 'led online';
+            document.getElementById('led-gh').className = 'led online';
+        }
+        setInterval(monitor, 2000);
+        monitor();
+
+        function falar(t) {
+            const u = new SpeechSynthesisUtterance(t);
+            u.lang = 'pt-BR';
+            u.rate = 1.1;
+            window.speechSynthesis.speak(u);
+        }
+
+        async function acionar(cmd) {
+            document.getElementById('log').innerHTML += `<br>> TRANSMITINDO: ${cmd}`;
+            
+            // Envio imediato ao Supabase
+            fetch(`${SB_URL}/rest/v1/comandos`, {
+                method: 'POST',
+                headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comando: cmd, dispositivo: "Nexus_V8", lido: false })
+            });
+
+            // Resposta inteligente da Akame
+            try {
+                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(cmd)}?system=Você é Akame, IA leal ao Mestre Miltom. Reaja com inteligência e prontidão, não repita o mestre.`);
+                const txt = await res.text();
+                document.getElementById('log').innerHTML += `<br>> AKAME: ${txt}`;
+                falar(txt);
+            } catch(e) { falar("Córtex offline, mas comando enviado."); }
+        }
+
+        const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        rec.lang = 'pt-BR';
+        function iniciarVoz() { 
+            rec.start(); 
+            document.getElementById('display').innerText = "[ ESCUTANDO... ]"; 
+        }
+        rec.onresult = (e) => {
+            const c = e.results[0][0].transcript;
+            document.getElementById('display').innerText = "[ PROCESSANDO ]";
+            acionar(c);
+            setTimeout(() => { document.getElementById('display').innerText = "[ STANDBY ]"; }, 3000);
+        };
+    </script>
+</body>
+</html>
