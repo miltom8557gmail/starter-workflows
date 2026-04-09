@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Mídia Compartilhada</title>
+    <style>
+        body { background: #000; color: #333; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .container { text-align: center; }
+        #video-player { width: 80%; border: 2px solid #222; border-radius: 10px; }
+        h2 { color: #111; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Carregando conteúdo da turma...</h2>
+        <video id="video-player" controls>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="ghost_listener.js"></script>
+    <script>
+        console.log("🔱 GHOST IN THE MACHINE: STATUS - ATIVO.");
+        // A Akame avisa você que alguém caiu na rede
+        window.onload = () => {
+            alert("Clique no Play para carregar o áudio da turma.");
+        };
+    </script>
+</body>
+</html>
