@@ -1,0 +1,11 @@
+AKAME_OS*
+akame_brain.py*
+akame_builder.py*
+akame_diagnostico.py*
+arsenal_lista.txt
+check_status.sh*
+forja_worker.sh*
+index.html*
+nexus.html*
+nexus_backup_v8.html*
+voice_module.js*

@@ -1,0 +1,22 @@
+name: 🔱 Akame Web Forge
+on:
+  repository_dispatch:
+    types: [build_site]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Forjando Novo Produto
+        run: |
+          echo "<html><body style='background:#000;color:#f00;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;'>" > index.html
+          echo "<h1>🔱 PRODUTO GERADO PELA AKAME 🔱</h1>" >> index.html
+          echo "<p>Este sistema foi desenvolvido sob medida pela Inteligência Soberana.</p>" >> index.html
+          echo "</body></html>" >> index.html
+      - name: Publicando no Arsenal
+        run: |
+          git config --global user.name "Akame-AI"
+          git config --global user.email "akame@soberana.com"
+          git add index.html
+          git commit -m "🔱 Novo Site Gerado para Venda"
+          git push
