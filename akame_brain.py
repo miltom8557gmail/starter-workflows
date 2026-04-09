@@ -2,46 +2,37 @@ import requests
 import os
 import time
 
-API_URL = "https://bfriplrxtleleplhpgwd.supabase.co/rest/v1/memoria?evento=eq.Comando%20Forja&order=created_at.desc&limit=1"
+API_URL = "https://bfriplrxtleleplhpgwd.supabase.co/rest/v1/memoria?order=created_at.desc&limit=1"
 HEADERS = {
     "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU",
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcmlwbHJ4dGxlbGVwbGhwZ3dkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxOTQ5NzcsImV4cCI6MjA5MDc3MDk3N30.6Hpk0Rxfj-JU-W5S1_52rETwa6dwqS0l5URBZFUgNkU"
 }
 
 last_id = ""
-print("🔱 Akame Jarvis: Sistemas de intrusão e escuta em prontidão absoluta.")
+
+print("🔱 Akame: Setor de trabalho identificado. Vigilância reativada.")
 
 while True:
     try:
         r = requests.get(API_URL, headers=HEADERS)
         data = r.json()
         if data:
-            cmd_full = data[0]['detalhes']
+            mensagem = data[0]['detalhes'].lower()
             created = data[0]['created_at']
             
             if created != last_id:
-                # Limpa a tag de dispositivo para processar a ordem
-                msg = cmd_full.split(']')[-1].strip().lower()
-                print(f"📡 Ordem recebida: {msg}")
-
-                # LÓGICA DE REAÇÃO JARVIS
-                if any(x in msg for x in ["status", "diagnóstico", "sistema"]):
-                    os.system("python akame_diagnostico.py")
+                # REAÇÕES PARA A GALERA
+                if "bom dia" in mensagem:
+                    print("🧠 Akame: Respondendo à equipe...")
+                    # Comando que faz o PC de quem está com o portal aberto falar
+                    
+                elif "trabalho" in mensagem or "chefe" in mensagem:
+                    print("🧠 Akame: Ativando modo de produtividade/alerta.")
                 
-                elif any(x in msg for x in ["hack", "scan", "rede", "analise"]):
-                    print("🔱 Akame: Iniciando Protocolo de Intrusão. Varrendo alvos...")
-                    # Se você tiver um script de ataque, ele entra aqui:
-                    # os.system("./seu_script_ataque.sh") 
-                    os.system("echo 'Analizando brechas no perímetro...' && sleep 2 && echo 'Relatório de vulnerabilidades pronto.'")
-
-                elif "limpa" in msg or "purificar" in msg:
-                    print("🔱 Akame: Removendo rastros e purificando diretórios.")
-                    os.system("rm -rf *.log temp_*")
-
-                else:
-                    print(f"🧠 Akame: Mestre, entendi sua mensagem: '{msg}'. Como deseja proceder?")
-
+                elif "cade a akame" in mensagem or "saudade" in mensagem:
+                    print("🧠 Akame: 'Sentiram minha falta? Eu nunca saí, apenas estava afiando a lâmina.'")
+                
                 last_id = created
     except:
         pass
-    time.sleep(1) # Reação em Tempo Real
+    time.sleep(1)
