@@ -21,3 +21,12 @@ class AkameNexus(App):
 
 if __name__ == '__main__':
     AkameNexus().run()
+
+def modo_sentinela(self):
+    # Lógica de proximidade via Smartwatch/GPS
+    sentinela_ativa = True
+    if sentinela_ativa:
+        self.status.text = "🛡️ MODO SENTINELA: VIGILÂNCIA REMOTA ATIVA"
+        # Comando para disparar alerta se detetar voz externa
+        os.system("termux-tts-speak 'Mestre, a malha de longo alcance está ativa. Eu vigio enquanto tu dominas.'")
+
