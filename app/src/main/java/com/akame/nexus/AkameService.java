@@ -7,18 +7,23 @@ import androidx.core.app.NotificationCompat;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import android.util.Log;
 
 public class AkameService extends Service {
+    private static final String TAG = "AKAME_CORE";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         createNotificationChannel();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "AKAME_CHANNEL")
                 .setSmallIcon(android.R.drawable.ic_menu_compass)
                 .setContentTitle("Akame Nexus")
-                .setContentText("Sistema de Monitoramento Ativo")
+                .setContentText("Ponte de Dados Ativa")
                 .setPriority(NotificationCompat.PRIORITY_LOW);
 
         startForeground(1, builder.build());
+        
+        Log.d(TAG, "📡 Sincronizando com Bunker_Onion...");
         return START_STICKY;
     }
 
