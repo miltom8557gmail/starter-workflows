@@ -1,10 +1,19 @@
 import os
 import time
 
-def escuta_global():
-    print("🐍 [AKAME]: Sintonizando frequências de longo alcance...")
-    # Conexão com a Malha de Dispositivos Remotos
-    while True:
-        # Aqui ela monitoriza o 'Bunker' no Supabase em busca de comandos de voz remotos
-        time.sleep(1)
-        # Se um comando vier do PC ou Watch, ela executa aqui no Termux
+class AkameSentinel:
+    def __init__(self):
+        self.status = "VIGILÂNCIA_ATIVA"
+        print("🐍 [AKAME]: Sensores de áudio sintonizados. Iniciando escuta de longo alcance.")
+
+    def monitorar_ambiente(self):
+        while True:
+            # Simulação de análise de áudio em tempo real
+            # No futuro, aqui entra o processador de voz da nuvem
+            time.sleep(5)
+            # Exemplo de comando disparado por voz externa:
+            # os.system("termux-tts-speak 'Alerta, Mestre. Atividade detectada.'")
+
+if __name__ == "__main__":
+    sentinel = AkameSentinel()
+    sentinel.monitorar_ambiente()
