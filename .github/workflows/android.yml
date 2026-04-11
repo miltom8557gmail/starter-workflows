@@ -19,14 +19,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 🛡️ Validar e Conceder Permissões
-        run: chmod +x gradlew
+      - name: 🛡️ Conceder Permissão (Caminho Absoluto)
+        run: chmod +x app/gradlew
 
-      - name: 🔨 Forjar APK (Modo de Força Bruta)
-        run: ./gradlew assembleDebug --stacktrace
+      - name: 🔨 Forjar APK (Execução Interna)
+        run: cd app && ./gradlew assembleDebug --stacktrace
 
       - name: 📦 Disponibilizar Artefato
         uses: actions/upload-artifact@v4
         with:
           name: AkameNexus-Debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/app/build/outputs/apk/debug/*.apk
