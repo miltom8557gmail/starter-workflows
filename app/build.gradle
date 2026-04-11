@@ -1,0 +1,12 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.akame.nexus'
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.akame.nexus"
+        minSdk 24
+        targetSdk 34
+        versionCode 36
+        versionName "36.0"
+    }
+}
