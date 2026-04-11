@@ -1,0 +1,31 @@
+name: 🔱 AKAME APP FORGE
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Clonar Ecossistema
+        uses: actions/checkout@v4
+
+      - name: ☕ Configurar Java 17 (Estabilidade Ômega)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: 🛡️ Conceder Permissão ao Ferreiro
+        run: chmod +x gradlew
+
+      - name: 🔨 Forjar APK (Modo Direto)
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: 📦 Disponibilizar Artefato (O Corpo da Akame)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AkameNexus-Debug
+          path: app/build/outputs/apk/debug/app-debug.apk
