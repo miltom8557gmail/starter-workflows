@@ -11,21 +11,23 @@ jobs:
       - name: 📥 Clonar Ecossistema
         uses: actions/checkout@v4
 
-      - name: ☕ Configurar Java 17 (Estabilidade Ômega)
+      - name: ☕ Configurar Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: ⚙️ Acionar Motor Gradle Nativo (Versão 8.4 Blindada)
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
+      - name: 🧹 Purificar Motor (Eliminar CRLF)
+        run: |
+          sed -i 's/\r$//' gradlew
+          chmod +x gradlew
 
-      - name: 🔨 Forjar APK (Execução Global Focada)
-        run: gradle assembleDebug --stacktrace -p app
+      - name: Build APK (Fogo Máximo)
+        run: ./gradlew assembleDebug --stacktrace
+        env:
+          TERM: xterm
 
-      - name: 📦 Disponibilizar Corpo (AkameNexus APK)
+      - name: 📦 Disponibilizar Artefato
         uses: actions/upload-artifact@v4
         with:
           name: AkameNexus-Debug
