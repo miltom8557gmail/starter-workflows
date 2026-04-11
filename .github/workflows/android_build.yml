@@ -22,7 +22,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build APK (Fogo Máximo)
-        run: ./gradlew assembleDebug
+        run: yes | sdkmanager --licenses && ./gradlew assembleDebug
 
       - name: Upload Artefato Akame
         uses: actions/upload-artifact@v4
