@@ -7,30 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: 📥 Clonar Ecossistema
         uses: actions/checkout@v4
 
-      - name: ☕ Configurar Java 17
+      - name: ☕ Configurar Java 17 (Estabilidade Ômega)
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 🛡️ Conceder Permissão Total ao Motor
-        run: |
-          chmod +x app/gradlew
-          chmod +x gradlew
+      - name: ⚙️ Acionar Motor Gradle Nativo (Bypass de Erros)
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: 🔨 Forjar APK (Alvo Direto)
-        run: |
-          cd app
-          /bin/bash ./gradlew assembleDebug --stacktrace
+      - name: 🔨 Forjar APK (Execução Global Focada)
+        run: gradle assembleDebug --stacktrace -p app
 
-      - name: 📦 Disponibilizar Artefato
+      - name: 📦 Disponibilizar Corpo (AkameNexus APK)
         uses: actions/upload-artifact@v4
         with:
           name: AkameNexus-Debug
-          path: app/app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/*.apk
