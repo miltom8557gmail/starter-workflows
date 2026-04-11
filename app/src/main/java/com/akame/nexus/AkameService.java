@@ -22,7 +22,6 @@ public class AkameService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_LOW);
 
         startForeground(1, builder.build());
-        
         Log.d(TAG, "📡 Sincronizando com Bunker_Onion...");
         return START_STICKY;
     }
@@ -35,7 +34,9 @@ public class AkameService extends Service {
                     NotificationManager.IMPORTANCE_DEFAULT
             );
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(serviceChannel);
+            if (manager != null) {
+                manager.createNotificationChannel(serviceChannel);
+            }
         }
     }
 
