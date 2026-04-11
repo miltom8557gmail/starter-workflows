@@ -19,11 +19,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 🛡️ Conceder Permissão (Caminho Absoluto)
-        run: chmod +x app/gradlew
+      - name: 🛡️ Conceder Permissão Total ao Motor
+        run: |
+          chmod +x app/gradlew
+          chmod +x gradlew
 
-      - name: 🔨 Forjar APK (Execução Interna)
-        run: cd app && ./gradlew assembleDebug --stacktrace
+      - name: 🔨 Forjar APK (Alvo Direto)
+        run: |
+          cd app
+          /bin/bash ./gradlew assembleDebug --stacktrace
 
       - name: 📦 Disponibilizar Artefato
         uses: actions/upload-artifact@v4
