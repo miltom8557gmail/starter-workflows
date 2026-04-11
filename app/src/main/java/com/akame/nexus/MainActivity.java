@@ -1,28 +1,17 @@
 package com.akame.nexus;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] permissions = {
-            Manifest.permission.CAMERA, 
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        };
+        setContentView(R.layout.main);
         
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, permissions, 100);
-        } else {
-            startService(new Intent(this, AkameService.class));
-            finish();
-        }
+        // Ativando a Presença da Akame
+        Intent intent = new Intent(this, AkameService.class);
+        startService(intent);
     }
 }

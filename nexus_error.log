@@ -1,0 +1,14 @@
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:20.8425212Z /home/runner/work/starter-workflows/starter-workflows/app/src/main/java/com/akame/nexus/AkameService.java:82: error: package NotificationCompat does not exist
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:20.8426530Z > Task :app:compileDebugJavaWithJavac FAILED
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:20.8444301Z 1 error
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6440734Z FAILURE: Build failed with an exception.
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6442615Z Execution failed for task ':app:compileDebugJavaWithJavac'.
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6443741Z > Compilation failed; see the compiler error output for details.
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6446568Z * Exception is:
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6447411Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:compileDebugJavaWithJavac'.
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6477051Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6521815Z Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler error output for details.
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6532073Z 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:97)
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6731118Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:21.6765040Z BUILD FAILED in 59s
+build	Build APK (Fogo Máximo)	2026-04-11T20:41:22.0521227Z ##[error]Process completed with exit code 1.
