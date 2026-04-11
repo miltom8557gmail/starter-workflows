@@ -1,0 +1,42 @@
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-04-11 04:57 -0300
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 1.27% done; ETC: 04:57 (0:00:00 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 22.95% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 22.95% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.05% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.14% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.24% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.34% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.44% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.63% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 23.83% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 24.02% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:00 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 24.41% done; ETC: 04:57 (0:00:03 remaining)
+Stats: 0:00:01 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 54.20% done; ETC: 04:57 (0:00:02 remaining)
+Stats: 0:00:01 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 54.59% done; ETC: 04:57 (0:00:02 remaining)
+Stats: 0:00:01 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 55.27% done; ETC: 04:57 (0:00:02 remaining)
+Stats: 0:00:01 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 56.35% done; ETC: 04:57 (0:00:02 remaining)
+Stats: 0:00:02 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Ping Scan Timing: About 100.00% done; ETC: 04:57 (0:00:00 remaining)
+Stats: 0:00:03 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
+Parallel DNS resolution of 2 hosts. Timing: About 50.00% done; ETC: 04:57 (0:00:01 remaining)
+Nmap scan report for 192.168.1.1
+Host is up (0.010s latency).
+Nmap scan report for 192.168.1.50
+Host is up (0.0015s latency).
+Nmap done: 256 IP addresses (2 hosts up) scanned in 3.99 seconds
