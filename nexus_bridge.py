@@ -25,6 +25,9 @@ def run_command():
         subprocess.run(["bash", "./scripts/sync_ecosystem.sh"])
         return "🌌 GITHUB: Sincronia de ativos iniciada via Nuvem."
 
+    elif action == "toggle_auto":
+        subprocess.Popen(["bash", "./scripts/omni_sentinel.sh"])
+        return "🤖 AUTOMAÇÃO: Sentinela ativado em segundo plano."
     return "❌ Comando Desconhecido."
 
 if __name__ == '__main__':
