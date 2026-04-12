@@ -7,5 +7,7 @@
   "duckduckgo_ai": "ACTIVE",
   "huggingface_free_tier": "ENABLED",
   "storage_mode": "HYBRID_CLOUD",
-  "integrity_protection": "STRICT_ADD_ONLY"
+  "integrity_protection": "STRICT_ADD_ONLY",
+  "billing_protection": "BLOCK_ALL_PAID",
+  "free_tier_priority": "MAXIMUM"
 }
