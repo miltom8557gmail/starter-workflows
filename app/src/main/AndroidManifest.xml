@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
-        android:icon="@drawable/akame_bg"
-        android:label="Akame Omni 2026"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity
-            android:name=".MainActivity"
+        android:label="Akame Vitrine"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+        <activity android:name="com.akame.soberana.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
