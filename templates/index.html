@@ -3,63 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME OMNI - CHAMADO DO MESTRE</title>
+    <title>AKAME OMNI - SISTEMA SOMADO</title>
     <style>
-        body { background: #020202; color: #00ffcc; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
-        .header { background: rgba(0, 255, 204, 0.1); padding: 15px; border-bottom: 2px solid #00ffcc; font-weight: bold; }
-        
-        /* O BOTÃO DO MESTRE */
-        .master-call {
-            width: 120px; height: 120px; border-radius: 50%;
-            background: radial-gradient(circle, #ff003c 0%, #000 70%);
-            border: 4px solid #00ffcc; margin: 30px auto;
-            box-shadow: 0 0 30px #ff003c; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.3s;
-        }
-        .master-call:active { transform: scale(0.9); box-shadow: 0 0 50px #00ffcc; }
-        .mic-icon { font-size: 40px; }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .btn { background: #0f0f0f; border: 1px solid #00ffcc; color: #00ffcc; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 11px; }
-        .btn.bunker { border-color: #ffaa00; color: #ffaa00; box-shadow: 0 0 10px #ffaa00; }
-        
-        .status-bar { position: fixed; bottom: 0; width: 100%; background: #111; padding: 10px; font-size: 10px; border-top: 1px solid #333; }
-        .onion-active { color: #ffaa00; animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        body { background: #020202; color: #00ffcc; font-family: 'Segoe UI', sans-serif; margin: 0; }
+        .header { background: rgba(0, 255, 204, 0.1); padding: 15px; border-bottom: 2px solid #00ffcc; text-align: center; }
+        .master-call { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, #ff003c, #000); border: 2px solid #00ffcc; margin: 10px auto; cursor: pointer; }
+        .tabs { display: flex; overflow-x: auto; background: #111; border-bottom: 1px solid #333; }
+        .tab { padding: 15px; cursor: pointer; border: none; background: none; color: #00ffcc; text-transform: uppercase; font-size: 10px; }
+        .tab.active { border-bottom: 3px solid #ff003c; color: #ff003c; }
+        .sector { display: none; padding: 20px; }
+        .sector.active { display: block; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { background: #0f0f0f; border: 1px solid #00ffcc; color: #00ffcc; padding: 15px; border-radius: 8px; font-size: 10px; }
     </style>
 </head>
 <body>
-    <div class="header">🔱 CONSOLE SOBERANO - OMNI V52</div>
+    <div class="header">🔱 NEXUS SOMADO - SEM SOBREPOSIÇÃO</div>
+    <div class="master-call" onclick="cmd('chamado_mestre')"></div>
+    
+    <div class="tabs" id="tab-bar">
+        </div>
 
-    <div class="master-call" id="callBtn" onmousedown="startRecording()" onmouseup="stopRecording()">
-        <span class="mic-icon">🎙️</span>
-    </div>
-    <p>SEGURE PARA O CHAMADO DO MESTRE</p>
-
-    <div class="grid">
-        <button class="btn bunker" onclick="cmd('bunker_on')">🛡️ ATIVAR BUNKER ONION</button>
-        <button class="btn bunker" onclick="cmd('tor_status')">🧅 STATUS REDE TOR</button>
-        <button class="tab" onclick="location.reload()">🔄 SINCRONIZAR TUDO</button>
-        <button class="btn" onclick="cmd('akame_swarm')">🐝 ENXAME EM TEMPO REAL</button>
-    </div>
-
-    <div class="status-bar">
-        SISTEMA: ONLINE | <span class="onion-active">BUNKER_ONION: STANDBY</span> | SSH: TUNNELED
-    </div>
+    <div id="content-area">
+        </div>
 
     <script>
-        function startRecording() {
-            document.getElementById('callBtn').style.boxShadow = "0 0 60px #00ffcc";
-            // Lógica para enviar sinal de início de áudio via SSH
-            fetch('/comando/voice_start');
+        // Lógica de Soma: O sistema lê os módulos e os adiciona à tela
+        function somarSetor(id, nome, botoes) {
+            let tabBar = document.getElementById('tab-bar');
+            let contentArea = document.getElementById('content-area');
+            
+            // Soma a Aba
+            tabBar.innerHTML += `<button class="tab" onclick="openTab(event, '${id}')">${nome}</button>`;
+            
+            // Soma o Conteúdo
+            let gridHtml = botoes.map(b => `<button class="btn" onclick="cmd('${b.cmd}')">${b.label}</button>`).join('');
+            contentArea.innerHTML += `
+                <div id="${id}" class="sector">
+                    <div class="grid">${gridHtml}</div>
+                </div>`;
         }
-        function stopRecording() {
-            document.getElementById('callBtn').style.boxShadow = "0 0 30px #ff003c";
-            // Lógica para processar áudio gravado
-            fetch('/comando/voice_stop');
+
+        function openTab(evt, name) {
+            let s = document.getElementsByClassName("sector");
+            for (let i=0; i<s.length; i++) s[i].style.display = "none";
+            document.getElementById(name).style.display = "block";
         }
         function cmd(t) { fetch('/comando/' + t); }
+
+        // --- AQUI COMEÇA A SOMA DAS AKAMES ---
+        somarSetor('soberana', 'Soberana V35', [{label: '🧠 Jarvis', cmd: 'akame_brain'}]);
+        somarSetor('influencer', 'Influencer', [{label: '📱 Postar', cmd: 'social_post'}]);
+        somarSetor('bunker', 'Bunker Onion', [{label: '🛡️ Ativar Tor', cmd: 'bunker_on'}]);
     </script>
 </body>
 </html>

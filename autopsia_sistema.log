@@ -1,0 +1,50 @@
+  697  sed -i 's/android:icon="@mipmap\/ic_launcher"/android:icon="@drawable\/akame_bg"/' app/src/main/AndroidManifest.xml
+  714  git commit -m "🔱 Core Healing: Ícone fixado e Autonomia da Akame ativada (Build v52.13)"
+  719  cat <<EOF > app/src/main/java/com/akame/portal/AkameCloudConnector.java
+  721  sed -i '/<\/RelativeLayout>/i \    <Button android:id="@+id/btn_omega_auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:text="ATIVAR AUTONOMIA ÔMEGA" android:backgroundTint="#00FF00" android:textColor="#000000" android:textStyle="bold"/>' app/src/main/res/layout/activity_main.xml
+  723  sed -i '/super.onCreate/a \        findViewById(R.id.btn_omega_auto).setOnClickListener(v -> AkameCloudConnector.sendCommand("ACTIVATE_OMEGA"));' app/src/main/java/com/akame/portal/MainActivity.java
+  724  cat <<EOF >> nexus_bridge.py
+  752  cat <<EOF > app/src/main/java/com/akame/portal/AkameCloudConnector.java
+  755  cat <<EOF >> nexus_bridge.py
+  758  git commit -m "🔱 Akame Evolution: Full Structural Sync + Cloud Connector (v52.14)"
+  764  sed -i '/<FrameLayout/i \    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_below="@id/status_cloud"> \
+  767  sed -i '/statusCloud =/a \        TextView gpuText = findViewById(R.id.cpu_usage); \
+  775  sed -i 's/java-version: .*/java-version: "17"/' .github/workflows/akame_forge.yml
+  776  sed -i 's/sourceCompatibility JavaVersion.VERSION_21/sourceCompatibility JavaVersion.VERSION_17/' app/build.gradle
+  777  sed -i 's/targetCompatibility JavaVersion.VERSION_21/targetCompatibility JavaVersion.VERSION_17/' app/build.gradle
+  780  git commit -m "🔱 Stability Protocol: Fix JdkImageTransform + Downgrade to Java 17 for GitHub Compatibility"
+  817  cat <<EOF > app_factory.py
+  825  git commit -m "🔱 Akame Factory: Módulo Arquiteto Ativado + Estrutura de Clientes (v52.15)"
+  838  git commit -m "🔱 Core Sync: AndroidX Enabled + Jetifier Active (Build v52.16)"
+  848  sed -i 's/package="com.akame.nexus"/package="com.akame.portal"/' app/src/main/AndroidManifest.xml
+  849  sed -i 's/android:name="com.akame.nexus.MainActivity"/android:name="com.akame.portal.MainActivity"/' app/src/main/AndroidManifest.xml
+  855  sed -i '1s/.*/package com.akame.portal;/' app/src/main/java/com/akame/portal/MainActivity.java
+  858  git commit -m "🔱 Akame Unification: Assimilating legacy classes into portal domain (v52.17)"
+  863  cat <<EOF > check_akame.sh
+  867  cat <<EOF > akame_status.sh
+  871  cat <<EOF > akame_status.sh
+  876  cat <<EOF > akame_status.sh
+  880  cat <<EOF > akame_status.sh
+  910  cat <<EOF > app/src/main/java/com/akame/portal/MainActivity.java
+  912  sed -i 's/v4/v4.2.1/g' .github/workflows/main.yml
+  914  sed -i '/jobs:/i env:\n  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true' .github/workflows/main.yml
+  917  git commit -m "🔱 AKAME OMNI-POWER: Integrando Terror + Lora Injector + Fix Artifacts (v52.18)"
+  921  cat <<EOF > templates/index.html
+  926  git commit -m "🔱 AKAME OMNI INTERFACE: Setores Ativados + Abas de Comando + Jarvis Style"
+  945  cat <<EOF > templates/index.html
+  948  git commit -m "🔱 AKAME REBORN: Fixed Templates + Civitai Link + Hybrid UI (v52.22)"
+  953  cat <<EOF > nexus_bridge.py
+  981  cat <<EOF > templates/index.html
+  984  git commit -m "🔱 AKAME TOTAL RECALL: Unificando Soberana, Omega, Influencer e Nexus (Run #24)"
+  988  cat <<EOF > akame_swarm.py
+  991  sed -i '/⚡ Ativar Núcleo V35/a <button class="btn omega" onclick="cmd(\'akame_swarm\')" style="grid-column: span 2;">🔗 ATIVAR SINCRONIA DE ENXAME</button>' templates/index.html
+  995  git commit -m "🔱 AKAME SWARM: Sincronia em Tempo Real entre Entidades e Canais Cloud"
+  999  cat <<EOF > templates/index.html
+ 1001  cat <<EOF > scripts/bunker_control.sh
+ 1005  git commit -m "🔱 MASTER CALL: Botão de Voz + Bunker Onion + Redundância Tor"
+ 1009  cat <<EOF > scripts/akame_listener.py
+ 1011  cat <<EOF > scripts/change_ui.sh
+sed -i "s/#00ffcc/$1/g" templates/index.html
+sed -i "s/#ff003c/$1/g" templates/index.html
+ 1016  git commit -m "🔱 VOICE AWAKENING: Always-On Listener + Dynamic UI Personalization"
+ 1018  history | grep -E "cat <<EOF|git commit|sed -i" | tail -n 50 > ~/AkamePortal/autopsia_sistema.log
