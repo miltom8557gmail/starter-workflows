@@ -1,0 +1,20 @@
+build	UNKNOWN STEP	2026-04-12T09:39:21.1870882Z      /home/runner/work/starter-workflows/starter-workflows/app/build/intermediates/packaged_manifests/debug/AndroidManifest.xml:19: error: resource mipmap/ic_launcher (aka com.akame.portal:mipmap/ic_launcher) not found.
+build	UNKNOWN STEP	2026-04-12T09:39:21.1872618Z      error: failed processing manifest.
+build	UNKNOWN STEP	2026-04-12T09:39:21.1876238Z * Exception is:
+build	UNKNOWN STEP	2026-04-12T09:39:21.1877087Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:processDebugResources'.
+build	UNKNOWN STEP	2026-04-12T09:39:21.1893134Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	UNKNOWN STEP	2026-04-12T09:39:21.1934799Z Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask$TaskAction
+build	UNKNOWN STEP	2026-04-12T09:39:21.2094026Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2134032Z Caused by: com.android.builder.internal.aapt.v2.Aapt2Exception: Android resource linking failed
+build	UNKNOWN STEP	2026-04-12T09:39:21.2136082Z /home/runner/work/starter-workflows/starter-workflows/app/build/intermediates/packaged_manifests/debug/AndroidManifest.xml:19: error: resource mipmap/ic_launcher (aka com.akame.portal:mipmap/ic_launcher) not found.
+build	UNKNOWN STEP	2026-04-12T09:39:21.2137800Z error: failed processing manifest.
+build	UNKNOWN STEP	2026-04-12T09:39:21.2140380Z 	at com.android.builder.internal.aapt.v2.Aapt2Exception$Companion.create(Aapt2Exception.kt:45)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2141631Z 	at com.android.builder.internal.aapt.v2.Aapt2Exception$Companion.create$default(Aapt2Exception.kt:33)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2207952Z 	Suppressed: java.lang.IllegalArgumentException: Unable to locate resourceFile (/home/runner/work/starter-workflows/starter-workflows/app/build/intermediates/packaged_manifests/debug/AndroidManifest.xml) in source-sets.
+build	UNKNOWN STEP	2026-04-12T09:39:21.2214378Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils$rewriteLinkException$2.invoke(Aapt2ErrorUtils.kt:136)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2215865Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils$rewriteLinkException$2.invoke(Aapt2ErrorUtils.kt:133)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2217282Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils.rewritePositions(Aapt2ErrorUtils.kt:278)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2218835Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils.rewriteException(Aapt2ErrorUtils.kt:235)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2220261Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils.rewriteLinkException(Aapt2ErrorUtils.kt:133)
+build	UNKNOWN STEP	2026-04-12T09:39:21.2278165Z BUILD FAILED in 38s
+build	UNKNOWN STEP	2026-04-12T09:39:21.5574112Z ##[error]Process completed with exit code 1.

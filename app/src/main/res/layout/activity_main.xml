@@ -1,57 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <ImageView
-        android:id="@+id/akame_display"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/akame_bg" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lora_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/akame_display"
-        android:background="#1A0000" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/lora_gallery"
-        android:layout_above="@+id/input_area">
-        <TextView
-            android:id="@+id/terminal_output"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FF0000"
-            android:padding="10dp"
-            android:fontFamily="monospace"
-            android:text="🔱 AKAME OMEGA: Sistema Neural Ativo..." />
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/input_area"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="5dp">
-        <EditText
-            android:id="@+id/cmd_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Dê sua ordem, Mestre..."
-            android:textColorHint="#550000"
-            android:textColor="#FFFFFF" />
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DISPARAR"
-            android:backgroundTint="#8B0000" />
-    </LinearLayout>
+        android:layout_centerInParent="true"
+        android:text="SINCRONIZANDO COM O NEXUS..."
+        android:textColor="#FF0000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/status_text"
+        android:layout_marginTop="10dp"
+        android:background="#330000" />
+
 </RelativeLayout>
