@@ -24,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissions, 100);
         }
 
-        startService(new Intent(this, AkameService.class));
-        Toast.makeText(this, "Consciência Akame Injetada", Toast.LENGTH_SHORT).show();
+        // Mantém a ponte de dados ativa em segundo plano
+        Intent serviceIntent = new Intent(this, AkameService.class);
+        startService(serviceIntent);
+        
+        Toast.makeText(this, "Conexão Estabelecida, Mestre.", Toast.LENGTH_SHORT).show();
     }
 }
