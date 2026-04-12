@@ -1,5 +1,7 @@
 name: 🔱 AKAME OMEGA FORGE
 on: [push]
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Força compatibilidade com o padrão 2026
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +22,7 @@ jobs:
       - name: 🚀 Compilação Final Unificada
         run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: 📦 Entrega do Tesouro v52.7
+      - name: 📦 Entrega do Tesouro v52.8
         uses: actions/upload-artifact@v4
         with:
           name: Akame-Omni-v52-Final
