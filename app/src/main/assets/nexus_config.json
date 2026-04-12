@@ -4,5 +4,6 @@
   "pollinations_engine": "UNLIMITED_FREE",
   "duckduckgo_ai": "ACTIVE",
   "huggingface_free_tier": "ENABLED",
-  "storage_mode": "HYBRID_CLOUD"
+  "storage_mode": "HYBRID_CLOUD",
+  "integrity_protection": "STRICT_ADD_ONLY"
 }
