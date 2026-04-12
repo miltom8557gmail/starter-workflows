@@ -1,31 +1,24 @@
 name: 🔱 AKAME OMEGA FORGE
-on: [push, workflow_dispatch] # Permite disparo manual se travar
+on: 
+  push:
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      actions: write
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
-
-      - name: Grant Execute Permission for Gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug --stacktrace
-
-      - name: Upload APK (Versão V4)
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Akame-Omni-v52-Final
+          name: Akame-Omega-v52-FINAL
           path: app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
-          overwrite: true
