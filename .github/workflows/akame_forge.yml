@@ -1,10 +1,11 @@
 name: 🔱 AKAME OMEGA FORGE
-on: 
-  push:
-    branches: [ main ]
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - name: Setup Java 17
@@ -13,12 +14,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
-      - name: Build APK
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug
-      - name: Upload APK
+      - name: Grant Execute Permission
+        run: chmod +x gradlew
+      - name: Build APK (Compilação Acumulada)
+        run: ./gradlew assembleDebug --no-daemon
+      - name: Upload APK Final
         uses: actions/upload-artifact@v4
         with:
-          name: Akame-Omega-v52-FINAL
+          name: Akame-Omni-v52-ULTRA
           path: app/build/outputs/apk/debug/app-debug.apk
