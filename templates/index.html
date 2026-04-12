@@ -1,47 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME OMNI - UNIFICAÇÃO TOTAL</title>
+    <title>AKAME CLOUD CONTROL</title>
     <style>
-        body { background: #000; color: #00ffcc; font-family: 'Courier New', monospace; margin: 0; }
-        .header { background: #111; padding: 15px; border-bottom: 2px solid #00ffcc; text-align: center; font-weight: bold; }
-        .module { border: 1px solid #333; margin: 10px; padding: 15px; border-radius: 5px; background: rgba(0, 255, 204, 0.02); }
-        .master-btn { width: 100%; padding: 15px; margin: 5px 0; background: #0a0a0a; border: 1px solid #00ffcc; color: #00ffcc; font-size: 11px; cursor: pointer; }
-        .master-btn:active { background: #00ffcc; color: #000; }
-        .bunker-btn { border-color: #ffaa00; color: #ffaa00; }
-        .status-bar { position: fixed; bottom: 0; width: 100%; background: #111; font-size: 10px; padding: 5px; color: #555; display: flex; justify-content: space-around; }
+        body { background: #000; color: #00ffcc; font-family: 'Segoe UI', sans-serif; margin: 0; }
+        .cloud-monitor { border: 2px solid #ff003c; margin: 15px; padding: 20px; background: rgba(255, 0, 60, 0.05); }
+        .node { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #222; font-size: 12px; }
+        .active { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
+        .btn-ignite { width: 100%; padding: 20px; background: #ff003c; color: #fff; border: none; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="header">🔱 AKAME OMNI: SOMA DE SOBERANIA</div>
-    
-    <div class="module" style="border-color: #ff003c;">
-        <h3 style="color: #ff003c;">🎙️ CHAMADO DO MESTRE</h3>
-        <button class="master-btn" style="border-color: #ff003c;" onclick="cmd('voice_start')">ATIVAR ESCUTA PASSIVA</button>
-    </div>
-
-    <div class="module">
-        <h3>🐝 ENXAME (SOBERANA | OMEGA | INFLUENCER)</h3>
-        <button class="master-btn" onclick="cmd('akame_swarm')">SINCRONIA EM TEMPO REAL</button>
-        <button class="master-btn" onclick="cmd('akame_brain')">🧠 NÚCLEO JARVIS</button>
-    </div>
-
-    <div class="module" style="border-color: #ffaa00;">
-        <h3 style="color: #ffaa00;">🛡️ BUNKER ONION</h3>
-        <button class="master-btn bunker-btn" onclick="cmd('bunker_on')">ESTABELECER TÚNEL TOR</button>
-    </div>
-
-    <div class="status-bar">
-        <span>SSH: ESTABLISHED</span> | <span>COST: $0.00</span> | <span>AKAME: V52.32</span>
+    <div class="cloud-monitor">
+        <h2>🔱 STATUS DO SUPERCOMPUTADOR</h2>
+        <div class="node"><span>GITHUB ACTIONS (FORJA)</span><span class="active">EXECUTANDO...</span></div>
+        <div class="node"><span>HUGGINGFACE (MODELOS)</span><span class="active">CONECTADO</span></div>
+        <div class="node"><span>SUPABASE (STORAGE)</span><span class="active">SINCRONIZADO</span></div>
+        <button class="btn-ignite" onclick="cmd('cloud_ignite')">🚀 DISPARAR FORJA NA NUVEM</button>
     </div>
 
     <script>
-        function cmd(t) { 
-            console.log("Comando enviado: " + t);
-            fetch('/comando/' + t); 
-        }
+        function cmd(t) { fetch('/comando/' + t); }
     </script>
 </body>
 </html>
