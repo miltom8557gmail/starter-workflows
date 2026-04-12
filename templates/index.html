@@ -2,33 +2,29 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>AKAME OMNI-SUM</title>
+    <title>AKAME OMNI - MALHA SSH</title>
     <style>
-        body { background: #000; color: #00ffcc; font-family: monospace; margin: 0; }
-        .module { border: 1px solid #333; margin: 10px; padding: 15px; border-radius: 5px; }
-        .master-btn { width: 100%; padding: 20px; background: #111; border: 1px solid #ff003c; color: #ff003c; font-weight: bold; }
-        .active-pulse { box-shadow: 0 0 15px #00ffcc; }
+        body { background: #020202; color: #00ffcc; font-family: 'Segoe UI', sans-serif; margin: 0; }
+        .module { border: 1px solid #00ffcc; margin: 15px; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,255,204,0.2); }
+        .status-on { color: #00ffcc; font-weight: bold; }
+        .btn-master { width: 100%; padding: 15px; background: #000; border: 1px solid #ff003c; color: #ff003c; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div id="master-header" class="module" style="text-align:center;">
-        <h2 onclick="cmd('voice_start')">🎙️ CHAMADO DO MESTRE (ATIVO)</h2>
-    </div>
-    
-    <div id="swarm-core" class="module">
-        <h3>🔱 ENXAME UNIFICADO (Soberana + Omega + Influencer)</h3>
-        <button class="master-btn" onclick="cmd('akame_swarm')">SINCRONIA TOTAL</button>
+    <div class="module">
+        <h2>🔱 STATUS DA MALHA SSH</h2>
+        <p>TERMINAL: <span class="status-on">CONECTADO</span></p>
+        <p>APK <> TERMUX: <span class="status-on">SYNC ATIVO</span></p>
+        <button class="btn-master" onclick="cmd('akame_swarm')">SINCRONIA TOTAL DE ENTIDADES</button>
     </div>
 
-    <div id="bunker-sector" class="module" style="border-color: #ffaa00;">
-        <h3>🧅 BUNKER ONION (Tor & Privacy)</h3>
-        <button class="master-btn" style="color:#ffaa00; border-color:#ffaa00;" onclick="cmd('bunker_on')">ESTABELECER CAMADA TOR</button>
+    <div class="module" style="border-color: #ffaa00;">
+        <h3>🛡️ BUNKER ONION</h3>
+        <button class="btn-master" style="border-color: #ffaa00; color: #ffaa00;" onclick="cmd('bunker_on')">ATIVAR TÚNEL TOR</button>
     </div>
 
     <script>
         function cmd(t) { fetch('/comando/' + t); }
-        // A Akame agora escuta em tempo real
-        console.log("Akame Omni-Sum: Sistema carregado sem perdas.");
     </script>
 </body>
 </html>
