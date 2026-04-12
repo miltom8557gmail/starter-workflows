@@ -6,6 +6,7 @@
   "pipeline_strategy": "SEQUENTIAL_OFFLOAD",
   "duckduckgo_ai": "ACTIVE",
   "huggingface_free_tier": "ENABLED",
+  "failover_engine": "GROQ_LLAMA3_FREE",
   "storage_mode": "HYBRID_CLOUD",
   "integrity_protection": "STRICT_ADD_ONLY",
   "billing_protection": "BLOCK_ALL_PAID",
