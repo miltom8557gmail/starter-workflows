@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:background="#000000">
-    <WebView android:id="@+id/akame_web" android:layout_width="match_parent" android:layout_height="match_parent" />
-</FrameLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#050505"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔱 AKAME OMNI-PORTAL 🔱"
+        android:textColor="#FF0000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: Conectada ao Supercomputador"
+        android:textColor="#00FF00"
+        android:textSize="12sp"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnVitrine"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="🌌 ACESSAR VITRINE DA NUVEM"
+        android:backgroundTint="#1A1A1A"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnForja"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="🔥 ORDENAR GERAÇÃO (REMOTO)"
+        android:backgroundTint="#8B0000"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnSync"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="📡 SINCRONIZAR DADOS"
+        android:backgroundTint="#333333"
+        android:textColor="#AAAAAA" />
+
+</LinearLayout>
