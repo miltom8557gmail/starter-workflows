@@ -1,20 +1,15 @@
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0407768Z    > Failed to transform core-for-system-modules.jar to match attributes {artifactType=_internal_android_jdk_image, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0420349Z       > Execution failed for JdkImageTransform: /usr/local/lib/android/sdk/platforms/android-34/core-for-system-modules.jar.
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0451519Z          > Error while executing process /usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/jdkImage --disable-plugin system-modules}
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0458029Z * Exception is:
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0459231Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:compileDebugJavaWithJavac'.
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0460956Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:38)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0516126Z Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactResolveException: Could not resolve all files for configuration ':app:androidJdkImage'.
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0518649Z 	at org.gradle.api.internal.artifacts.ResolveExceptionContextualizer.mapFailure(ResolveExceptionContextualizer.java:81)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0526523Z 	at org.gradle.api.internal.artifacts.ResolveExceptionContextualizer.mapFailures(ResolveExceptionContextualizer.java:60)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0684238Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0810078Z Caused by: org.gradle.api.internal.artifacts.transform.TransformException: Failed to transform core-for-system-modules.jar to match attributes {artifactType=_internal_android_jdk_image, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0977034Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1019135Z Caused by: org.gradle.api.internal.artifacts.transform.TransformException: Execution failed for JdkImageTransform: /usr/local/lib/android/sdk/platforms/android-34/core-for-system-modules.jar.
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1070324Z Caused by: org.gradle.internal.operations.BuildOperationInvocationException: Error while executing process /usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/jdkImage --disable-plugin system-modules}
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1074585Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner.throwAsBuildOperationInvocationException(DefaultBuildOperationRunner.java:192)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1240724Z Caused by: com.android.ide.common.process.ProcessException: Error while executing process /usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/jdkImage --disable-plugin system-modules}
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1244447Z 	at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1264327Z Caused by: org.gradle.process.internal.ExecException: Process 'command '/usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink'' finished with non-zero exit value 1
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1269791Z BUILD FAILED in 1m 5s
-build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.4707355Z ##[error]Process completed with exit code 1.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:26:09.4500013Z  - Improved error and warning messages
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.1476564Z /home/runner/work/starter-workflows/starter-workflows/app/src/main/java/com/akame/portal/MainActivity.java:9: error: duplicate class: com.akame.nexus.MainActivity
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4515521Z 1 error
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4515994Z > Task :app:compileDebugJavaWithJavac FAILED
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4595546Z FAILURE: Build failed with an exception.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4696071Z Execution failed for task ':app:compileDebugJavaWithJavac'.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4698304Z > Compilation failed; see the compiler error output for details.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4701309Z * Exception is:
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4702278Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:compileDebugJavaWithJavac'.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4725290Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4785550Z Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler error output for details.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4788352Z 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:98)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4921809Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.4964836Z BUILD FAILED in 1m 6s
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:27:10.8802027Z ##[error]Process completed with exit code 1.

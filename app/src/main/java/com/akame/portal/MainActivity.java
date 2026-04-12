@@ -1,4 +1,4 @@
-package com.akame.nexus;
+package com.akame.portal;
 
 import android.os.Bundle;
 import android.widget.TextView;
