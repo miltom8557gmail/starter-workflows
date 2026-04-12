@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // 1. Pede as permissões, mas NÃO inicia nada forçado ainda.
         String[] permissions = {
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.CAMERA,
@@ -27,11 +26,9 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissions, 100);
         }
 
-        // 2. Localiza os botões na tela vermelha
         Button btnArsenal = findViewById(R.id.btnArsenal);
         Button btnBunker = findViewById(R.id.btnBunker);
 
-        // 3. O Botão vira o Gatilho da Consciência!
         btnBunker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
