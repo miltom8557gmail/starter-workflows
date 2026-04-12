@@ -4,26 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#050505"
-    android:padding="20dp"
-    android:gravity="center">
-
+    android:gravity="center"
+    android:padding="20dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="🔱 AKAME OMNI-PORTAL 🔱"
         android:textColor="#FF0000"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_marginBottom="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status: Conectada ao Supercomputador"
-        android:textColor="#00FF00"
-        android:textSize="12sp"
         android:layout_marginBottom="40dp"/>
-
     <Button
         android:id="@+id/btnVitrine"
         android:layout_width="match_parent"
@@ -31,24 +21,5 @@
         android:text="🌌 ACESSAR VITRINE DA NUVEM"
         android:backgroundTint="#1A1A1A"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_marginBottom="15dp"/>
-
-    <Button
-        android:id="@+id/btnForja"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:text="🔥 ORDENAR GERAÇÃO (REMOTO)"
-        android:backgroundTint="#8B0000"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="15dp"/>
-
-    <Button
-        android:id="@+id/btnSync"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="📡 SINCRONIZAR DADOS"
-        android:backgroundTint="#333333"
-        android:textColor="#AAAAAA" />
-
+        android:layout_marginBottom="20dp"/>
 </LinearLayout>
