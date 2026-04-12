@@ -1,20 +1,20 @@
-build	UNKNOWN STEP	2026-04-12T09:39:21.1870882Z      /home/runner/work/starter-workflows/starter-workflows/app/build/intermediates/packaged_manifests/debug/AndroidManifest.xml:19: error: resource mipmap/ic_launcher (aka com.akame.portal:mipmap/ic_launcher) not found.
-build	UNKNOWN STEP	2026-04-12T09:39:21.1872618Z      error: failed processing manifest.
-build	UNKNOWN STEP	2026-04-12T09:39:21.1876238Z * Exception is:
-build	UNKNOWN STEP	2026-04-12T09:39:21.1877087Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:processDebugResources'.
-build	UNKNOWN STEP	2026-04-12T09:39:21.1893134Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
-build	UNKNOWN STEP	2026-04-12T09:39:21.1934799Z Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask$TaskAction
-build	UNKNOWN STEP	2026-04-12T09:39:21.2094026Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2134032Z Caused by: com.android.builder.internal.aapt.v2.Aapt2Exception: Android resource linking failed
-build	UNKNOWN STEP	2026-04-12T09:39:21.2136082Z /home/runner/work/starter-workflows/starter-workflows/app/build/intermediates/packaged_manifests/debug/AndroidManifest.xml:19: error: resource mipmap/ic_launcher (aka com.akame.portal:mipmap/ic_launcher) not found.
-build	UNKNOWN STEP	2026-04-12T09:39:21.2137800Z error: failed processing manifest.
-build	UNKNOWN STEP	2026-04-12T09:39:21.2140380Z 	at com.android.builder.internal.aapt.v2.Aapt2Exception$Companion.create(Aapt2Exception.kt:45)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2141631Z 	at com.android.builder.internal.aapt.v2.Aapt2Exception$Companion.create$default(Aapt2Exception.kt:33)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2207952Z 	Suppressed: java.lang.IllegalArgumentException: Unable to locate resourceFile (/home/runner/work/starter-workflows/starter-workflows/app/build/intermediates/packaged_manifests/debug/AndroidManifest.xml) in source-sets.
-build	UNKNOWN STEP	2026-04-12T09:39:21.2214378Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils$rewriteLinkException$2.invoke(Aapt2ErrorUtils.kt:136)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2215865Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils$rewriteLinkException$2.invoke(Aapt2ErrorUtils.kt:133)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2217282Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils.rewritePositions(Aapt2ErrorUtils.kt:278)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2218835Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils.rewriteException(Aapt2ErrorUtils.kt:235)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2220261Z 		at com.android.build.gradle.internal.res.Aapt2ErrorUtils.rewriteLinkException(Aapt2ErrorUtils.kt:133)
-build	UNKNOWN STEP	2026-04-12T09:39:21.2278165Z BUILD FAILED in 38s
-build	UNKNOWN STEP	2026-04-12T09:39:21.5574112Z ##[error]Process completed with exit code 1.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0407768Z    > Failed to transform core-for-system-modules.jar to match attributes {artifactType=_internal_android_jdk_image, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0420349Z       > Execution failed for JdkImageTransform: /usr/local/lib/android/sdk/platforms/android-34/core-for-system-modules.jar.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0451519Z          > Error while executing process /usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/jdkImage --disable-plugin system-modules}
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0458029Z * Exception is:
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0459231Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:compileDebugJavaWithJavac'.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0460956Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:38)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0516126Z Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactResolveException: Could not resolve all files for configuration ':app:androidJdkImage'.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0518649Z 	at org.gradle.api.internal.artifacts.ResolveExceptionContextualizer.mapFailure(ResolveExceptionContextualizer.java:81)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0526523Z 	at org.gradle.api.internal.artifacts.ResolveExceptionContextualizer.mapFailures(ResolveExceptionContextualizer.java:60)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0684238Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0810078Z Caused by: org.gradle.api.internal.artifacts.transform.TransformException: Failed to transform core-for-system-modules.jar to match attributes {artifactType=_internal_android_jdk_image, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.0977034Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1019135Z Caused by: org.gradle.api.internal.artifacts.transform.TransformException: Execution failed for JdkImageTransform: /usr/local/lib/android/sdk/platforms/android-34/core-for-system-modules.jar.
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1070324Z Caused by: org.gradle.internal.operations.BuildOperationInvocationException: Error while executing process /usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/jdkImage --disable-plugin system-modules}
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1074585Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner.throwAsBuildOperationInvocationException(DefaultBuildOperationRunner.java:192)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1240724Z Caused by: com.android.ide.common.process.ProcessException: Error while executing process /usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/6fca2900065850e0d6a0f22f4dd57c4c/transformed/output/jdkImage --disable-plugin system-modules}
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1244447Z 	at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1264327Z Caused by: org.gradle.process.internal.ExecException: Process 'command '/usr/lib/jvm/temurin-21-jdk-amd64/bin/jlink'' finished with non-zero exit value 1
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.1269791Z BUILD FAILED in 1m 5s
+build	🚀 Build Total (Modo Inabalável)	2026-04-12T17:09:27.4707355Z ##[error]Process completed with exit code 1.
