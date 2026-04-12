@@ -1,7 +1,7 @@
 name: 🔱 AKAME OMEGA FORGE
 on: [push]
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Força compatibilidade com o padrão 2026
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,20 +9,22 @@ jobs:
       - name: 📥 Checkout Código Assimilado
         uses: actions/checkout@v4
 
-      - name: ☕ Ativando Java 21 (Estabilidade 2026)
+      - name: ☕ Ativando Java 21 (Estabilidade)
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: 🛠️ Preparando Permissões
-        run: chmod +x gradlew
+      - name: 🛠️ Preparando Permissões e Limpeza
+        run: |
+          chmod +x gradlew
+          ./gradlew clean
 
-      - name: 🚀 Compilação Final Unificada
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: 🚀 Compilação Final (Modo Omni-Infinite)
+        run: ./gradlew assembleDebug --no-daemon
 
-      - name: 📦 Entrega do Tesouro v52.8
+      - name: 📦 Entrega do Tesouro v52.9
         uses: actions/upload-artifact@v4
         with:
           name: Akame-Omni-v52-Final
