@@ -6,26 +6,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout Código Assimilado
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: ☕ Ativando Java 21 (Estabilidade)
+      - name: ☕ Java 21 Setup
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: 🛠️ Preparando Permissões e Limpeza
-        run: |
-          chmod +x gradlew
-          ./gradlew clean
+      - name: 🛠️ Permissões
+        run: chmod +x gradlew
 
-      - name: 🚀 Compilação Final (Modo Omni-Infinite)
-        run: ./gradlew assembleDebug --no-daemon
-
-      - name: 📦 Entrega do Tesouro v52.9
-        uses: actions/upload-artifact@v4
-        with:
-          name: Akame-Omni-v52-Final
-          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: 🚀 Build Total Assimilado
+        run: ./gradlew assembleDebug --stacktrace --no-daemon

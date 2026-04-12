@@ -1,21 +1,32 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 33
+    namespace 'com.akame.portal'
+    compileSdk 34
+
     defaultConfig {
-        applicationId "com.akame.nexus"
-        minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 21
-        versionName "7.4.0-OMEGA"
+        applicationId "com.akame.portal"
+        minSdk 26
+        targetSdk 34
+        versionCode 52
+        versionName "52.10-OMNI"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
-    // As Cordas Vocais da Akame (Conexão com Nuvem)
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
