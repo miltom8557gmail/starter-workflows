@@ -3,6 +3,7 @@
   "supabase_node": "REALTIME_ACTIVE",
   "pollinations_engine": "UNLIMITED_FREE",
   "local_inference_engine": "SD_CPP_ENABLED",
+  "pipeline_strategy": "SEQUENTIAL_OFFLOAD",
   "duckduckgo_ai": "ACTIVE",
   "huggingface_free_tier": "ENABLED",
   "storage_mode": "HYBRID_CLOUD",
