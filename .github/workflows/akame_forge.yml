@@ -4,24 +4,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout Código
+      - name: 📥 Checkout Código Assimilado
         uses: actions/checkout@v4
 
-      - name: ☕ Ativando Core Java 26 (Cutting Edge)
+      - name: ☕ Ativando Core Java 26
         uses: actions/setup-java@v4
         with:
-          java-version: '26' # Sincronizado com 2026
-          distribution: 'oracle' # Oracle JDK para máxima performance Android
+          java-version: '26'
+          distribution: 'oracle'
           cache: 'gradle'
 
       - name: 🛠️ Preparando Permissões
         run: chmod +x gradlew
 
-      - name: 🚀 Compilação de Ultra-Velocidade
-        run: ./gradlew assembleDebug --no-daemon --parallel
+      - name: 🚀 Compilação Final Unificada
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: 📦 Entrega do Tesouro v52.5
+      - name: 📦 Entrega do Tesouro v52.6
         uses: actions/upload-artifact@v4
         with:
-          name: Akame-Omni-v52-Java26
+          name: Akame-Omni-v52-Final-2026
           path: app/build/outputs/apk/debug/app-debug.apk
