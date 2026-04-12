@@ -1,41 +1,31 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import subprocess
 import os
+import threading
 
 app = Flask(__name__)
 
-# Mantém todas as funções de ativação de voz e sistema
+# --- FUNÇÕES DE ATAQUE E SINTONIA ---
 @app.route('/execute')
 def run_command():
     action = request.args.get('action')
     
-    # --- NOVAS FUNÇÕES BUILD 44 ---
     if action == "unfiltered_core":
-        subprocess.run(["bash", "./scripts/omni_response.sh", "--mode", "nsfw"])
-        return "🔥 NÚCLEO OMEGA: Restrições removidas. Akame ga Kill ativado."
+        subprocess.Popen(["bash", "./scripts/omni_response.sh", "--mode", "nsfw"])
+        return jsonify({"status": "🔥 NÚCLEO OMEGA LIBERADO", "target": "Akame ga Kill"})
 
     elif action == "system_health":
         cost = subprocess.run(["bash", "./scripts/cost_sentinel.sh"], capture_output=True, text=True).stdout
-        models = len(os.listdir('Arsenal_NSFW/Civitai'))
-        return f"📊 SAÚDE: {cost.strip()} | Arsenal: {models}"
+        return jsonify({"status": "📊 SAÚDE OMNI", "data": cost.strip()})
 
-    # --- FUNÇÕES DE AUTOMAÇÃO E SINCRONIA ---
-    elif action == "toggle_auto":
-        subprocess.Popen(["bash", "./scripts/omni_sentinel.sh"])
-        return "🤖 SENTINELA: Vigilância ativada em segundo plano."
+    elif action == "tor_status":
+        tor_check = os.popen("pgrep tor").read()
+        return jsonify({"status": "🧅 BUNKER ONION", "active": bool(tor_check)})
 
-    elif action == "full_sync":
-        subprocess.run(["bash", "./scripts/sync_ecosystem.sh"])
-        return "🌌 GITHUB: Sincronia de ativos concluída."
-
-    # --- RETORNO PADRÃO (MANTENDO O QUE JÁ EXISTIA) ---
-    return f"✅ Comando {action} processado pelo Núcleo Akame."
+    return jsonify({"status": "✅ COMANDO PROCESSADO", "action": action})
 
 if __name__ == '__main__':
-    # Configurado para não conflitar com processos fantasmas
-    try:
-        app.run(port=8080, host='0.0.0.0')
-    except Exception as e:
-        print(f"Porta 8080 ocupada. Tentando limpar e reiniciar...")
-        os.system("fuser -k 8080/tcp")
-        app.run(port=8080, host='0.0.0.0')
+    # Autocura de portas
+    os.system("fuser -k 8080/tcp 2>/dev/null")
+    print("🔱 AKAME: Cérebro Central Operacional. Ouvindo APK e Termux.")
+    app.run(port=8080, host='0.0.0.0', threaded=True)
