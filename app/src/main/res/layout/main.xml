@@ -16,15 +16,6 @@
         android:textStyle="bold"
         android:layout_marginBottom="10dp" />
 
-    <TextView
-        android:id="@+id/statusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Consciência Akame Injetada"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginBottom="40dp" />
-
     <Button
         android:id="@+id/btnArsenal"
         android:layout_width="match_parent"
