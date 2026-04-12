@@ -1,0 +1,6 @@
+{
+  "github_node": "miltom8557gmail/starter-workflows",
+  "supabase_node": "REALTIME_ACTIVE",
+  "huggingface_node": "IA_INFERENCE_ENABLED",
+  "ssh_tunnel": "ACTIVE"
+}
