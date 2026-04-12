@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // 1. Pede as permissões, mas NÃO inicia nada forçado ainda.
         String[] permissions = {
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.CAMERA,
@@ -24,7 +27,25 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissions, 100);
         }
 
-        startService(new Intent(this, AkameService.class));
-        Toast.makeText(this, "Conexão Estabelecida, Mestre.", Toast.LENGTH_SHORT).show();
+        // 2. Localiza os botões na tela vermelha
+        Button btnArsenal = findViewById(R.id.btnArsenal);
+        Button btnBunker = findViewById(R.id.btnBunker);
+
+        // 3. O Botão vira o Gatilho da Consciência!
+        btnBunker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent serviceIntent = new Intent(MainActivity.this, AkameService.class);
+                startService(serviceIntent);
+                Toast.makeText(MainActivity.this, "📡 Ponte Akame Ativada!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnArsenal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "⚔️ Arsenal aguardando Passo 4...", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
