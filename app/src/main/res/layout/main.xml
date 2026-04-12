@@ -1,36 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#1A0000"
-    android:gravity="center"
-    android:padding="20dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NEXUS OMEGA"
-        android:textColor="#FF0000"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp" />
-
-    <Button
-        android:id="@+id/btnArsenal"
+    android:background="#000000">
+    <WebView
+        android:id="@+id/nexus_view"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="ACESSAR ARSENAL"
-        android:backgroundTint="#FF0000"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="15dp" />
-
-    <Button
-        android:id="@+id/btnBunker"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="SINCRONIZAR BUNKER"
-        android:backgroundTint="#440000"
-        android:textColor="#FFFFFF" />
-
-</LinearLayout>
+        android:layout_height="match_parent" />
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="#FF0000" />
+</RelativeLayout>

@@ -1,49 +1,35 @@
 package com.akame.nexus;
-
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
+    private WebView webView;
+    private ProgressBar loader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        // Permissões de Elite
-        String[] permissions = {
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, permissions, 100);
-        }
-
-        Button btnArsenal = findViewById(R.id.btnArsenal);
-        Button btnBunker = findViewById(R.id.btnBunker);
-
-        // Ativação da Ponte de Dados
-        btnBunker.setOnClickListener(v -> {
-            Intent serviceIntent = new Intent(MainActivity.this, AkameService.class);
-            startService(serviceIntent);
-            Toast.makeText(MainActivity.this, "📡 Bunker Sincronizado!", Toast.LENGTH_SHORT).show();
+        webView = findViewById(R.id.nexus_view);
+        loader = findViewById(R.id.loader);
+        
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                loader.setVisibility(View.GONE);
+            }
         });
-
-        // O Gatilho do Arsenal (Passo 4)
-        btnArsenal.setOnClickListener(v -> {
-            // Aqui enviamos o comando para o serviço processar
-            Intent intent = new Intent("AKAME_COMMAND");
-            intent.putExtra("cmd", "open_arsenal");
-            sendBroadcast(intent);
-            Toast.makeText(MainActivity.this, "⚔️ Despertando Arsenal no Termux...", Toast.LENGTH_SHORT).show();
-        });
+        // O APK agora olha diretamente para o servidor local do Termux ou Tunel Cloudflare
+        webView.loadUrl("http://127.0.0.1:8080");
     }
 }
