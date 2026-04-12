@@ -1,7 +1,8 @@
 {
   "github_node": "miltom8557gmail/starter-workflows",
   "supabase_node": "REALTIME_ACTIVE",
-  "telegram_bridge": "STANDBY",
-  "storage_mode": "HYBRID_CLOUD",
-  "alert_system": "ENABLED"
+  "pollinations_engine": "UNLIMITED_FREE",
+  "duckduckgo_ai": "ACTIVE",
+  "huggingface_free_tier": "ENABLED",
+  "storage_mode": "HYBRID_CLOUD"
 }
