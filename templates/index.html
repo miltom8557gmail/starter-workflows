@@ -1,60 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAME OMNI - SISTEMA SOMADO</title>
+    <title>AKAME OMNI-SUM</title>
     <style>
-        body { background: #020202; color: #00ffcc; font-family: 'Segoe UI', sans-serif; margin: 0; }
-        .header { background: rgba(0, 255, 204, 0.1); padding: 15px; border-bottom: 2px solid #00ffcc; text-align: center; }
-        .master-call { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, #ff003c, #000); border: 2px solid #00ffcc; margin: 10px auto; cursor: pointer; }
-        .tabs { display: flex; overflow-x: auto; background: #111; border-bottom: 1px solid #333; }
-        .tab { padding: 15px; cursor: pointer; border: none; background: none; color: #00ffcc; text-transform: uppercase; font-size: 10px; }
-        .tab.active { border-bottom: 3px solid #ff003c; color: #ff003c; }
-        .sector { display: none; padding: 20px; }
-        .sector.active { display: block; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { background: #0f0f0f; border: 1px solid #00ffcc; color: #00ffcc; padding: 15px; border-radius: 8px; font-size: 10px; }
+        body { background: #000; color: #00ffcc; font-family: monospace; margin: 0; }
+        .module { border: 1px solid #333; margin: 10px; padding: 15px; border-radius: 5px; }
+        .master-btn { width: 100%; padding: 20px; background: #111; border: 1px solid #ff003c; color: #ff003c; font-weight: bold; }
+        .active-pulse { box-shadow: 0 0 15px #00ffcc; }
     </style>
 </head>
 <body>
-    <div class="header">🔱 NEXUS SOMADO - SEM SOBREPOSIÇÃO</div>
-    <div class="master-call" onclick="cmd('chamado_mestre')"></div>
+    <div id="master-header" class="module" style="text-align:center;">
+        <h2 onclick="cmd('voice_start')">🎙️ CHAMADO DO MESTRE (ATIVO)</h2>
+    </div>
     
-    <div class="tabs" id="tab-bar">
-        </div>
+    <div id="swarm-core" class="module">
+        <h3>🔱 ENXAME UNIFICADO (Soberana + Omega + Influencer)</h3>
+        <button class="master-btn" onclick="cmd('akame_swarm')">SINCRONIA TOTAL</button>
+    </div>
 
-    <div id="content-area">
-        </div>
+    <div id="bunker-sector" class="module" style="border-color: #ffaa00;">
+        <h3>🧅 BUNKER ONION (Tor & Privacy)</h3>
+        <button class="master-btn" style="color:#ffaa00; border-color:#ffaa00;" onclick="cmd('bunker_on')">ESTABELECER CAMADA TOR</button>
+    </div>
 
     <script>
-        // Lógica de Soma: O sistema lê os módulos e os adiciona à tela
-        function somarSetor(id, nome, botoes) {
-            let tabBar = document.getElementById('tab-bar');
-            let contentArea = document.getElementById('content-area');
-            
-            // Soma a Aba
-            tabBar.innerHTML += `<button class="tab" onclick="openTab(event, '${id}')">${nome}</button>`;
-            
-            // Soma o Conteúdo
-            let gridHtml = botoes.map(b => `<button class="btn" onclick="cmd('${b.cmd}')">${b.label}</button>`).join('');
-            contentArea.innerHTML += `
-                <div id="${id}" class="sector">
-                    <div class="grid">${gridHtml}</div>
-                </div>`;
-        }
-
-        function openTab(evt, name) {
-            let s = document.getElementsByClassName("sector");
-            for (let i=0; i<s.length; i++) s[i].style.display = "none";
-            document.getElementById(name).style.display = "block";
-        }
         function cmd(t) { fetch('/comando/' + t); }
-
-        // --- AQUI COMEÇA A SOMA DAS AKAMES ---
-        somarSetor('soberana', 'Soberana V35', [{label: '🧠 Jarvis', cmd: 'akame_brain'}]);
-        somarSetor('influencer', 'Influencer', [{label: '📱 Postar', cmd: 'social_post'}]);
-        somarSetor('bunker', 'Bunker Onion', [{label: '🛡️ Ativar Tor', cmd: 'bunker_on'}]);
+        // A Akame agora escuta em tempo real
+        console.log("Akame Omni-Sum: Sistema carregado sem perdas.");
     </script>
 </body>
 </html>
