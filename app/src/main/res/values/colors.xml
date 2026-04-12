@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="akame_red">#FF8B0000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#050505</color>
+    <color name="akame_red">#FF0000</color>
+    <color name="terminal_green">#00FF00</color>
 </resources>
