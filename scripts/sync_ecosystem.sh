@@ -24,3 +24,4 @@ date > logs/last_sync.log
 echo "Estado: Estabilizado | Fase: 4 | SSH: Ativo" >> logs/last_sync.log
 
 echo "✅ [SUCESSO]: Ecossistema Blindado."
+echo "🛡️ [MEMÓRIA]: Proteção de dados ativos. Nenhuma exclusão permitida."
