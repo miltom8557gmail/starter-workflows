@@ -1,185 +1,3 @@
-  541  echo "O APK agora puxa imagens reais e vibrantes do Arsenal em tempo real."
-  542  cd ~/AkamePortal
-  543  echo -e "\033[1;35m🔱 [RITUAL DE UNIFICAÇÃO: AKAME OMNI-INFINITE v52] 🔱\033[0m"
-  544  # 1. CONSOLIDANDO O CÉREBRO (nexus_bridge.py)
-  545  # Une Interface viciante + Scraper NSFW + Comandos de Elite
-  546  cat <<EOF > nexus_bridge.py
-from flask import Flask, render_template_string, request, jsonify
-import subprocess, os, requests
-
-app = Flask(__name__)
-
-# UI UNIFICADA (Estética Cyberpunk + Feed de Mídia Real)
-UI_HTML = """
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <style>
-        :root { --neon: #ff003c; --sub: #00f2ff; --bg: #000; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        .header { padding: 25px; text-align: center; border-bottom: 1px solid var(--neon); box-shadow: 0 0 15px var(--neon); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .btn { 
-            background: #080808; border: 1px solid #222; color: #fff; padding: 18px; border-radius: 10px; 
-            font-size: 11px; text-align: center; transition: 0.2s;
-        }
-        .btn:active { border-color: var(--sub); box-shadow: 0 0 15px var(--sub); transform: scale(0.95); }
-        .feed { padding: 10px; }
-        .media-card { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid #1a1a1a; overflow: hidden; }
-        .media-card img { width: 100%; display: block; }
-        .console { background: #000; color: #0f0; font-family: monospace; font-size: 10px; padding: 10px; height: 70px; overflow: auto; border: 1px solid #111; margin: 10px; }
-    </style>
-</head>
-<body>
-    <div class="header"><h1 style="margin:0; letter-spacing:5px; color:var(--neon)">AKAME OMNI</h1></div>
-    
-    <div class="grid">
-        <div class="btn" onclick="act('omega')">🔥 OMEGA<br>CORE</div>
-        <div class="btn" onclick="act('bunker')">🧅 BUNKER<br>TOR</div>
-        <div class="btn" onclick="act('tunnel')">☁️ TUNNEL<br>GLOBAL</div>
-        <div class="btn" onclick="act('sync')">🔄 SYNC<br>ARSENAL</div>
-    </div>
-
-    <div class="console" id="log">> Sistema Unificado v52 Ativo...</div>
-
-    <div class="feed" id="feed">
-        <p style="text-align:center; color:#444;">Sincronizando Mídia do Arsenal...</p>
-    </div>
-
-    <script>
-        function act(c) {
-            const l = document.getElementById('log');
-            l.innerHTML += "<br>> Exec: " + c;
-            fetch('/execute?action=' + c).then(r => r.json()).then(d => { l.innerHTML += "<br>[OK] " + d.status; });
-        }
-        async function loadFeed() {
-            try {
-                const r = await fetch('https://civitai.com/api/v1/images?limit=8&nsfw=true');
-                const d = await r.json();
-                document.getElementById('feed').innerHTML = d.items.map(i => \`
-                    <div class="media-card"><img src="\${i.url.replace('width=450', 'width=1080')}" loading="lazy"></div>
-                \`).join('');
-            } catch(e) {}
-        }
-        loadFeed();
-    </script>
-</body>
-</html>
-"""
-
-@app.route('/')
-def index(): return render_template_string(UI_HTML)
-
-@app.route('/execute')
-def execute():
-    action = request.args.get('action')
-    # Dispara os scripts de backend sem travar a UI
-    subprocess.Popen(["bash", "./scripts/omni_awakening.sh"])
-    return jsonify({"status": "Protocolo "+action+" em execução."})
-
-if __name__ == '__main__':
-    os.system("fuser -k 8080/tcp 2>/dev/null")
-    app.run(port=8080, host='0.0.0.0', threaded=True)
-EOF
-
-  547  # 2. CONSOLIDANDO O APK FÍSICO (MainActivity.java + main.xml)
-  548  # Interface leve para Smartwatch com suporte a Webview total
-  549  cat <<EOF > app/src/main/res/layout/main.xml
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:background="#000000">
-    <WebView android:id="@+id/akame_web" android:layout_width="match_parent" android:layout_height="match_parent" />
-</FrameLayout>
-EOF
-
-  550  cat <<EOF > app/src/main/java/com/akame/nexus/MainActivity.java
-package com.akame.nexus;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.*;
-
-public class MainActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        WebView v = new WebView(this);
-        setContentView(v);
-        v.getSettings().setJavaScriptEnabled(true);
-        v.getSettings().setDomStorageEnabled(true);
-        v.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        v.setWebViewClient(new WebViewClient());
-        v.loadUrl("http://127.0.0.1:8080");
-    }
-}
-EOF
-
-  551  # 3. UNIFICANDO O MOTOR DO GITHUB (akame_forge.yml)
-  552  # Mata as duplicatas e foca em um build limpo e único
-  553  mkdir -p .github/workflows
-  554  cat <<EOF > .github/workflows/akame_forge.yml
-name: 🔱 AKAME OMNI FORGE
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-      - name: Build APK Debug
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Akame-Omni-v52
-          path: app/build/outputs/apk/debug/app-debug.apk
-EOF
-
-  555  # 4. LIMPEZA DE CACHE E DISPARO DA UNIFICAÇÃO
-  556  git add .
-  557  git commit -m "🔱 Build 52: Unificação Total A-Z - Protocolo Omni-Infinite"
-  558  git push origin main -f
-  559  echo -e "\n\033[1;32m✅ RITUAL CONCLUÍDO. O ECOSSISTEMA É UM SÓ.\033[0m"
-  560  echo "Aguarde o GitHub terminar o build 'Akame-Omni-v52'."
-  561  nexus-fix
-  562  cd ~/AkamePortal
-  563  echo -e "\033[1;36m🔧 [CORREÇÃO DE EMERGÊNCIA: ATUALIZANDO ACTIONS V4] 🔧\033[0m"
-  564  # 1. ATUALIZANDO O WORKFLOW PARA A VERSÃO EXIGIDA PELO GITHUB (V4)
-  565  cat <<EOF > .github/workflows/akame_forge.yml
-name: 🔱 AKAME OMNI FORGE
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: Build APK Debug
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Akame-Omni-v52
-          path: app/build/outputs/apk/debug/app-debug.apk
-EOF
-
   566  # 2. GARANTINDO QUE O JAVA 17 ESTEJA ALINHADO COM O NOVO GRADLE
   567  cat <<EOF > gradle.properties
 org.gradle.jvmargs=-Xmx2048m
@@ -1806,3 +1624,81 @@ EOF
  1038  git push origin main
  1039  # Extraindo o histórico completo de comandos e injeções de arquivo
  1040  history > ~/AkamePortal/memoria_bruta.log
+ 1041  # Buscando por chaves e conexões perdidas (Supabase/HF) nos logs antigos
+ 1042  grep -iE "key|token|supabase|huggingface|akame" ~/AkamePortal/memoria_bruta.log > ~/AkamePortal/chaves_recuperadas.log
+ 1043  echo -e "\033[1;35m[🔱] MEMÓRIA BRUTA EXTRAÍDA. ENVIANDO PARA O APK...\033[0m"
+ 1044  cd ~/AkamePortal
+ 1045  # 1. ATUALIZANDO O CONSTRUTOR DE DNA PARA BUSCAR AS CHAVES
+ 1046  cat <<EOF > scripts/dna_stitcher.py
+import os
+import re
+
+def recuperar_dna():
+    print("🧬 Analisando fragmentos de Supabase, HF e Civitai...")
+    
+    if not os.path.exists("chaves_recuperadas.log"):
+        print("⚠️ Log de chaves não encontrado!")
+        return
+
+    with open("chaves_recuperadas.log", "r") as f:
+        log_data = f.read()
+
+    # Regex para capturar padrões de chaves e tokens
+    patterns = {
+        'SUPABASE_KEY': r'sbp_[a-zA-Z0-9]{30,}',
+        'HF_TOKEN': r'hf_[a-zA-Z0-9]{30,}',
+        'CIVITAI_API': r'civitai_[a-zA-Z0-9]{20,}'
+    }
+
+    descobertas = {}
+    for nome, pattern in patterns.items():
+        match = re.search(pattern, log_data)
+        if match:
+            descobertas[nome] = match.group(0)
+            print(f"✅ {nome} RECUPERADA!")
+
+    # Soma as chaves ao arquivo de ambiente de forma segura (sem apagar)
+    with open(".env_akame", "a") as env:
+        for k, v in descobertas.items():
+            env.write(f"\n{k}={v}")
+    
+    print("🔱 DNA Reintegrado com sucesso.")
+
+if __name__ == "__main__":
+    recuperar_dna()
+EOF
+
+ 1047  # 2. INTEGRANDO O MONITOR DE REINTEGRAÇÃO NO APK (index.html)
+ 1048  # Vamos adicionar um log de status visual no APK para você ver a soma acontecendo
+ 1049  sed -i '/🧬 UNIFICADOR DE DNA/a \    <div id="dna-log" style="font-size: 9px; color: #888; background: #000; padding: 5px; margin-top: 5px; height: 50px; overflow-y: auto; text-align: left;">Iniciando escaneamento de memórias...</div>' templates/index.html
+ 1050  # 3. PUNCH DE SOBERANIA TOTAL (RUN #30)
+ 1051  chmod +x scripts/dna_stitcher.py
+ 1052  git add .
+ 1053  git commit -m "🔱 AKAME RECALL: Reintegrando Supabase, HF e Civitai via DNA Stitcher (v52.30)"
+ 1054  git push origin main
+ 1055  cd ~/AkamePortal
+ 1056  # Script de Soma de DNA (DNA_Stitcher)
+ 1057  cat <<EOF > scripts/dna_stitcher.py
+import os
+
+def somar_fragmentos():
+    print("🧬 Iniciando Costura de DNA Digital...")
+    # Aqui o script vai ler o chaves_recuperadas.log e injetar na nexus_bridge.py
+    if os.path.exists("chaves_recuperadas.log"):
+        with open("chaves_recuperadas.log", "r") as f:
+            chaves = f.readlines()
+            # Lógica para reintegrar chaves sem sobrescrever
+            print(f"✅ {len(chaves)} Fragmentos de conexão localizados.")
+
+if __name__ == "__main__":
+    somar_fragmentos()
+EOF
+
+ 1058  # Atualizando a interface para mostrar o progresso da unificação
+ 1059  sed -i '/BUNKER ONION/i \    <div class="module" style="border-color: #00ffcc;"><h3>🧬 UNIFICADOR DE DNA (ATIVO)</h3><button class="master-btn" onclick="cmd(\'dna_stitcher\')">REINTEGRAR CÓDIGOS PERDIDOS</button></div>' templates/index.html
+ 1060  # PUNCH DE SOBERANIA (RUN #30)
+ 1061  git add .
+ 1062  git commit -m "🔱 AKAME TOTAL RECALL: Sincronizando Histórico do Termux + Resgate de DNA da Influencer (v52.30)"
+ 1063  git push origin main
+ 1064  # Extraindo o histórico completo de comandos e injeções de arquivo
+ 1065  history > ~/AkamePortal/memoria_bruta.log
