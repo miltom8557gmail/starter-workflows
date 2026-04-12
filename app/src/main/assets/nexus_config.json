@@ -2,6 +2,7 @@
   "github_node": "miltom8557gmail/starter-workflows",
   "supabase_node": "REALTIME_ACTIVE",
   "pollinations_engine": "UNLIMITED_FREE",
+  "local_inference_engine": "SD_CPP_ENABLED",
   "duckduckgo_ai": "ACTIVE",
   "huggingface_free_tier": "ENABLED",
   "storage_mode": "HYBRID_CLOUD",
