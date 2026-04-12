@@ -10,7 +10,7 @@ else
 fi
 
 # Verificador Hugging Face
-check_hf_status() {
+check_REMOVIDO_POR_SEGURANCA() {
     STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://api-inference.huggingface.co/models/AKAME_MODEL")
     if [ "$STATUS" -eq 402 ]; then
         echo "⚠️ [SENTINELA]: Hugging Face exigindo pagamento. Bloqueando acesso imediatamente."
