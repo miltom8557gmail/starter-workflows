@@ -1,3 +1,8 @@
+.gradle/
+build/
+app/build/
+*.pyc
+__pycache__/
+local.properties
 .env
 .env_telegram
-.env
