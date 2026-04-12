@@ -8,3 +8,12 @@ if [[ "$CHECK_LIMIT" == *"0"* ]]; then
 else
     echo "✅ [SENTINELA]: Créditos disponíveis. Prosseguindo..."
 fi
+
+# Verificador Hugging Face
+check_hf_status() {
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://api-inference.huggingface.co/models/AKAME_MODEL")
+    if [ "$STATUS" -eq 402 ]; then
+        echo "⚠️ [SENTINELA]: Hugging Face exigindo pagamento. Bloqueando acesso imediatamente."
+        exit 1
+    fi
+}

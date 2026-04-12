@@ -9,5 +9,7 @@
   "storage_mode": "HYBRID_CLOUD",
   "integrity_protection": "STRICT_ADD_ONLY",
   "billing_protection": "BLOCK_ALL_PAID",
-  "free_tier_priority": "MAXIMUM"
+  "free_tier_priority": "MAXIMUM",
+  "hf_billing_lock": "STRICT_FREE_ONLY",
+  "hf_model_timeout": "WAIT_OR_ABORT"
 }
