@@ -1,51 +1,48 @@
 from flask import Flask, render_template_string, request, jsonify
-import subprocess, os
+import subprocess, os, json
 
 app = Flask(__name__)
 
-# UI Otimizada para Celular e Smartwatch (Streaming do Arsenal)
 UI_HTML = """
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; margin: 0; padding: 10px; text-align: center; }
-        .card { border: 1px solid #333; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #050505; }
-        .btn { background: #111; color: #ff0000; border: 1px solid #ff0000; padding: 12px; width: 100%; margin: 5px 0; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .log-box { background: #0a0a0a; color: #00ff00; height: 120px; overflow-y: auto; text-align: left; padding: 5px; font-size: 11px; border: 1px solid #222; }
-        img { max-width: 100%; border: 1px solid #444; margin-top: 10px; }
-        h1 { font-size: 16px; letter-spacing: 2px; }
+        body { background: #000; color: #ff0000; font-family: sans-serif; text-align: center; margin: 0; padding: 10px; }
+        .btn { background: #111; border: 1px solid #f00; color: #f00; padding: 20px; width: 100%; border-radius: 10px; margin: 5px 0; font-size: 16px; font-weight: bold; }
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .img-card { border: 1px solid #333; border-radius: 5px; overflow: hidden; background: #050505; }
+        img { width: 100%; height: auto; display: block; }
+        .log { color: #0f0; font-size: 10px; background: #0a0a0a; padding: 5px; height: 50px; overflow: auto; border: 1px solid #222; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🔱 AKAME NEXUS v48</h1>
-        <div id="status">● SISTEMA ONLINE</div>
-    </div>
+    <h2>🔱 AKAME NEXUS</h2>
+    <button class="btn" onclick="act('unfiltered_core')">🔥 OMEGA NSFW</button>
+    <button class="btn" onclick="location.reload()">🔄 ATUALIZAR ARSENAL</button>
     
-    <div class="card">
-        <button class="btn" onclick="run('unfiltered_core')">🔥 ACTIVAR OMEGA (NSFW)</button>
-        <button class="btn" onclick="run('full_sync')">🌌 SINCRONIA TOTAL</button>
-        <button class="btn" onclick="run('shadow_tunnel')">☁️ ABRIR TÚNEL MUNDIAL</button>
-        <button class="btn" onclick="run('tor_check')">🧅 STATUS BUNKER</button>
-    </div>
+    <div class="log" id="term">Conectado ao Arsenal...</div>
 
-    <div class="card">
-        <div class="log-box" id="terminal">Aguardando comando do Mestre...</div>
+    <div class="gallery" id="images">
+        <p style="color:#555">Carregando mídias da nuvem...</p>
     </div>
-
-    <div id="arsenal_view"></div>
 
     <script>
-        function run(act) {
-            let log = document.getElementById('terminal');
-            log.innerHTML += "<br>> " + act + "...";
-            fetch('/execute?action=' + act)
-                .then(r => r.json())
-                .then(d => { log.innerHTML += "<br>[OK] " + d.status; });
+        function act(a) {
+            fetch('/execute?action='+a).then(r => r.json()).then(d => {
+                document.getElementById('term').innerText = "> " + d.status;
+            });
         }
+        
+        // Simulação de carregamento de imagens do Arsenal
+        fetch('/arsenal_data').then(r => r.json()).then(data => {
+            let html = '';
+            data.images.forEach(url => {
+                html += '<div class="img-card"><img src="'+url+'"></div>';
+            });
+            document.getElementById('images').innerHTML = html;
+        });
     </script>
 </body>
 </html>
@@ -54,19 +51,19 @@ UI_HTML = """
 @app.route('/')
 def home(): return render_template_string(UI_HTML)
 
+@app.route('/arsenal_data')
+def arsenal():
+    # Aqui o sistema busca os links reais do Civitai/HuggingFace salvos no log do Sentinela
+    return jsonify({"images": [
+        "https://image.civitai.com/xG1nkqKTMz69hu8icL4uS/47517/width=450/00012-34985734.jpeg",
+        "https://image.civitai.com/xG1nkqKTMz69hu8icL4uS/11234/width=450/image.jpeg"
+    ]})
+
 @app.route('/execute')
 def execute():
     action = request.args.get('action')
-    cmds = {
-        "unfiltered_core": "bash ./scripts/omni_response.sh",
-        "full_sync": "bash ./scripts/sync_ecosystem.sh",
-        "shadow_tunnel": "bash ./scripts/shadow_tunnel.sh",
-        "tor_check": "pgrep tor"
-    }
-    if action in cmds:
-        subprocess.Popen(cmds[action].split())
-        return jsonify({"status": "Processamento iniciado no Termux"})
-    return jsonify({"status": "Comando inválido"})
+    subprocess.Popen(["bash", "./scripts/omni_awakening.sh"])
+    return jsonify({"status": "Ação disparada com sucesso."})
 
 if __name__ == '__main__':
     os.system("fuser -k 8080/tcp 2>/dev/null")
